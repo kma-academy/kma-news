@@ -10,7 +10,7 @@ export class Option {
   @PrimaryColumn()
   name: string;
 
-  @Column()
+  @Column('mediumtext')
   value: string;
 
   @Column({ type: 'enum', enum: OptionType, default: OptionType.PLAIN_TEXT })

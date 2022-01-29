@@ -8,7 +8,7 @@ import { Option, OptionType } from './entities/option.entity';
 export class OptionService {
   constructor(
     @InjectRepository(Option)
-    private readonly optionRepository: Repository<Option>,
+    private readonly optionRepository: Repository<Option>
   ) {}
 
   findAll() {
@@ -30,6 +30,8 @@ export class OptionService {
     if (data.type === OptionType.PLAIN_TEXT) {
       return data;
     }
+    console.log(data);
+
     if (data.type === OptionType.JSON_TEXT) {
       return {
         ...data,
