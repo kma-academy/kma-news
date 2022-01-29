@@ -2,6 +2,8 @@
   "version": 2,
   "projects": {
     "api-interface": "libs/api-interface",
-    "backend": "apps/backend"
+    "backend": "apps/backend",
+    "frontend": "apps/frontend",
+    "frontend-e2e": "apps/frontend-e2e"
   }
 }

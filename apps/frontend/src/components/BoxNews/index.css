@@ -1,0 +1,154 @@
+.boxNews {
+  width: 100%;
+  display: flex;
+  height: 100px;
+  box-sizing: content-box;
+}
+
+.boxNews:hover .boxNews-logo {
+  display: block;
+}
+
+.boxNews + .boxNews {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 12px;
+  margin-top: 8px;
+}
+
+.boxNews-photo {
+  width: 155px;
+  height: 100px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.boxNews-photo:hover .news-photo {
+  transform: scale(1.2);
+}
+
+.boxNews-title {
+  font-size: 19px;
+  font-weight: 600;
+  width: 100%;
+}
+
+.boxNews-title:hover {
+  cursor: pointer;
+  color: #2fa1b3;
+}
+
+.boxNews-exten--involve:hover {
+  cursor: pointer;
+  color: #2fa1b3;
+}
+
+.boxNews-exten {
+  display: flex;
+  align-items: center;
+}
+
+.boxNews-exten--brand {
+  height: 16px;
+  margin-right: 10px;
+  margin-right: 10px;
+}
+
+.boxNews-exten--brand:hover {
+  cursor: pointer;
+}
+
+.boxNews-exten--time {
+  font-size: 16px;
+  color: #adb5bd;
+  margin-right: 10px;
+}
+
+.boxNews-exten--involve {
+  font-size: 16px;
+  color: #adb5bd;
+  margin-right: 10px;
+}
+
+.boxNews-logo {
+  height: 16px;
+  -webkit-filter: grayscale(100%);
+  display: none;
+}
+
+.boxNews-logo:hover {
+  -webkit-filter: none;
+  cursor: pointer;
+}
+
+.boxNews-title .news-photo {
+  border-radius: 5px;
+  width: 155px;
+  height: 100px;
+}
+
+.boxNews-title .news-photo:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+  width: 155px;
+  height: 100px;
+}
+
+.boxNews-left {
+  margin-left: 10px;
+  flex: 1;
+}
+
+.boxNews-photo .news-photo {
+  height: 100px;
+  width: 155px;
+  border-radius: 5px;
+}
+
+.boxNews:hover .video-icon::before {
+  background-position: 50px -750px;
+  transition: all 0.9s ease;
+}
+
+.box-exten {
+  display: flex;
+  align-items: center;
+}
+
+.box-exten--brand {
+  height: 16px;
+  margin-right: 10px;
+  margin-right: 10px;
+}
+
+.box-exten--brand:hover {
+  cursor: pointer;
+}
+
+.box-exten--time {
+  font-size: 16px;
+  color: #adb5bd;
+  margin-right: 10px;
+}
+
+.box-exten--involve {
+  font-size: 16px;
+  color: #adb5bd;
+  margin-right: 10px;
+}
+
+.box-logo {
+  height: 16px;
+  -webkit-filter: grayscale(100%);
+
+  display: none;
+}
+
+.box-logo:hover {
+  -webkit-filter: none;
+  cursor: pointer;
+}
+
+.boxNews:hover .box-logo {
+  display: block;
+}

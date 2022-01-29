@@ -1,0 +1,42 @@
+.box-recent__frame-img {
+    border-radius: 5px;
+    min-width: 115px;
+    height: 85px;
+    overflow: hidden;
+}
+
+.box-recent__img {
+    width: 115px;
+    height: 85px;
+}
+
+.box-recent__img:hover {
+    transform: scale(1.2);
+}
+
+.box-recent__content {
+    padding-left: 10px;
+}
+
+.box-recent__title {
+    font-size: 20px;
+}
+
+.box-recent {
+    width: 50%;
+    margin-bottom: 20px;
+    display: flex;
+    padding: 0 20px 0 0;
+}
+
+.box-recent:hover .box-logo {
+    display: block;
+}
+
+.box-exten__remove:hover .box-exten__remove-x {
+    color: tomato;
+}
+
+.box-exten__remove:hover {
+    cursor: pointer;
+}

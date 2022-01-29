@@ -1,0 +1,42 @@
+.box-offer {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+
+}
+
+.box-offer__frame-img {
+    border-radius: 5px;
+    width: 155px;
+    height: 100px;
+    overflow: hidden;
+}
+
+.box-offer__img:hover {
+    transform: scale(1.2);
+}
+
+.box-offer__img {
+    width: 155px;
+    height: 100px;
+}
+
+.box-offer__content {
+    padding-left: 10px;
+}
+
+.box-offer__title {
+    font-size: 20px;
+}
+
+.box-offer:hover .box-logo {
+    display: block;
+}
+
+.box-exten__remove:hover .box-exten__remove-x {
+    color: tomato;
+}
+
+.box-exten__remove:hover {
+    cursor: pointer;
+}

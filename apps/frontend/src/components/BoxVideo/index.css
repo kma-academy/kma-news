@@ -1,0 +1,82 @@
+.boxVideo {
+    background-color: #EEF8F9;
+    width: 100%;
+}
+
+.boxVideo+.boxVideo {
+    margin-top: 25px;
+}
+
+.boxVideo:hover .boxVideo-logo {
+    display: block;
+}
+
+.boxVideo-photo {
+    height: 150px;
+    width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    z-index: 0;
+}
+
+.boxVideo-photo img {
+    width: 100%;
+}
+
+.boxVideo-photo img:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.boxVideo-title {
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.boxVideo-title:hover {
+    cursor: pointer;
+    color: #2FA1B3;
+}
+
+.boxVideo-exten {
+    display: flex;
+    align-items: center;
+
+}
+
+.boxVideo-exten--brand {
+    height: 16px;
+    margin-right: 10px;
+}
+
+.boxVideo-exten--brand:hover {
+    cursor: pointer;
+}
+
+.boxVideo-exten--time {
+    font-size: 16px;
+    color: #ADB5BD;
+    margin-right: 10px;
+}
+
+.boxVideo-exten--involve {
+    font-size: 16px;
+    color: #ADB5BD;
+    margin-right: 10px;
+}
+
+.boxVideo-exten--involve:hover {
+    cursor: pointer;
+    color: #2FA1B3;
+}
+
+.boxVideo-logo {
+    height: 16px;
+    -webkit-filter: grayscale(100%);
+    display: none;
+}
+
+.boxVideo-logo:hover {
+    -webkit-filter: none;
+}

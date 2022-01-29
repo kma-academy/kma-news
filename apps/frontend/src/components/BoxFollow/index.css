@@ -1,0 +1,46 @@
+.box-follow {
+    width: calc(50% - 10px);
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F8F9FA;
+    margin-bottom: 10px;
+}
+
+.box-follow__logo {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-left: 10px;
+}
+
+.box-follow__logo-m {
+    height: 40px;
+    width: 40px
+}
+
+.box-follow__logo-m:hover {
+    transform: scale(1.2);
+}
+
+.box-follow__name {
+    flex: 1;
+    font-size: 20px;
+    margin-left: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.box-follow__remove {
+    color: grey;
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+.box-follow__remove:hover {
+    cursor: pointer;
+    color: tomato;
+}

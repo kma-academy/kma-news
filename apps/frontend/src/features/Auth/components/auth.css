@@ -1,0 +1,173 @@
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    animation: fadeIn linear 0.1s;
+    z-index: 100;
+}
+
+.modal__overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal-none {
+    display: none;
+}
+
+.modal__body {
+    z-index: 1;
+    margin: auto;
+    animation: growth linear 0.1s;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 30vw;
+
+}
+
+.auth-form {}
+
+.auth-form__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px;
+}
+
+.auth-form__title {
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.auth-form__logo {
+    width: 100px;
+}
+
+.auth-form__form {
+    padding: 20px 20px;
+}
+
+.auth-form__group {
+    width: 100%;
+    margin-top: 25px;
+}
+
+.auth-form__group-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #999;
+    line-height: 25px;
+    font-size: 20px;
+
+}
+
+.auth-form__group+.auth-form__group {
+    margin-top: 30px;
+}
+
+.auth-form__group-input:focus {
+    outline: none;
+}
+
+.auth-form__group-forget {
+    margin-top: 25px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.auth-form__group-forget:hover {
+    cursor: pointer;
+    color: brown;
+}
+
+.auth-form__btn {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 20px 10px 20px;
+}
+
+.auth-btn {
+    outline: none;
+    min-width: 100px;
+    border-radius: 4px;
+    border: none;
+    height: 30px;
+    font-size: 15px;
+    font-weight: 500;
+
+}
+
+.auth-btn:hover {
+    cursor: pointer;
+    background-color: antiquewhite;
+}
+
+.auth-btn+.auth-btn {
+    margin-left: 15px;
+}
+
+.auth-form__socials {
+    display: flex;
+    height: 50px;
+    margin-top: 20px;
+    justify-content: space-between;
+}
+
+.auth-socials__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 1;
+}
+
+.auth-socails__logo {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+}
+
+.auth-socials__name {}
+
+.auth-socials__name--zalo {
+    color: #2D3B55;
+}
+
+.auth-socials__name--face {
+    color: #DDDFE2;
+}
+
+.auth-form__group-input {}
+
+.auth-btn--regis {
+    background-color: #F47D59;
+}
+
+.auth-btn--login {
+    background-color: #6EBECD;
+}
+
+.auth-socials__btn--zalo {
+    background-color: #DDDFE2;
+
+}
+
+.auth-socials__btn--face {
+    background-color: #2D3B55;
+}
+
+@keyframes transOpacity {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0.5;
+    }
+
+}

@@ -1,0 +1,96 @@
+.boxHot {
+    background-color: #EEF8F9;
+    width: 100%;
+    display: flex;
+    padding-top: 12px;
+    margin-top: 8px;
+}
+
+.boxHot:hover .boxHot-logo {
+    display: block;
+}
+
+.boxHot+.boxHot {
+    border-top: 1px solid #E0E0E0;
+}
+
+.boxHot-photo {
+    height: 60px;
+    flex-basis: 60px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+
+}
+
+.boxHot-title {
+    font-size: 19px;
+    font-weight: 600;
+    width: 100%;
+}
+
+.boxHot-title:hover {
+    cursor: pointer;
+    color: #2FA1B3;
+}
+
+.boxHot-exten--involve:hover {
+    cursor: pointer;
+    color: #2FA1B3;
+}
+
+.boxHot-exten {
+    display: flex;
+    align-items: center;
+}
+
+.boxHot-exten--brand {
+    height: 16px;
+    margin-right: 10px;
+    margin-right: 10px;
+}
+
+.boxHot-exten--brand:hover {
+    cursor: pointer;
+}
+
+.boxHot-exten--time {
+    font-size: 16px;
+    color: #ADB5BD;
+    margin-right: 10px;
+}
+
+.boxHot-exten--involve {
+    font-size: 16px;
+    color: #ADB5BD;
+    margin-right: 10px;
+}
+
+.boxHot-logo {
+    height: 16px;
+    -webkit-filter: grayscale(100%);
+    display: none;
+}
+
+.boxHot-logo:hover {
+    -webkit-filter: none;
+    cursor: pointer;
+}
+
+.hot-photo {
+    border-radius: 5px;
+    width: 60px;
+    height: 60px;
+}
+
+.hot-photo:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+}
+
+.boxHot-left {
+    margin-left: 10px;
+    flex: 1;
+}
