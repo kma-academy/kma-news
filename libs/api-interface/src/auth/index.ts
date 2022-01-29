@@ -27,7 +27,7 @@ export const logout = () => {
     withCredentials: true,
   }) as Promise<LogoutResponse>;
 };
-
+export type ProfileResponse = UserWithoutPassword;
 export const getProfile = () => {
-  return client.get('/auth/profile') as Promise<UserWithoutPassword>;
+  return client.get('/auth/profile') as Promise<ProfileResponse>;
 };

@@ -12,9 +12,9 @@ export const getRecentPost = (params: RecentPostParameter) => {
   return client.request({
     url: '/posts/',
     params,
-  }) as Promise<RecentPostParameter>;
+  }) as Promise<RecentPostResponse>;
 };
-
+export type PostWithDetailResponse = PostWithDetail;
 export const getPostDetail = (id: number) => {
   return client.get(`/posts/${id}`) as Promise<PostWithDetail>;
 };

@@ -1,25 +1,29 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { RootState } from '@/app/store'
-import { getAllPosts, Types } from 'shared-api'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { RootState } from '@/app/store';
+import {
+  getRecentPost,
+  RecentPostResponse,
+  RecentPostParameter,
+} from '@kma-news/api-interface';
+import { LoadingState } from '@kma-news/api-interface';
 
 interface HomeState {
-  data: Types.APIResponse.GetAllPosts
-  loading: 'idle' | 'pending' | 'done' | 'error'
-  message?: string
+  data: RecentPostResponse;
+  loading: LoadingState;
+  message?: string;
 }
 
 const initialState: HomeState = {
   data: [],
   loading: 'idle',
-}
+};
 
 export const fetchNewFeedAction = createAsyncThunk(
   'home/newFeed',
-  async (params: Types.APIParameter.GetAllPosts, ThunkApi) => {
-    const data = await getAllPosts(params)
-    return data
+  (params: RecentPostParameter, ThunkApi) => {
+    return getRecentPost(params);
   }
-)
+);
 
 export const homeSlice = createSlice({
   name: 'home',
@@ -28,20 +32,20 @@ export const homeSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchNewFeedAction.pending, (state) => {
-        state.loading = 'pending'
+        state.loading = 'pending';
       })
       .addCase(fetchNewFeedAction.fulfilled, (state, action) => {
-        state.data = action.payload
-        state.loading = 'done'
+        state.data = action.payload;
+        state.loading = 'done';
       })
       .addCase(fetchNewFeedAction.rejected, (state, action) => {
-        state.loading = 'error'
-        state.message = action.error.message
-      })
+        state.loading = 'error';
+        state.message = action.error.message;
+      });
   },
-})
-export const selectData = (state: RootState) => state.home.data
-export const selectLoading = (state: RootState) => state.home.loading
-export const selectError = (state: RootState) => state.home.message
+});
+export const selectData = (state: RootState) => state.home.data;
+export const selectLoading = (state: RootState) => state.home.loading;
+export const selectError = (state: RootState) => state.home.message;
 
-export default homeSlice.reducer
+export default homeSlice.reducer;

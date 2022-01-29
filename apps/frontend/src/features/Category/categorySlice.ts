@@ -1,22 +1,24 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { LoadingState } from 'shared-types'
-import { Types, getTreeCategories } from 'shared-api'
-import { RootState } from '@/app/store'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { LoadingState, ListCategory } from '@kma-news/api-interface';
+import { RootState } from '@/app/store';
 
-export const getTreeAction = createAsyncThunk('category/getTree', async (_, thunkAPI) => {
-  return getTreeCategories()
-})
+export const getTreeAction = createAsyncThunk(
+  'category/getTree',
+  async (_, thunkAPI) => {
+    return Promise.resolve([]);
+  }
+);
 
 interface CategoryState {
-  data: Types.APIResponse.GetTreeCategories
-  loading: LoadingState
-  message?: string
+  data: ListCategory[];
+  loading: LoadingState;
+  message?: string;
 }
 
 const initialState: CategoryState = {
   data: [],
   loading: 'idle',
-}
+};
 const categorySlice = createSlice({
   name: 'category',
   initialState,
@@ -24,21 +26,21 @@ const categorySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getTreeAction.pending, (state) => {
-        state.loading = 'pending'
+        state.loading = 'pending';
       })
       .addCase(getTreeAction.fulfilled, (state, action) => {
-        state.loading = 'done'
-        state.data = action.payload
+        state.loading = 'done';
+        state.data = action.payload;
       })
       .addCase(getTreeAction.rejected, (state, action) => {
-        state.loading = 'error'
-        state.message = action.error.message
-      })
+        state.loading = 'error';
+        state.message = action.error.message;
+      });
   },
-})
+});
 
-export const selectData = (state: RootState) => state.category.data
-export const selectLoading = (state: RootState) => state.category.loading
-export const selectMessage = (state: RootState) => state.category.message
+export const selectData = (state: RootState) => state.category.data;
+export const selectLoading = (state: RootState) => state.category.loading;
+export const selectMessage = (state: RootState) => state.category.message;
 
-export default categorySlice.reducer
+export default categorySlice.reducer;
