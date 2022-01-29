@@ -24,6 +24,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/', app, document);
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors({
+    origin: ['http://localhost:4200'],
+    credentials: true,
+  });
   Logger.log(`🚀 App listening in ${port}`);
   await app.listen(port || 3000);
 }
