@@ -38,6 +38,9 @@ export class Post {
   @Column()
   description: string;
 
+  @Column()
+  thumbnailURL: string;
+
   @ManyToOne(() => Publisher)
   publisher: Publisher;
 

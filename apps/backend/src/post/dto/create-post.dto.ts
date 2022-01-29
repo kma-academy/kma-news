@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsArray, IsNumber, IsString, ValidateNested } from 'class-validator';
+import {
+  IsArray,
+  IsNumber,
+  IsString,
+  IsUrl,
+  ValidateNested,
+} from 'class-validator';
 import { ParagraphType } from '../entities/paragraph.entity';
 import { ParagraphDto } from './paragraph.dto';
 
@@ -36,6 +42,12 @@ export class CreatePostDto {
   })
   sourceURL?: string;
 
+  @ApiProperty({
+    example:
+      'https://photo-baomoi.zadn.vn/w300_r3x2/2022_01_29_20_41638526/04ff1aadb9ef50b109fe.jpg',
+  })
+  @IsUrl()
+  thumbnailURL: string;
   @ApiProperty({
     example: [],
   })

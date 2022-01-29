@@ -13,6 +13,7 @@ export interface Post {
   keywords: string[];
   viewCount: number;
   publisher: Publisher;
+  thumbnailURL: string;
   url: string;
 }
 
