@@ -1,11 +1,11 @@
-import React from 'react'
-import { Types } from 'shared-api'
-import PostFeedItem from '../PostFeedItem'
-export interface PostFeedProps extends Types.APIResponse.GetPostsOnTopic {
-  loadMore: () => void
+import React from 'react';
+import { PostByChannelResponse } from '@kma-news/api-interface';
+import PostFeedItem from '../PostFeedItem';
+export interface PostFeedProps extends PostByChannelResponse {
+  loadMore: () => void;
 }
 const PostFeed: React.FC<PostFeedProps> = (props) => {
-  const { name, contents } = props
+  const { name, contents } = props;
   // Scroll to lasted -> loadMore
   return (
     <div className="content">
@@ -18,6 +18,6 @@ const PostFeed: React.FC<PostFeedProps> = (props) => {
         </div>
       </div>
     </div>
-  )
-}
-export default PostFeed
+  );
+};
+export default PostFeed;

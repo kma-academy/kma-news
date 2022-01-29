@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import { BsFlagFill } from 'react-icons/bs'
-import { FaUserInjured, FaUsersSlash } from 'react-icons/fa'
-import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { fetchCovid19Data, selectData } from '@/features/covid19/covid19Slice'
+import React, { useEffect, useState } from 'react';
+import { BsFlagFill } from 'react-icons/bs';
+import { FaUserInjured, FaUsersSlash } from 'react-icons/fa';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { fetchCovid19Data, selectData } from '@/features/covid19/covid19Slice';
 
-const numberFormat = new Intl.NumberFormat('en-EN')
+const numberFormat = new Intl.NumberFormat('en-EN');
 export const Covid19Feed = () => {
-  const dispatch = useAppDispatch()
-  const data = useAppSelector(selectData)
-  const [showFull, setShowFull] = useState(false)
+  const dispatch = useAppDispatch();
+  const data = useAppSelector(selectData);
+  const [showFull, setShowFull] = useState(false);
   useEffect(() => {
-    dispatch(fetchCovid19Data())
-    return () => {}
-  }, [dispatch])
+    dispatch(fetchCovid19Data());
+  }, [dispatch]);
   return (
     <div className="section">
       <div className="news-covid">
@@ -43,20 +42,22 @@ export const Covid19Feed = () => {
                 <td>{numberFormat.format(data?.internal.cases || 0)}</td>
                 <td>{numberFormat.format(data?.internal.death || 0)}</td>
               </tr>
-              {data?.locations.slice(0, showFull ? undefined : 10).map((e,index) => (
-                <tr key={index}>
-                  <td>{e.name}</td>
-                  <td>{numberFormat.format(e.cases || 0)}</td>
-                  <td>{numberFormat.format(e.death || 0)}</td>
-                </tr>
-              ))}
+              {data?.locations
+                .slice(0, showFull ? undefined : 10)
+                .map((e, index) => (
+                  <tr key={index}>
+                    <td>{e.name}</td>
+                    <td>{numberFormat.format(e.cases || 0)}</td>
+                    <td>{numberFormat.format(e.death || 0)}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
           <a
             href="/#"
             onClick={(e) => {
-              e.preventDefault()
-              setShowFull(!showFull)
+              e.preventDefault();
+              setShowFull(!showFull);
             }}
           >
             {showFull ? 'ẨN BỚT' : 'XEM THÊM'}
@@ -64,5 +65,5 @@ export const Covid19Feed = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

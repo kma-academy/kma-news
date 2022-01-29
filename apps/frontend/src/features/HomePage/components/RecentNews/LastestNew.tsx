@@ -1,23 +1,30 @@
-import { defaultThumbnail } from '@/constants/thumnail'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { defaultThumbnail } from '@/constants/thumnail';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export interface LastestNewProps {
-  url: string
-  title: string
-  publishedAt: Date
-  thumbnailUrl: string
-  publisherLogo?: string
-  publisherName?: string
+  url: string;
+  title: string;
+  publishedAt: Date;
+  thumbnailURL: string;
+  publisherLogo?: string;
+  publisherName?: string;
 }
 
 export const LastestNew: React.FC<LastestNewProps> = (props) => {
-  const { url, thumbnailUrl, title, publishedAt, publisherLogo, publisherName } = props
+  const {
+    url,
+    thumbnailURL,
+    title,
+    publishedAt,
+    publisherLogo,
+    publisherName,
+  } = props;
   return (
     <div className="section">
       <Link to={url}>
         <div className="img-top">
-          <img src={thumbnailUrl || defaultThumbnail} alt="" />
+          <img src={thumbnailURL || defaultThumbnail} alt="" />
         </div>
       </Link>
       <div className="description-top">
@@ -28,7 +35,10 @@ export const LastestNew: React.FC<LastestNewProps> = (props) => {
           <Link to={url}>
             <img
               className="logo-source"
-              src={publisherLogo || 'https://photo-baomoi.zadn.vn/d59db7f26ab183efdaa0.png'}
+              src={
+                publisherLogo ||
+                'https://photo-baomoi.zadn.vn/d59db7f26ab183efdaa0.png'
+              }
               alt={publisherName}
             />
           </Link>
@@ -36,5 +46,5 @@ export const LastestNew: React.FC<LastestNewProps> = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

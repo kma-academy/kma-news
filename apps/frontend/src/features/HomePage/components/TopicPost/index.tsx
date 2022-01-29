@@ -1,12 +1,10 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Types } from 'shared-api'
-import { TopicPostItem } from './TopicPostItem'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { PostByChannelResponse } from '@kma-news/api-interface';
+import { TopicPostItem } from './TopicPostItem';
 
-export interface TopicPostProps extends Types.APIResponse.GetPostsOnTopic { }
-
-export const TopicPost: React.FC<TopicPostProps> = (props) => {
-  const { name, contents } = props
+export const TopicPost: React.FC<PostByChannelResponse> = (props) => {
+  const { name, contents } = props;
   return (
     <div className="section">
       <div>
@@ -17,8 +15,10 @@ export const TopicPost: React.FC<TopicPostProps> = (props) => {
               key={index}
               url={content.url}
               title={content.title}
-              publishedAt={content.publishedAt ? new Date(content.publishedAt) : new Date()}
-              thumbnailUrl={content.thumbnailUrl}
+              publishedAt={
+                content.publishedAt ? new Date(content.publishedAt) : new Date()
+              }
+              thumbnailURL={content.thumbnailURL}
               publisherLogo={content.publisher.logo}
               publisherName={content.publisher.name}
             />
@@ -29,8 +29,8 @@ export const TopicPost: React.FC<TopicPostProps> = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 // export const NewsHorizontal: React.FC = () => {
 //     return (

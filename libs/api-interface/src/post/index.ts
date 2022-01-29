@@ -1,6 +1,7 @@
 import client from '../axiosClient';
 import { Post, PostWithDetail } from './post.interface';
 
+export type PostResponse = Post;
 export interface RecentPostParameter {
   page?: number;
   limit?: number;

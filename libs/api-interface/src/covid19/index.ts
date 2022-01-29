@@ -1,9 +1,27 @@
 import client from 'axios';
-export const COVID19_GENERAL_API =
-  'https://static.pipezero.com/covid/data.json';
+export const COVID19_API = 'https://static.pipezero.com/covid/data.json';
+
+type LocationField =
+  | 'cases'
+  | 'death'
+  | 'treating'
+  | 'recovered'
+  | 'casesToday'
+  | 'deathToday'
+  | 'recoveredToday'
+  | 'treatingToday';
+
+type LocationData = Record<LocationField, number>;
+
+type LocationReport = LocationData & Record<'name', string>;
+export interface Covid19Response {
+  locations: LocationReport[];
+  internal: LocationData;
+  world: LocationData;
+}
 
 export const fetchCovid19General = async () => {
-  const { data } = await client.get(COVID19_GENERAL_API);
+  const { data } = await client.get(COVID19_API);
   const { locations, total, today } = data;
   return {
     locations,
@@ -27,7 +45,5 @@ export const fetchCovid19General = async () => {
       treating: total.world.treating,
       treatingToday: today.world.treating,
     },
-  } as const;
+  } as Covid19Response;
 };
-
-export type Covid19Response = Awaited<ReturnType<typeof fetchCovid19General>>;

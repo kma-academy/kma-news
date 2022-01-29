@@ -1,39 +1,45 @@
-import React, { useEffect } from 'react'
-import { AiOutlineUser, AiOutlineMenu } from 'react-icons/ai'
-import { BsPhone, BsSearch } from 'react-icons/bs'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import Login from '@/features/Auth/components/Login'
-import { AuthDropDown } from '@/features/Auth/components/AuthDropDown/'
-import { selectLoggedIn, selectProfile } from '@/features/Auth/authSlice'
-import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { useClickOutside } from '@/hooks/useClickOutside'
-import { HeaderMenu } from './HeaderMenu'
-import { HeaderTag } from './HeaderTag'
-import { getOptionAction } from '@/features/Option/optionSlice'
-import { HeaderCategory } from './HeaderCategory'
+import React, { useEffect } from 'react';
+import { AiOutlineUser, AiOutlineMenu } from 'react-icons/ai';
+import { BsPhone, BsSearch } from 'react-icons/bs';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Login from '@/features/Auth/components/Login';
+import { AuthDropDown } from '@/features/Auth/components/AuthDropDown/';
+import { selectLoggedIn, selectProfile } from '@/features/Auth/authSlice';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { useClickOutside } from '@/hooks/useClickOutside';
+import { HeaderMenu } from './HeaderMenu';
+import { HeaderTag } from './HeaderTag';
+import {
+  getHeaderCategoriesAction,
+  getHeaderMenusAction,
+  getHeaderTagsAction,
+} from '@/features/Option/optionSlice';
+import { HeaderCategory } from './HeaderCategory';
 
 const Header = () => {
-  const dispatch = useAppDispatch()
-  const loggedIn = useAppSelector(selectLoggedIn)
-  const profile = useAppSelector(selectProfile)
-  const [refUser, userMenuVisible, toggleUserMenu] = useClickOutside<HTMLDivElement>(false)
-  const [refDropMenu, activeDropMenu, setActiveDropMenu] = useClickOutside<HTMLDivElement>(false)
-  const [loginVisible, toggleLogin] = useState(false)
+  const dispatch = useAppDispatch();
+  const loggedIn = useAppSelector(selectLoggedIn);
+  const profile = useAppSelector(selectProfile);
+  const [refUser, userMenuVisible, toggleUserMenu] =
+    useClickOutside<HTMLDivElement>(false);
+  const [refDropMenu, activeDropMenu, setActiveDropMenu] =
+    useClickOutside<HTMLDivElement>(false);
+  const [loginVisible, toggleLogin] = useState(false);
 
   useEffect(() => {
     // Nếu đăng nhập thành công
-    if (!!loggedIn) {
-      toggleLogin(false)
-      toggleUserMenu(false)
+    if (loggedIn) {
+      toggleLogin(false);
+      toggleUserMenu(false);
     }
-  }, [loggedIn, toggleLogin, toggleUserMenu])
+  }, [loggedIn, toggleLogin, toggleUserMenu]);
   useEffect(() => {
-    dispatch(getOptionAction('header.menu'))
-    dispatch(getOptionAction('header.tag'))
-    dispatch(getOptionAction('header.category'))
+    dispatch(getHeaderMenusAction());
+    dispatch(getHeaderCategoriesAction());
+    dispatch(getHeaderTagsAction());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
   // const domNode = useClickOutside(() => {
   //   toggleUserMenu(false)
   // })
@@ -46,7 +52,11 @@ const Header = () => {
               <div className="logo-main">
                 <span>
                   BAOM
-                  <img src="https://baomoi-static.zadn.vn/favicons/favicon-32x32.png" alt="logo" />I
+                  <img
+                    src="https://baomoi-static.zadn.vn/favicons/favicon-32x32.png"
+                    alt="logo"
+                  />
+                  I
                 </span>
               </div>
             </Link>
@@ -57,19 +67,18 @@ const Header = () => {
             <div className="icon-search">
               <BsSearch />
             </div>
-            <div
-              className="result-search"
-              style={false ? { display: 'block' } : { display: 'none' }}
-            >
+            <div className="result-search" style={{ display: 'none' }}>
               <div className="list-result-search">
                 <Link to="">
                   <div className="item-result-search">
-                    Hội thảo: Đột phá hạ tầng phát triển kinh tế vùng TP.Hồ Chí Minh - Đồng Nai - Bà
-                    Rịa Vũng Tàu -
+                    Hội thảo: Đột phá hạ tầng phát triển kinh tế vùng TP.Hồ Chí
+                    Minh - Đồng Nai - Bà Rịa Vũng Tàu -
                   </div>
                 </Link>
                 <Link to="">
-                  <div className="item-result-search">xem các kết quả của 'key'</div>
+                  <div className="item-result-search">
+                    xem các kết quả của 'key'
+                  </div>
                 </Link>
               </div>
             </div>
@@ -78,7 +87,10 @@ const Header = () => {
         <div className="header-top-right">
           {profile ? (
             <div ref={refUser}>
-              <div className="header-top__user" onClick={() => toggleUserMenu(!userMenuVisible)}>
+              <div
+                className="header-top__user"
+                onClick={() => toggleUserMenu(!userMenuVisible)}
+              >
                 <img
                   src={profile.avatarURL || 'https://i.pravatar.cc/800'}
                   alt=""
@@ -87,12 +99,18 @@ const Header = () => {
                 <div className="header-top__user-name">{profile.name}</div>
               </div>
               <div>
-                <AuthDropDown visible={userMenuVisible} toggleVisible={toggleUserMenu} />
+                <AuthDropDown
+                  visible={userMenuVisible}
+                  toggleVisible={toggleUserMenu}
+                />
               </div>
             </div>
           ) : (
             <div>
-              <div className="logo-user" onClick={() => toggleLogin(!loginVisible)}>
+              <div
+                className="logo-user"
+                onClick={() => toggleLogin(!loginVisible)}
+              >
                 <AiOutlineUser size="25px" />
               </div>
               <Login visible={loginVisible} toggleVisible={toggleLogin} />
@@ -122,14 +140,16 @@ const Header = () => {
         <div ref={refDropMenu}>
           <div
             className="drop-menu"
-            style={activeDropMenu ? { visibility: 'visible', opacity: '1' } : {}}
+            style={
+              activeDropMenu ? { visibility: 'visible', opacity: '1' } : {}
+            }
           >
             <HeaderCategory />
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

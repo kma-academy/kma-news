@@ -1,13 +1,13 @@
-import { Types } from '@/../../shared-api/dist'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { PostResponse, RecentPostResponse } from '@kma-news/api-interface';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export interface NewDataSource {
-  data: Types.APIResponse.GetAllPosts
+  data: RecentPostResponse;
 }
 
 export interface ItemNewsProps {
-  data: any
+  data: PostResponse;
 }
 
 export const ItemNews: React.FC<ItemNewsProps> = ({ children, data }) => {
@@ -17,7 +17,7 @@ export const ItemNews: React.FC<ItemNewsProps> = ({ children, data }) => {
         <Link to="/">
           <img
             src={
-              data.thumbnailUrl ||
+              data.thumbnailURL ||
               'https://baomoi-static.zadn.vn/web/styles/img/logo-baomoi-gray.png'
             }
             alt=""
@@ -43,8 +43,8 @@ export const ItemNews: React.FC<ItemNewsProps> = ({ children, data }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const ListNewsRight: React.FC<NewDataSource> = ({ data }) => {
   return (
@@ -55,5 +55,5 @@ export const ListNewsRight: React.FC<NewDataSource> = ({ data }) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};

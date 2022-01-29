@@ -1,49 +1,61 @@
-import React, { useMemo, useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import BoxVideo from '@/components/BoxVideo'
-import BoxHot from '@/components/BoxHot'
-import BoxNews from '@/components/BoxNews'
-import { IoIosArrowForward } from 'react-icons/io'
-import { AiOutlineStar } from 'react-icons/ai'
-import { BiLike } from 'react-icons/bi'
-import { VscTag } from 'react-icons/vsc'
-import { GoReport } from 'react-icons/go'
-import { HiOutlineDocumentDuplicate, HiOutlineKey } from 'react-icons/hi'
-import { selectData, getPostAction } from '../postSlice'
-import { useParams } from 'react-router-dom'
-import { FullScreenImage } from '../components/FullScreenImage'
-import { IParagraphImage } from 'shared-types'
+import React, { useMemo, useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import BoxVideo from '@/components/BoxVideo';
+import BoxHot from '@/components/BoxHot';
+import BoxNews from '@/components/BoxNews';
+import { IoIosArrowForward } from 'react-icons/io';
+import { AiOutlineStar } from 'react-icons/ai';
+import { BiLike } from 'react-icons/bi';
+import { VscTag } from 'react-icons/vsc';
+import { GoReport } from 'react-icons/go';
+import { HiOutlineDocumentDuplicate, HiOutlineKey } from 'react-icons/hi';
+import { useParams, useNavigate } from 'react-router-dom';
+import { FullScreenImage } from '../components/FullScreenImage';
+import { selectData, getPostAction, selectLoading } from '../postSlice';
 // import '../components/HotTopic/'
 interface ImageDetail {
-  id: number
-  url: string
-  description?: string
+  id: number;
+  url: string;
+  description?: string;
 }
 
-const ReadingPage = () => {
-  const { slug } = useParams<'slug'>()
-  const [visible, toggleVisible] = useState(false)
-  const dispatch = useAppDispatch()
-  const data = useAppSelector(selectData)
+const ReadingPage: React.FC = () => {
+  const { slug, id } = useParams<'slug' | 'id'>();
+  const [visible, toggleVisible] = useState(false);
+  const loading = useAppSelector(selectLoading);
+  const dispatch = useAppDispatch();
+  const data = useAppSelector(selectData);
+  const navigate = useNavigate();
   useEffect(() => {
-    if (slug) dispatch(getPostAction(slug))
-  }, [dispatch, slug])
+    if (id) dispatch(getPostAction(+id));
+  }, [dispatch, id]);
+  useEffect(() => {
+    if (loading === 'done' && data?.slug !== slug) {
+      navigate('/');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
+
   const allImages = useMemo(() => {
     return data?.paragraphs
       .filter((e) => e.type === 'image')
       .map((e, i) => {
-        const paragraph = e as IParagraphImage
         return {
           id: i + 1,
-          url: paragraph.imageUrl[0],
-          description: paragraph.description,
-        }
-      }) as ImageDetail[]
-  }, [data])
+          url: e.imageURL[0],
+          description: e.content,
+        };
+      }) as ImageDetail[];
+  }, [data]);
+
   return (
     <>
       {visible && allImages.length > 0 && (
-        <FullScreenImage arrImg={allImages} visible={visible} toggleVisible={toggleVisible} />
+        <FullScreenImage
+          arrImg={allImages}
+          visible={visible}
+          toggleVisible={toggleVisible}
+        />
       )}
       <div className="container container--positions">
         <div className="col-9 container-main ">
@@ -82,16 +94,23 @@ const ReadingPage = () => {
                   <div className="page-desc">{data?.description}</div>
                   {data?.paragraphs.map((paragraph) => {
                     if (paragraph.type === 'text')
-                      return <p className="page-word">{paragraph.content}</p>
+                      return <p className="page-word">{paragraph.content}</p>;
 
                     return (
                       <>
-                        <p className="page-img" onClick={() => toggleVisible(true)}>
-                          <img src={paragraph.imageUrl[0]} alt="" className="page-img-content" />
+                        <p
+                          className="page-img"
+                          onClick={() => toggleVisible(true)}
+                        >
+                          <img
+                            src={paragraph.imageURL[0]}
+                            alt=""
+                            className="page-img-content"
+                          />
                         </p>
-                        <p className="page-caption">{paragraph.description}</p>
+                        <p className="page-caption">{paragraph.content}</p>
                       </>
-                    )
+                    );
                   })}
                   <p className="page-author">{data?.owner || 'Sưu tầm'} </p>
                 </div>
@@ -139,7 +158,10 @@ const ReadingPage = () => {
                 </div>
               </div>
               <p className="page-source">
-                Nguồn <span className="page-source-name">{data?.publisher?.name}</span>
+                Nguồn{' '}
+                <span className="page-source-name">
+                  {data?.publisher?.name}
+                </span>
                 {': '}
                 <span className="page-source-link">{data?.sourceURL}</span>
               </p>
@@ -205,6 +227,6 @@ const ReadingPage = () => {
         </div>
       </div>
     </>
-  )
-}
-export default ReadingPage
+  );
+};
+export default ReadingPage;

@@ -1,23 +1,30 @@
-import { defaultThumbnail } from '@/constants/thumnail'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { defaultThumbnail } from '@/constants/thumnail';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export interface RecentNewsItemProps {
-  url: string
-  title: string
-  publishedAt: Date
-  thumbnailUrl: string
-  publisherLogo?: string
-  publisherName?: string
+  url: string;
+  title: string;
+  publishedAt: Date;
+  thumbnailURL: string;
+  publisherLogo?: string;
+  publisherName?: string;
 }
 
 export const RecentNewsItem: React.FC<RecentNewsItemProps> = (props) => {
-  const { url, thumbnailUrl, title, publishedAt, publisherLogo, publisherName } = props
+  const {
+    url,
+    thumbnailURL,
+    title,
+    publishedAt,
+    publisherLogo,
+    publisherName,
+  } = props;
   return (
     <div className="col-4 item-news">
       <div className="img-item-news">
         <Link to={url}>
-          <img src={thumbnailUrl || defaultThumbnail} alt={title} />
+          <img src={thumbnailURL || defaultThumbnail} alt={title} />
         </Link>
       </div>
 
@@ -29,7 +36,10 @@ export const RecentNewsItem: React.FC<RecentNewsItemProps> = (props) => {
           <Link to={url}>
             <img
               className="logo-source"
-              src={publisherLogo || 'https://photo-baomoi.zadn.vn/6eede58338c0d19e88d1.png'}
+              src={
+                publisherLogo ||
+                'https://photo-baomoi.zadn.vn/6eede58338c0d19e88d1.png'
+              }
               alt={publisherName || 'Báo mới'}
             />
           </Link>
@@ -37,5 +47,5 @@ export const RecentNewsItem: React.FC<RecentNewsItemProps> = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

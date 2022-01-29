@@ -1,21 +1,28 @@
-import { defaultThumbnail } from '@/constants/thumnail'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { defaultThumbnail } from '@/constants/thumnail';
+import React from 'react';
+import { Link } from 'react-router-dom';
 export interface TopicPostItemProps {
-  url: string
-  title: string
-  publishedAt: Date
-  thumbnailUrl: string
-  publisherLogo?: string
-  publisherName?: string
+  url: string;
+  title: string;
+  publishedAt: Date;
+  thumbnailURL: string;
+  publisherLogo?: string;
+  publisherName?: string;
 }
 export const TopicPostItem: React.FC<TopicPostItemProps> = (props) => {
-  const { url, title, publishedAt, publisherLogo, publisherName, thumbnailUrl } = props
+  const {
+    url,
+    title,
+    publishedAt,
+    publisherLogo,
+    publisherName,
+    thumbnailURL,
+  } = props;
   return (
     <div className="item-news-navbar">
       <div className="img-news-navbar">
         <Link to={url}>
-          <img src={thumbnailUrl || defaultThumbnail} alt="" />
+          <img src={thumbnailURL || defaultThumbnail} alt="" />
         </Link>
       </div>
 
@@ -28,7 +35,8 @@ export const TopicPostItem: React.FC<TopicPostItemProps> = (props) => {
             <img
               className="logo-source"
               src={
-                publisherLogo || 'https://baomoi-static.zadn.vn/web/styles/img/logo-baomoi-gray.png'
+                publisherLogo ||
+                'https://baomoi-static.zadn.vn/web/styles/img/logo-baomoi-gray.png'
               }
               alt={publisherName || 'Báo mới'}
             />
@@ -37,5 +45,5 @@ export const TopicPostItem: React.FC<TopicPostItemProps> = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

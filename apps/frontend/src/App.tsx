@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import './gird.css';
+import './grid.css';
 import './index.css';
 import { RootRouter } from './routes/Root';
 function App() {
