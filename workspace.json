@@ -3,6 +3,7 @@
   "projects": {
     "api-interface": "libs/api-interface",
     "backend": "apps/backend",
+    "crawler": "apps/crawler",
     "frontend": "apps/frontend",
     "frontend-e2e": "apps/frontend-e2e"
   }

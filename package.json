@@ -9,6 +9,7 @@
   },
   "private": true,
   "dependencies": {
+    "@nestjs/bull": "^0.4.2",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^1.1.6",
     "@nestjs/core": "^8.0.0",
@@ -20,6 +21,7 @@
     "@reduxjs/toolkit": "^1.7.1",
     "axios": "^0.25.0",
     "bcrypt": "^5.0.1",
+    "bull": "^3.29.3",
     "cache-manager": "^3.6.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
@@ -59,6 +61,7 @@
     "@testing-library/react": "12.1.2",
     "@testing-library/react-hooks": "7.0.2",
     "@types/bcrypt": "^5.0.0",
+    "@types/bull": "^3.15.7",
     "@types/cache-manager": "^3.4.2",
     "@types/jest": "27.0.2",
     "@types/node": "16.11.7",

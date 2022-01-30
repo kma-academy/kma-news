@@ -15,8 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@kma-news/api-interface": ["libs/api-interface/src/index.ts"],
-      "@/*": ["apps/frontend/src/*"]
+      "@/*": ["apps/frontend/src/*"],
+      "@kma-news/api-interface": ["libs/api-interface/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
