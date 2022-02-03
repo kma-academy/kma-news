@@ -14,6 +14,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
+    "esModuleInterop": true,
     "paths": {
       "@/*": ["apps/frontend/src/*"],
       "@kma-news/api-interface": ["libs/api-interface/src/index.ts"]
