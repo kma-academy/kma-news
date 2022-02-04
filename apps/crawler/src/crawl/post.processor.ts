@@ -1,13 +1,23 @@
 import { OnQueueActive, OnQueueFailed, Process, Processor } from '@nestjs/bull';
-import { Logger } from '@nestjs/common';
+import { Inject, Logger } from '@nestjs/common';
 import { Job } from 'bull';
+import { BaseHandler } from './handler/base.handler';
 
 @Processor('news')
 export class PostProcessor {
   private readonly logger = new Logger(PostProcessor.name);
+
+  constructor(
+    @Inject('VNEXPRESS_HANDLER') private readonly vnexpress: BaseHandler
+  ) {
+    console.log(vnexpress.getNewDetail);
+  }
+
   @Process('vnexpress')
-  handleVNExpress(job: Job<string>) {
-    // this.logger.log('');
+  async handleVNExpress(job: Job<string>) {
+    //
+    const post = await this.vnexpress.getNewDetail(job.data);
+    this.logger.log(JSON.stringify(post));
   }
 
   @OnQueueActive()

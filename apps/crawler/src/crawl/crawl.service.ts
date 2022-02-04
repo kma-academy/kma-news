@@ -6,12 +6,7 @@ import { Queue } from 'bull';
 @Injectable()
 export class CrawlService {
   private readonly logger = new Logger(CrawlService.name);
-  constructor(
-    @Inject('VNEXPRESS_CRAWLER') private readonly alo: string,
-    @InjectQueue('news') private readonly postQueue: Queue
-  ) {
-    console.log(alo);
-  }
+  constructor(@InjectQueue('news') private readonly postQueue: Queue) {}
 
   @Cron(CronExpression.EVERY_HOUR)
   async cleanTask() {
