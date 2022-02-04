@@ -23,8 +23,8 @@ export class CronService {
     });
   }
 
-  @Cron(CronExpression.EVERY_2_HOURS)
-  async emptyTask() {
+  @Cron(CronExpression.EVERY_30_MINUTES)
+  async cleanTask() {
     this.logger.log('Clean lastest news queue');
     const preCount = await this.lastestQueue.getJobCounts();
     this.logger.debug(

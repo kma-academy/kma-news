@@ -22,6 +22,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           // Store-specific configuration:
           host: configService.get('REDIS_HOST') || 'localhost',
           port: configService.get('REDIS_PORT') || 6379,
+          ttl: 0,
         };
       },
       inject: [ConfigService],

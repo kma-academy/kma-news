@@ -6,7 +6,7 @@ import { Job } from 'bull';
 export class PostProcessor {
   private readonly logger = new Logger(PostProcessor.name);
   @Process('vnexpress')
-  handleVNExpress() {
+  handleVNExpress(job: Job<string>) {
     // this.logger.log('');
   }
 

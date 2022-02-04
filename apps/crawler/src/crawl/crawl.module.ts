@@ -7,6 +7,10 @@ import { PostProcessor } from './post.processor';
   imports: [
     BullModule.registerQueue({
       name: 'news',
+      limiter: {
+        duration: 1000,
+        max: 1,
+      },
     }),
   ],
   providers: [
