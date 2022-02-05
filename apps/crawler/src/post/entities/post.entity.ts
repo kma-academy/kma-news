@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { Category } from '../../category/entities/category.entity';
 import { Publisher } from '../../publisher/entities/publisher.entity';
+import { User } from '../../user/entities/user.entity';
 import { Paragraph } from './paragraph.entity';
 
 export enum PostStatus {
@@ -46,7 +47,8 @@ export class Post {
   @Column()
   owner: string;
 
-  writterId: number;
+  @ManyToOne(() => User)
+  writter: User;
 
   @Column({ type: 'enum', enum: PostStatus, default: PostStatus.PENDING })
   status: PostStatus;

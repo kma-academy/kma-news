@@ -12,6 +12,8 @@ import { Repository } from 'typeorm';
 import { Post } from '../post/entities/post.entity';
 import { ParagraphService } from '../post/paragraph.service';
 import { PublisherService } from '../publisher/publisher.service';
+import { UserRole } from '../user/entities/user.entity';
+import { UserService } from '../user/user.service';
 import { BaseHandler } from './handler/base.handler';
 
 @Processor('news')
@@ -25,6 +27,7 @@ export class PostProcessor {
     private readonly postRepository: Repository<Post>,
     private readonly paragraphService: ParagraphService,
     private readonly publisherService: PublisherService,
+    private readonly userService: UserService,
     @InjectQueue('add_category_to_post')
     private readonly categoryQueue: Queue
   ) {}
@@ -37,11 +40,13 @@ export class PostProcessor {
     const { categories, paragraphs, publisherHostname, ...data } = post;
     const paragraphData = await this.paragraphService.createBatch(paragraphs);
     const publisher = await this.publisherService.findOne(publisherHostname);
+    const admin = await this.userService.findOneByRole(UserRole.ADMIN);
     const postData = await this.postRepository.save({
       ...data,
       paragraphs: paragraphData,
       publisher,
       categories: [],
+      writter: admin,
     });
     this.categoryQueue.add('add_to_post', {
       postId: postData.id,

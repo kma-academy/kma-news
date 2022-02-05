@@ -13,11 +13,11 @@ import { Publisher } from './entities/publisher.entity';
 export class PublisherService {
   constructor(
     @InjectRepository(Publisher)
-    private readonly publisherRepository: Repository<Publisher>,
+    private readonly publisherRepository: Repository<Publisher>
   ) {}
   async create(createPublisherDto: CreatePublisherDto) {
     const publisher = await this.publisherRepository.findOne(
-      createPublisherDto.hostname,
+      createPublisherDto.hostname
     );
     if (publisher) throw new BadRequestException('Dupicate publisher hostname');
     const data = await this.publisherRepository.save(createPublisherDto);
@@ -40,6 +40,7 @@ export class PublisherService {
     return this.publisherRepository.create(data);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   remove(hostname: string) {
     throw new NotAcceptableException();
   }

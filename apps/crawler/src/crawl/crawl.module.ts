@@ -5,6 +5,7 @@ import { PostProcessor } from './post.processor';
 import { HandlerModule } from './handler.module';
 import { ParagraphModule } from '../post/paragraph.module';
 import { PublisherModule } from '../publisher/publisher.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { PublisherModule } from '../publisher/publisher.module';
     HandlerModule,
     ParagraphModule,
     PublisherModule,
+    UserModule,
   ],
   providers: [PostProcessor, CrawlService],
 })
