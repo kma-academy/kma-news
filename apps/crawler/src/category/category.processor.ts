@@ -1,4 +1,10 @@
-import { OnQueueActive, OnQueueFailed, Process, Processor } from '@nestjs/bull';
+import {
+  OnQueueActive,
+  OnQueueCompleted,
+  OnQueueFailed,
+  Process,
+  Processor,
+} from '@nestjs/bull';
 import { Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Job } from 'bull';
@@ -36,5 +42,10 @@ export class CategoryProcessor {
   @OnQueueFailed()
   onFailed(job: Job, error: Error) {
     this.logger.debug(`Handle job ${job.name} error: ${error.message}`);
+  }
+  @OnQueueCompleted()
+  onCompleted(job: Job<AddToPostJob>) {
+    this.logger.debug(`Add category to post ${job?.data?.postId} success`);
+    job.remove();
   }
 }

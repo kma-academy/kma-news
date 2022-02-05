@@ -9,6 +9,7 @@ import { Inject, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Job, Queue } from 'bull';
 import { Repository } from 'typeorm';
+import { SlugHelper } from '../common/helpers/slug.helper';
 import { Post } from '../post/entities/post.entity';
 import { ParagraphService } from '../post/paragraph.service';
 import { PublisherService } from '../publisher/publisher.service';
@@ -29,7 +30,8 @@ export class PostProcessor {
     private readonly publisherService: PublisherService,
     private readonly userService: UserService,
     @InjectQueue('add_category_to_post')
-    private readonly categoryQueue: Queue
+    private readonly categoryQueue: Queue,
+    private readonly slugHelper: SlugHelper
   ) {}
 
   @Process('vnexpress')
@@ -47,6 +49,7 @@ export class PostProcessor {
       publisher,
       categories: [],
       writter: admin,
+      slug: this.slugHelper.slugify(data.title),
     });
     this.categoryQueue.add('add_to_post', {
       postId: postData.id,
