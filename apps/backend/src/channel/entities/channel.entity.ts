@@ -45,7 +45,7 @@ export class Channel {
 
   @Expose()
   get url(): string {
-    return '/kenh-tin/' + this.id;
+    return '/chu-de/' + this.id;
   }
 
   constructor(paratial: Partial<Channel>) {

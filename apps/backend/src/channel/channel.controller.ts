@@ -15,6 +15,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CurrentUserId } from '../common/decorators/current-user.decorator';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { ChannelService } from './channel.service';
+import { ChannelContentDto } from './dto/channel-content.dto';
 import { CreateChannelDto } from './dto/create-channel.dto';
 import { UpdateChannelDto } from './dto/update-channel.dto';
 
@@ -49,6 +50,14 @@ export class ChannelController {
   @UseGuards(JwtAuthGuard)
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.channelService.findOne(id);
+  }
+
+  @Get(':id/content')
+  findContentByChannel(
+    @Param('id', ParseIntPipe) id: number,
+    @Param() dto: ChannelContentDto
+  ) {
+    return this.channelService.findContentByChannel(id, dto.page, dto.limit);
   }
 
   @Patch(':id')

@@ -54,6 +54,11 @@ export class ChannelService {
     return channelContent;
   }
 
+  async findContentByChannel(id: number, page: number, limit: number) {
+    const channel = await this.channelRepository.findOne(id);
+    if (!channel) throw new NotFoundException('Channel not found');
+    return await this.contentByChannel(channel, page, limit);
+  }
   async contentByChannel(channel: Channel, page: number, limit: number) {
     const query = this.postRepository.createQueryBuilder('post');
     query.where('status =:status', { status: PostStatus.PUBLISHED });
