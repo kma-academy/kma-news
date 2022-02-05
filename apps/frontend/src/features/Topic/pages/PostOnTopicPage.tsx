@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PostFeed from '@/features/Post/components/PostFeed';
@@ -24,6 +25,7 @@ const PostOnTopic: React.FC = () => {
           <PostFeed
             name={topicContents.name}
             contents={topicContents.contents}
+            url={topicContents.url}
             loadMore={() => setPage((page) => page + 1)}
           />
         )}

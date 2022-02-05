@@ -1,27 +1,31 @@
-import React from 'react'
-import { Covid19Feed } from '@/features/covid19/components/Covid19Feed'
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
-import { ListNewsRight } from '../components/ListNewsRight'
-import { RiArrowDropDownLine } from 'react-icons/ri'
-import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { fetchNewFeedAction } from '../homeSlice'
-import { useEffect } from 'react'
-import { selectData } from '@/features/HomePage/homeSlice'
-import { selectHomeTopics, getHomeTopicsAction } from '@/features/Topic/topicSlice'
-import { LocationNews } from '../components/LocationNews'
-import { PublisherList } from '../components/PublisherList'
-import { TopicPost } from '../components/TopicPost'
-import { RecentNews } from '../components/RecentNews'
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
+import React from 'react';
+import { Covid19Feed } from '@/features/covid19/components/Covid19Feed';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { ListNewsRight } from '../components/ListNewsRight';
+import { RiArrowDropDownLine } from 'react-icons/ri';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { fetchNewFeedAction } from '../homeSlice';
+import { useEffect } from 'react';
+import { selectData } from '@/features/HomePage/homeSlice';
+import {
+  selectHomeTopics,
+  getHomeTopicsAction,
+} from '@/features/Topic/topicSlice';
+import { LocationNews } from '../components/LocationNews';
+import { PublisherList } from '../components/PublisherList';
+import { TopicPost } from '../components/TopicPost';
+import { RecentNews } from '../components/RecentNews';
 const Home = () => {
-  const [activeSelectWeather, setActiveSelectWeather] = useState(false)
-  const dispatch = useAppDispatch()
-  const data = useAppSelector(selectData)
-  const topics = useAppSelector(selectHomeTopics)
+  const [activeSelectWeather, setActiveSelectWeather] = useState(false);
+  const dispatch = useAppDispatch();
+  const data = useAppSelector(selectData);
+  const topics = useAppSelector(selectHomeTopics);
   useEffect(() => {
-    dispatch(fetchNewFeedAction({ limit: 4 }))
-    dispatch(getHomeTopicsAction())
-  }, [dispatch])
+    dispatch(fetchNewFeedAction({ limit: 4 }));
+    dispatch(getHomeTopicsAction());
+  }, [dispatch]);
   return (
     <div className="container">
       {data.length > 0 && (
@@ -30,7 +34,12 @@ const Home = () => {
             <div className="col-8 content-left">
               <RecentNews />
               {topics.map((topic, i) => (
-                <TopicPost name={topic.name} contents={topic.contents} key={`topic-${i}`} />
+                <TopicPost
+                  name={topic.name}
+                  contents={topic.contents}
+                  url={topic.url}
+                  key={`topic-${i}`}
+                />
               ))}
               <div className="btn-group">
                 <div className="btn-prev">
@@ -50,7 +59,10 @@ const Home = () => {
               <div className="section">
                 <div className="HCM">
                   <div className="img-news-HCM">
-                    <img src="https://baomoi-static.zadn.vn/events/banner_hcm_02-min.png" alt="" />
+                    <img
+                      src="https://baomoi-static.zadn.vn/events/banner_hcm_02-min.png"
+                      alt=""
+                    />
                   </div>
                 </div>
               </div>
@@ -74,7 +86,8 @@ const Home = () => {
                       <div className="description-item-news">
                         <Link to="/">
                           <span>
-                            Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ
+                            Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt
+                            tuyến phố cổ
                           </span>
                         </Link>
                         <div className="news-source">
@@ -131,7 +144,8 @@ const Home = () => {
                       <div className="description-item-news">
                         <Link to="/">
                           <span>
-                            Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ
+                            Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt
+                            tuyến phố cổ
                           </span>
                         </Link>
                         <div className="news-source">
@@ -170,7 +184,8 @@ const Home = () => {
                       <div className="description-item-news">
                         <Link to="/">
                           <span>
-                            Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ
+                            Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt
+                            tuyến phố cổ
                           </span>
                         </Link>
                         <div className="news-source">
@@ -219,14 +234,20 @@ const Home = () => {
                       <div className="location-select">
                         <div
                           className="name-select"
-                          onClick={() => setActiveSelectWeather(!activeSelectWeather)}
+                          onClick={() =>
+                            setActiveSelectWeather(!activeSelectWeather)
+                          }
                         >
                           Bển tre
                           <RiArrowDropDownLine />
                         </div>
                         <div
                           className="option-select"
-                          style={!activeSelectWeather ? { display: 'none' } : { display: 'block' }}
+                          style={
+                            !activeSelectWeather
+                              ? { display: 'none' }
+                              : { display: 'block' }
+                          }
                         >
                           <ul className="list-select">
                             <li className="item-select">An Giang</li>
@@ -383,7 +404,8 @@ const Home = () => {
                       <div className="description-item-news">
                         <Link to="/">
                           <span>
-                            Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt tuyến phố cổ
+                            Gần 900 ca F0 mỗi ngày, Hà Nội phong tỏa hàng loạt
+                            tuyến phố cổ
                           </span>
                         </Link>
                         <div className="news-source">
@@ -409,7 +431,7 @@ const Home = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

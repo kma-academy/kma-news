@@ -1,3 +1,4 @@
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { defaultThumbnail } from '@/constants/thumnail';
 import React from 'react';
 import { Link } from 'react-router-dom';

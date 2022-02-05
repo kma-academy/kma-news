@@ -4,7 +4,7 @@ import { PostByChannelResponse } from '@kma-news/api-interface';
 import { TopicPostItem } from './TopicPostItem';
 
 export const TopicPost: React.FC<PostByChannelResponse> = (props) => {
-  const { name, contents } = props;
+  const { name, contents, url } = props;
   return (
     <div className="section">
       <div>
@@ -25,7 +25,7 @@ export const TopicPost: React.FC<PostByChannelResponse> = (props) => {
           ))}
         </div>
         <div className="btn-list-posts">
-          <Link to="">Xem thêm</Link>
+          <Link to={url}>Xem thêm</Link>
         </div>
       </div>
     </div>
