@@ -40,6 +40,11 @@ export class ChannelController {
     return this.channelService.findAll(userId);
   }
 
+  @Get('/homepage')
+  findHomePage() {
+    return this.channelService.findHomePage();
+  }
+
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   findOne(@Param('id', ParseIntPipe) id: number) {

@@ -5,7 +5,9 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Brackets, Repository } from 'typeorm';
+import { Post, PostStatus } from '../post/entities/post.entity';
+import { Publisher } from '../publisher/entities/publisher.entity';
 import { User } from '../user/entities/user.entity';
 import { CreateChannelDto } from './dto/create-channel.dto';
 import { UpdateChannelDto } from './dto/update-channel.dto';
@@ -17,7 +19,9 @@ export class ChannelService {
     @InjectRepository(Channel)
     private readonly channelRepository: Repository<Channel>,
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>
+    private readonly userRepository: Repository<User>,
+    @InjectRepository(Post)
+    private readonly postRepository: Repository<Post>
   ) {}
   async create(userId: number, createChannelDto: CreateChannelDto) {
     const user = await this.userRepository.findOne(userId);
@@ -37,6 +41,71 @@ export class ChannelService {
         },
       },
     });
+  }
+  async findHomePage() {
+    const channels = await this.channelRepository.find({
+      where: {
+        isPublic: true,
+      },
+    });
+    const channelContent = await Promise.all(
+      channels.map((e) => this.contentByChannel(e, 1, 5))
+    );
+    return channelContent;
+  }
+
+  async contentByChannel(channel: Channel, page: number, limit: number) {
+    const query = this.postRepository.createQueryBuilder('post');
+    query.where('status =:status', { status: PostStatus.PUBLISHED });
+    if (channel.keywords.length > 0) {
+      query.andWhere(
+        new Brackets((qb) => {
+          channel.keywords.forEach((keyword, i) => {
+            if (i === 0)
+              qb.where('keywords LIKE :keyword', {
+                keyword: `%${keyword}%`,
+              });
+            else
+              qb.orWhere('keywords LIKE :keyword', {
+                keyword: `%${keyword}%`,
+              });
+          });
+        })
+      );
+    }
+    if (channel.excludedKeywords.length > 0) {
+      query.andWhere(
+        new Brackets((qb) => {
+          channel.excludedKeywords.forEach((keyword, i) => {
+            if (i === 0)
+              qb.where('keywords NOT LIKE :keyword', {
+                keyword: `%${keyword}%`,
+              });
+            else
+              qb.andWhere('keywords NOT LIKE :keyword', {
+                keyword: `%${keyword}%`,
+              });
+          });
+        })
+      );
+    }
+    query.skip((page - 1) * limit);
+    query.take(limit);
+    query.orderBy('post.publishedAt', 'DESC');
+    query.innerJoinAndMapOne(
+      'post.publisher',
+      Publisher,
+      'publisher',
+      'post.publisherHostname = publisher.hostname'
+    );
+    // console.log(query.getSql());
+    const post = await query.getMany();
+
+    return {
+      name: channel.name,
+      url: channel.url,
+      contents: post,
+    };
   }
 
   findOne(id: number) {

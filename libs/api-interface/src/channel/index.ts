@@ -9,13 +9,14 @@ export interface PostByChannelParameter {
 
 export interface PostByChannelResponse {
   name: string;
+  url?: string;
   contents: Post[];
 }
 
 export const getPostByChannel = (data: PostByChannelParameter) => {
   const { topicId, ...params } = data;
   return client.request({
-    url: `/channel/${topicId}/content`,
+    url: `/channels/${topicId}/content`,
     params,
   }) as Promise<PostByChannelResponse>;
 };
@@ -23,5 +24,5 @@ export const getPostByChannel = (data: PostByChannelParameter) => {
 export type HomeTopicResponse = PostByChannelResponse[];
 
 export const getHomeChannel = () => {
-  return client.get('/channel/homepage') as Promise<HomeTopicResponse>;
+  return client.get('/channels/homepage') as Promise<HomeTopicResponse>;
 };
