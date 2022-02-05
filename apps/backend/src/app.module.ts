@@ -7,8 +7,16 @@ import { CategoryModule } from './category/category.module';
 import { OptionModule } from './option/option.module';
 import { PublisherModule } from './publisher/publisher.module';
 import { PostModule } from './post/post.module';
+import { ChannelModule } from './channel/channel.module';
 import databaseConfig from './config/database.config';
 import jwtConfig from './config/jwt.config';
+import { Publisher } from './publisher/entities/publisher.entity';
+import { User } from './user/entities/user.entity';
+import { Category } from './category/entities/category.entity';
+import { Option } from './option/entities/option.entity';
+import { Post } from './post/entities/post.entity';
+import { Paragraph } from './post/entities/paragraph.entity';
+import { Channel } from './channel/entities/channel.entity';
 
 @Module({
   imports: [
@@ -26,8 +34,9 @@ import jwtConfig from './config/jwt.config';
         password: configService.get<string>('database.password'),
         database: configService.get<string>('database.name'),
         synchronize: configService.get<string>('NODE_ENV') !== 'production',
-        entities: ['dist/**/*.entity{.ts,.js}'],
-        autoLoadEntities: true,
+        entities: [User, Category, Publisher, Option, Post, Paragraph, Channel],
+        // entities: ['dist/apps/**/*.entity{.ts,.js}'],
+        // autoLoadEntities: true,
       }),
       inject: [ConfigService],
     }),
@@ -37,6 +46,7 @@ import jwtConfig from './config/jwt.config';
     OptionModule,
     PublisherModule,
     PostModule,
+    ChannelModule,
   ],
   providers: [],
 })

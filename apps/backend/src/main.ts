@@ -19,6 +19,7 @@ async function bootstrap() {
     .addTag('option', 'Option of website')
     .addTag('publisher', 'Source publisher')
     .addTag('post')
+    .addTag('channel', 'Channel of user or system')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

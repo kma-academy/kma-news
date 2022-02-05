@@ -68,4 +68,8 @@ export class PostService {
       .where('id = :id', { id })
       .execute();
   }
+  findEcu() {
+    // this.postRepository.createQueryBuilder()
+    // .innerJoi
+  }
 }
