@@ -1,6 +1,16 @@
-import { OnQueueActive, OnQueueFailed, Process, Processor } from '@nestjs/bull';
+import {
+  InjectQueue,
+  OnQueueActive,
+  OnQueueFailed,
+  Process,
+  Processor,
+} from '@nestjs/bull';
 import { Inject, Logger } from '@nestjs/common';
-import { Job } from 'bull';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Job, Queue } from 'bull';
+import { Repository } from 'typeorm';
+import { Post } from '../post/entities/post.entity';
+import { ParagraphService } from '../post/paragraph.service';
 import { BaseHandler } from './handler/base.handler';
 
 @Processor('news')
@@ -8,16 +18,30 @@ export class PostProcessor {
   private readonly logger = new Logger(PostProcessor.name);
 
   constructor(
-    @Inject('VNEXPRESS_HANDLER') private readonly vnexpress: BaseHandler
-  ) {
-    console.log(vnexpress.getNewDetail);
-  }
+    @Inject('VNEXPRESS_HANDLER')
+    private readonly vnexpress: BaseHandler,
+    @InjectRepository(Post)
+    private readonly postRepository: Repository<Post>,
+    private readonly paragraphService: ParagraphService,
+    @InjectQueue('add_category_to_post')
+    private readonly categoryQueue: Queue
+  ) {}
 
   @Process('vnexpress')
   async handleVNExpress(job: Job<string>) {
     //
     const post = await this.vnexpress.getNewDetail(job.data);
-    this.logger.log(JSON.stringify(post));
+    if (!post) return;
+    const { categories, paragraphs, ...data } = post;
+    const paragraphData = await this.paragraphService.createBatch(paragraphs);
+    const postData = await this.postRepository.save({
+      ...data,
+      paragraphs: paragraphData,
+    });
+    this.categoryQueue.add('add_to_post', {
+      postId: postData.id,
+      categories,
+    });
   }
 
   @OnQueueActive()

@@ -32,8 +32,7 @@ export class LastestProcessor {
       // eslint-disable-next-line no-empty
       const isCrawled = await this.cacheManager.get(`CRAWLED_LINK_${link}`);
       if (isCrawled) return;
-      this.logger.debug(`Crawl link ${link}`);
-      this.postQueue.add('vnexpress', isCrawled);
+      this.postQueue.add('vnexpress', link);
       await this.cacheManager.set(
         `CRAWLED_LINK_${link}`,
         new Date().toISOString()
