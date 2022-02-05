@@ -8,10 +8,11 @@ import { firstValueFrom } from 'rxjs';
 import { OmitType, PartialType } from '@nestjs/swagger';
 import { ParagraphDto } from '../../post/dto/paragraph.dto';
 class PostRaw extends PartialType(
-  OmitType(Post, ['categories', 'paragraphs'])
+  OmitType(Post, ['categories', 'paragraphs', 'publisher'])
 ) {
   categories: string[];
   paragraphs: ParagraphDto[];
+  publisherHostname: string;
 }
 @Injectable()
 export abstract class BaseHandler {

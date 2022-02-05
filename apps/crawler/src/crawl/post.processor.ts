@@ -11,6 +11,7 @@ import { Job, Queue } from 'bull';
 import { Repository } from 'typeorm';
 import { Post } from '../post/entities/post.entity';
 import { ParagraphService } from '../post/paragraph.service';
+import { PublisherService } from '../publisher/publisher.service';
 import { BaseHandler } from './handler/base.handler';
 
 @Processor('news')
@@ -23,6 +24,7 @@ export class PostProcessor {
     @InjectRepository(Post)
     private readonly postRepository: Repository<Post>,
     private readonly paragraphService: ParagraphService,
+    private readonly publisherService: PublisherService,
     @InjectQueue('add_category_to_post')
     private readonly categoryQueue: Queue
   ) {}
@@ -32,11 +34,14 @@ export class PostProcessor {
     //
     const post = await this.vnexpress.getNewDetail(job.data);
     if (!post) return;
-    const { categories, paragraphs, ...data } = post;
+    const { categories, paragraphs, publisherHostname, ...data } = post;
     const paragraphData = await this.paragraphService.createBatch(paragraphs);
+    const publisher = await this.publisherService.findOne(publisherHostname);
     const postData = await this.postRepository.save({
       ...data,
       paragraphs: paragraphData,
+      publisher,
+      categories: [],
     });
     this.categoryQueue.add('add_to_post', {
       postId: postData.id,

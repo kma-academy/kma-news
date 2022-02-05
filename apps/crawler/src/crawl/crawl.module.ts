@@ -4,13 +4,14 @@ import { CrawlService } from './crawl.service';
 import { PostProcessor } from './post.processor';
 import { HandlerModule } from './handler.module';
 import { ParagraphModule } from '../post/paragraph.module';
+import { PublisherModule } from '../publisher/publisher.module';
 
 @Module({
   imports: [
     BullModule.registerQueue({
       name: 'news',
       limiter: {
-        duration: 1000,
+        duration: 5000,
         max: 1,
       },
     }),
@@ -19,6 +20,7 @@ import { ParagraphModule } from '../post/paragraph.module';
     }),
     HandlerModule,
     ParagraphModule,
+    PublisherModule,
   ],
   providers: [PostProcessor, CrawlService],
 })

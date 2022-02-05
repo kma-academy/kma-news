@@ -5,10 +5,12 @@ import {
   Index,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Category } from '../../category/entities/category.entity';
+import { Publisher } from '../../publisher/entities/publisher.entity';
 import { Paragraph } from './paragraph.entity';
 
 export enum PostStatus {
@@ -38,7 +40,8 @@ export class Post {
   @Column()
   thumbnailURL: string;
 
-  publisherHostname: string;
+  @ManyToOne(() => Publisher)
+  publisher: Publisher;
 
   @Column()
   owner: string;

@@ -10,6 +10,7 @@ import jwtConfig from '../config/jwt.config';
 import { Post } from '../post/entities/post.entity';
 import { Paragraph } from '../post/entities/paragraph.entity';
 import { Category } from '../category/entities/category.entity';
+import { Publisher } from '../publisher/entities/publisher.entity';
 
 @Module({
   imports: [
@@ -36,7 +37,7 @@ import { Category } from '../category/entities/category.entity';
         password: configService.get<string>('database.password'),
         database: configService.get<string>('database.name'),
         synchronize: false,
-        entities: [Post, Paragraph, Category],
+        entities: [Post, Paragraph, Category, Publisher],
       }),
       inject: [ConfigService],
     }),
