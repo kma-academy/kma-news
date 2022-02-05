@@ -1,3 +1,4 @@
+import { CategoryModule } from '../category/category.module';
 import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bull';
 import { CronModule } from '../cron/cron.module';
@@ -11,6 +12,7 @@ import { Post } from '../post/entities/post.entity';
 import { Paragraph } from '../post/entities/paragraph.entity';
 import { Category } from '../category/entities/category.entity';
 import { Publisher } from '../publisher/entities/publisher.entity';
+import { User } from '../user/entities/user.entity';
 
 @Module({
   imports: [
@@ -22,6 +24,7 @@ import { Publisher } from '../publisher/entities/publisher.entity';
     }),
     CronModule,
     CrawlModule,
+    CategoryModule,
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -37,7 +40,7 @@ import { Publisher } from '../publisher/entities/publisher.entity';
         password: configService.get<string>('database.password'),
         database: configService.get<string>('database.name'),
         synchronize: false,
-        entities: [Post, Paragraph, Category, Publisher],
+        entities: [Post, Paragraph, Category, Publisher, User],
       }),
       inject: [ConfigService],
     }),

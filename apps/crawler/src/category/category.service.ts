@@ -44,4 +44,21 @@ export class CategoryService {
   remove(id: number) {
     this.categoryRepository.softDelete(id);
   }
+  captalize(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
+
+  async findOrCreate(categoryName: string) {
+    categoryName = this.captalize(categoryName);
+    const existedCategory = await this.categoryRepository.findOne({
+      where: {
+        slug: this.slugHelper.slugify(categoryName),
+      },
+    });
+    if (existedCategory) return existedCategory;
+    return this.create({
+      title: categoryName,
+      description: '',
+    });
+  }
 }
