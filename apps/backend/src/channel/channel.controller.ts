@@ -21,12 +21,12 @@ import { UpdateChannelDto } from './dto/update-channel.dto';
 @Controller('channels')
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiTags('channel')
-@UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 export class ChannelController {
   constructor(private readonly channelService: ChannelService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   create(
     @CurrentUserId() userId: number,
     @Body() createChannelDto: CreateChannelDto
@@ -35,16 +35,19 @@ export class ChannelController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   findAll(@CurrentUserId() userId: number) {
     return this.channelService.findAll(userId);
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.channelService.findOne(id);
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   update(
     @CurrentUserId() userId: number,
     @Param('id', ParseIntPipe) id: number,
@@ -54,6 +57,7 @@ export class ChannelController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   remove(
     @CurrentUserId() userId: number,
     @Param('id', ParseIntPipe) id: number
