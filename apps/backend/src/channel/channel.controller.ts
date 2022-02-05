@@ -40,20 +40,24 @@ export class ChannelController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.channelService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.channelService.findOne(id);
   }
 
   @Patch(':id')
   update(
+    @CurrentUserId() userId: number,
     @Param('id', ParseIntPipe) id: number,
     @Body() updateChannelDto: UpdateChannelDto
   ) {
-    return this.channelService.update(id, updateChannelDto);
+    return this.channelService.update(userId, id, updateChannelDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.channelService.remove(id);
+  remove(
+    @CurrentUserId() userId: number,
+    @Param('id', ParseIntPipe) id: number
+  ) {
+    return this.channelService.remove(userId, id);
   }
 }

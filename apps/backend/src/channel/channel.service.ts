@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../user/entities/user.entity';
@@ -35,14 +40,30 @@ export class ChannelService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} channel`;
+    return this.channelRepository.findOne(id);
   }
 
-  update(id: number, updateChannelDto: UpdateChannelDto) {
-    return `This action updates a #${id} channel`;
+  async update(userId: number, id: number, updateChannelDto: UpdateChannelDto) {
+    const channel = await this.channelRepository.findOne(id, {
+      relations: ['owner'],
+    });
+    if (!channel) throw new NotFoundException('Cannot found channel');
+    if (channel.owner.id != userId)
+      throw new UnauthorizedException('You can only delete your channel');
+    return await this.channelRepository.save({
+      id,
+      ...channel,
+      ...updateChannelDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} channel`;
+  async remove(userId: number, id: number) {
+    const channel = await this.channelRepository.findOne(id, {
+      relations: ['owner'],
+    });
+    if (!channel) throw new NotFoundException('Cannot found channel');
+    if (channel.owner.id != userId)
+      throw new UnauthorizedException('You can only delete your channel');
+    return this.channelRepository.softDelete(channel.id);
   }
 }

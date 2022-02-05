@@ -1,9 +1,19 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import {
+  DocumentBuilder,
+  SwaggerCustomOptions,
+  SwaggerModule,
+} from '@nestjs/swagger';
 import { Logger, ValidationPipe } from '@nestjs/common';
 
+const customOptions: SwaggerCustomOptions = {
+  swaggerOptions: {
+    persistAuthorization: true,
+  },
+  customSiteTitle: 'KMA News API Docs',
+};
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configSerice = app.get(ConfigService);
@@ -23,7 +33,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('/', app, document);
+  SwaggerModule.setup('/', app, document, customOptions);
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors({
     origin: ['http://localhost:4200'],
