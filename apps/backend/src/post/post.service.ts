@@ -46,8 +46,16 @@ export class PostService {
     return await this.postRepository.save(post);
   }
 
-  findAll() {
-    return this.postRepository.find({ relations: ['publisher'] });
+  findAll(page: number, limit: number) {
+    // Pagination
+    return this.postRepository.find({
+      relations: ['publisher'],
+      order: {
+        publishedAt: 'DESC',
+      },
+      skip: (page - 1) * limit,
+      take: limit,
+    });
   }
 
   findOne(id: number) {
@@ -57,7 +65,9 @@ export class PostService {
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+    return `This action updates a #${id} post with ${JSON.stringify(
+      updatePostDto
+    )}`;
   }
 
   remove(id: number) {

@@ -9,11 +9,14 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor,
   ParseIntPipe,
+  Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { RecentPostDto } from './dto/recent-post.dto';
 
 @Controller('posts')
 @ApiTags('post')
@@ -27,8 +30,11 @@ export class PostController {
   }
 
   @Get()
-  findAll() {
-    return this.postService.findAll();
+  findAll(
+    @Query(new ValidationPipe({ transform: true }))
+    findAllDto: RecentPostDto
+  ) {
+    return this.postService.findAll(findAllDto.page, findAllDto.limit);
   }
 
   @Get(':id')
