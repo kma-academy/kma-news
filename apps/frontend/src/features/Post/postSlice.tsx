@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { RootState } from '@/app/store';
+import { RootState } from '../../app/store';
 import { getPostDetail, PostWithDetailResponse } from '@kma-news/api-interface';
 
 interface ReadingPageState {

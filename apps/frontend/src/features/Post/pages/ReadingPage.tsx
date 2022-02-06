@@ -1,8 +1,8 @@
 import React, { useMemo, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '@/app/hooks';
-import BoxVideo from '@/components/BoxVideo';
-import BoxHot from '@/components/BoxHot';
-import BoxNews from '@/components/BoxNews';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import BoxVideo from '../../../components/BoxVideo';
+import BoxHot from '../../../components/BoxHot';
+import BoxNews from '../../../components/BoxNews';
 import { IoIosArrowForward } from 'react-icons/io';
 import { AiOutlineStar } from 'react-icons/ai';
 import { BiLike } from 'react-icons/bi';

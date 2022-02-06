@@ -41,7 +41,7 @@ export const RootRouter = () => {
           <Route path="/" element={<BasicLayout />}>
             <Route index element={<Home />} />
             <Route path="tin-moi.epi" element={<Home />} />
-            <Route path="bai-bao/:slug" element={<ReadingPage />} />
+            <Route path="bai-bao/:slug/:id" element={<ReadingPage />} />
             <Route
               path="phong-chong-dich-covid-19"
               element={<HotTopicPage />}
