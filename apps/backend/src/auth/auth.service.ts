@@ -1,15 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
-import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
 import { User } from '../user/entities/user.entity';
+import { TokenService } from './token.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
-    private readonly jwtService: JwtService,
-    private readonly configService: ConfigService
+    private readonly tokenService: TokenService
   ) {}
 
   async validate(email: string, password: string) {
@@ -20,21 +18,21 @@ export class AuthService {
     return undefined;
   }
 
-  login(user: Pick<User, 'id' | 'email' | 'avatarURL' | 'name'>) {
+  login(user: Pick<User, 'id' | 'email' | 'avatarURL' | 'name' | 'role'>) {
     const payload = {
       email: user.email,
       id: user.id,
+      role: user.role,
     };
+    const access_token = this.tokenService.signAccessToken(payload);
     return {
-      access_token: this.jwtService.sign(payload, {
-        secret: this.configService.get<string>('jwt.access_token_secret'),
-        expiresIn: this.configService.get<number>('jwt.access_token_ttl'),
-      }),
+      access_token: access_token,
       user: {
         id: user.id,
         email: user.email,
         avatarURL: user.avatarURL,
         name: user.name,
+        role: user.role,
       },
     };
   }
