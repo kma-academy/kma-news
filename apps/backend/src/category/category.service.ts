@@ -42,10 +42,11 @@ export class CategoryService {
   }
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    const user = await this.categoryRepository.findOne(id);
-    if (!user) throw new NotFoundException();
+    const category = await this.categoryRepository.findOne(id);
+    if (!category) throw new NotFoundException();
     const data = await this.categoryRepository.save({
       id,
+      ...category,
       ...updateCategoryDto,
     });
     return this.categoryRepository.create(data);
