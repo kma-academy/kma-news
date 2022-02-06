@@ -17,6 +17,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { hasRoles, UserRole } from '../common/decorators/role.decorator';
 
 @Controller('users')
 @ApiTags('user')
@@ -33,7 +35,8 @@ export class UserController {
 
   @Get()
   @UseInterceptors(ClassSerializerInterceptor)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @hasRoles(UserRole.ADMIN)
   findAll() {
     return this.userService.findAll();
   }
@@ -54,7 +57,8 @@ export class UserController {
     return this.userService.update(id, updateUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @hasRoles(UserRole.ADMIN)
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.userService.remove(id);

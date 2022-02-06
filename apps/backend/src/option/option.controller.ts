@@ -3,6 +3,8 @@ import { OptionService } from './option.service';
 import { UpsertOptionDto } from './dto/upsert-option.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { hasRoles, UserRole } from '../common/decorators/role.decorator';
 
 @Controller('options')
 @ApiTags('option')
@@ -21,7 +23,8 @@ export class OptionController {
 
   @Post(':name')
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @hasRoles(UserRole.ADMIN, UserRole.WRITTER)
   update(
     @Param('name') name: string,
     @Body() upsertOptionDto: UpsertOptionDto

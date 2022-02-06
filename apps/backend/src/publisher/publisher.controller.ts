@@ -13,6 +13,8 @@ import { CreatePublisherDto } from './dto/create-publisher.dto';
 import { UpdatePublisherDto } from './dto/update-publisher.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { hasRoles, UserRole } from '../common/decorators/role.decorator';
 
 @Controller('publishers')
 @ApiTags('publisher')
@@ -21,7 +23,8 @@ export class PublisherController {
   constructor(private readonly publisherService: PublisherService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @hasRoles(UserRole.ADMIN)
   create(@Body() createPublisherDto: CreatePublisherDto) {
     return this.publisherService.create(createPublisherDto);
   }
@@ -36,7 +39,8 @@ export class PublisherController {
     return this.publisherService.findOne(hostname);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @hasRoles(UserRole.ADMIN)
   @Patch(':hostname')
   update(
     @Param('hostname') hostname: string,
@@ -45,7 +49,8 @@ export class PublisherController {
     return this.publisherService.update(hostname, updatePublisherDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @hasRoles(UserRole.ADMIN)
   @Delete(':hostname')
   remove(@Param('hostname') hostname: string) {
     return this.publisherService.remove(hostname);
