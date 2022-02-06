@@ -140,7 +140,13 @@ const ReadingPage: React.FC = () => {
               <div className="page-key">
                 <HiOutlineKey className="page-key-icon" />
                 <div className="page-key-box">
-                  <ul className="page-key-list"></ul>
+                  <ul className="page-key-list">
+                    {data?.keywords.map((e, i) => (
+                      <li className="page-key-item" key={`keyword-${i}`}>
+                        {e}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
               <p className="page-source">
