@@ -17,12 +17,16 @@ import { Option } from './option/entities/option.entity';
 import { Post } from './post/entities/post.entity';
 import { Paragraph } from './post/entities/paragraph.entity';
 import { Channel } from './channel/entities/channel.entity';
+import { EnvValidationSchema } from '@kma-news/env-validation-schema';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       load: [databaseConfig, jwtConfig],
+      validationSchema: EnvValidationSchema,
+      validationOptions: {},
+      ignoreEnvFile: true,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

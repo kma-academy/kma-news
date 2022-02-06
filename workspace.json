@@ -4,6 +4,7 @@
     "api-interface": "libs/api-interface",
     "backend": "apps/backend",
     "crawler": "apps/crawler",
+    "env-validation-schema": "libs/env-validation-schema",
     "frontend": "apps/frontend",
     "frontend-e2e": "apps/frontend-e2e"
   }

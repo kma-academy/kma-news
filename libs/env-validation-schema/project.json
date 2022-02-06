@@ -1,0 +1,23 @@
+{
+  "root": "libs/env-validation-schema",
+  "sourceRoot": "libs/env-validation-schema/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/env-validation-schema/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/env-validation-schema"],
+      "options": {
+        "jestConfig": "libs/env-validation-schema/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
