@@ -9,7 +9,7 @@ import { BiLike } from 'react-icons/bi';
 import { VscTag } from 'react-icons/vsc';
 import { GoReport } from 'react-icons/go';
 import { HiOutlineDocumentDuplicate, HiOutlineKey } from 'react-icons/hi';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { FullScreenImage } from '../components/FullScreenImage';
 import { selectData, getPostAction, selectLoading } from '../postSlice';
 // import '../components/HotTopic/'
@@ -60,9 +60,16 @@ const ReadingPage: React.FC = () => {
       <div className="container container--positions">
         <div className="col-9 container-main ">
           <div className="indexPath">
-            <h3 className="indexPath-name">Xã hội</h3>
-            <IoIosArrowForward className="indexPath-icon" />
-            <h3 className="indexPath-name">Thời sự</h3>
+            {data?.categories.map((e, i) => {
+              return (
+                <React.Fragment key={`category-${i}`}>
+                  <h3 className="indexPath-name">
+                    <Link to={e.url}>{e.title}</Link>
+                  </h3>
+                  <IoIosArrowForward className="indexPath-icon" />
+                </React.Fragment>
+              );
+            })}
           </div>
           <div className="content">
             <div className="col-8 content-left">
