@@ -22,7 +22,7 @@ export class Paragraph {
   @Column({ type: 'enum', enum: ParagraphType, default: ParagraphType.TEXT })
   type: ParagraphType;
 
-  @Column()
+  @Column('mediumtext')
   content: string;
 
   @Column('simple-array')

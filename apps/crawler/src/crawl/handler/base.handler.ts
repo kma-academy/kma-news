@@ -7,6 +7,7 @@ import { Post, PostStatus } from '../../post/entities/post.entity';
 import { firstValueFrom } from 'rxjs';
 import { OmitType, PartialType } from '@nestjs/swagger';
 import { ParagraphDto } from '../../post/dto/paragraph.dto';
+import { ParagraphType } from '../../post/entities/paragraph.entity';
 class PostRaw extends PartialType(
   OmitType(Post, ['categories', 'paragraphs', 'publisher'])
 ) {
@@ -69,6 +70,10 @@ export abstract class BaseHandler {
     post.status = PostStatus.PUBLISHED;
     // console.log(post.publishedAt);
     post.paragraphs = this.getParagraphs($);
+    const firstImage = post.paragraphs.find(
+      (e) => e.type === ParagraphType.IMAGE
+    );
+    post.thumbnailURL = firstImage?.imageURL[0] || '';
     return post;
   }
 }
