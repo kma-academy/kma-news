@@ -18,6 +18,7 @@ import { Post } from './post/entities/post.entity';
 import { Paragraph } from './post/entities/paragraph.entity';
 import { Channel } from './channel/entities/channel.entity';
 import { EnvValidationSchema } from '@kma-news/env-validation-schema';
+import { TokenModule } from './token/token.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { EnvValidationSchema } from '@kma-news/env-validation-schema';
     PublisherModule,
     PostModule,
     ChannelModule,
+    TokenModule,
   ],
   providers: [],
 })

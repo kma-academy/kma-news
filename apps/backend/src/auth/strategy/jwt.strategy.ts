@@ -2,7 +2,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../../user/user.service';
-import { TokenService } from '../token.service';
+import { TokenService } from '../../token/token.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -17,7 +17,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       secretOrKey: tokenService.access_token_secret,
     });
   }
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async validate(payload: any) {
     this.logger.debug('Validate user:' + payload.id);

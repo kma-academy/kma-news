@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';
-import { TokenService } from './token.service';
+import { TokenService } from '../token/token.service';
+
+// Function compare two number
 
 @Injectable()
 export class AuthService {
@@ -25,6 +27,7 @@ export class AuthService {
       role: user.role,
     };
     const access_token = this.tokenService.signAccessToken(payload);
+    // Access token
     return {
       access_token: access_token,
       user: {
