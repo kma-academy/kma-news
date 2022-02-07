@@ -7,10 +7,15 @@ import {
   SwaggerModule,
 } from '@nestjs/swagger';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import cookieParser from 'cookie-parser';
 
 const customOptions: SwaggerCustomOptions = {
   swaggerOptions: {
     persistAuthorization: true,
+    requestInterceptor: (req) => {
+      req.credentials = 'include';
+      return req;
+    },
   },
   customSiteTitle: 'KMA News API Docs',
 };
@@ -23,6 +28,7 @@ async function bootstrap() {
     .setDescription('API for KMA News')
     .setVersion('1.0')
     .addBearerAuth()
+    .addCookieAuth('refresh_token')
     .addTag('auth', 'Authentication')
     .addTag('user', 'Operations about user')
     .addTag('category', 'Operation about category')
@@ -39,6 +45,7 @@ async function bootstrap() {
     origin: ['http://localhost:4200'],
     credentials: true,
   });
+  app.use(cookieParser());
   Logger.log(`🚀 App listening in ${port}`);
   await app.listen(port || 3000);
 }

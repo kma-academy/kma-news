@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import moment from 'moment';
 
 @Injectable()
 export class TokenService {
@@ -9,18 +10,36 @@ export class TokenService {
     private readonly configService: ConfigService
   ) {}
 
-  signAccessToken<T extends object>(payload: T) {
-    return this.jwtService.sign(payload, {
+  signAccessToken<T extends object>(payload: T): [string, Date] {
+    const tokenExpiration = moment()
+      .add(this.access_token_ttl, 'seconds')
+      .toDate();
+    const token = this.jwtService.sign(payload, {
       secret: this.access_token_secret,
       expiresIn: this.access_token_ttl,
     });
+    return [token, tokenExpiration];
   }
 
-  signRefreshToken<T extends object>(payload: T) {
-    return this.jwtService.sign(payload, {
+  signRefreshToken<T extends object>(payload: T): [string, Date] {
+    const tokenExpiration = moment()
+      .add(this.refresh_token_ttl, 'seconds')
+      .toDate();
+    const token = this.jwtService.sign(payload, {
       secret: this.refresh_token_secret,
       expiresIn: this.refresh_token_ttl,
     });
+    return [token, tokenExpiration];
+  }
+
+  verifyRefreshToken(token: string) {
+    const { id, email } = this.jwtService.verify(token, {
+      secret: this.refresh_token_secret,
+    });
+    return { id, email } as {
+      id: number;
+      email: string;
+    };
   }
 
   get access_token_secret(): string {
