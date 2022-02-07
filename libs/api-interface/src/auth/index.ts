@@ -9,6 +9,7 @@ export interface LoginParameter {
 export interface LoginResponse {
   access_token: string;
   refresh_token: string;
+  expiredAt: string;
   user: UserWithoutPassword;
 }
 
@@ -30,4 +31,17 @@ export const logout = () => {
 export type ProfileResponse = UserWithoutPassword;
 export const getProfile = () => {
   return client.get('/auth/profile') as Promise<ProfileResponse>;
+};
+
+export interface RefreshTokenResponse {
+  access_token: string;
+  user: UserWithoutPassword;
+}
+
+export const refreshToken = () => {
+  return client.request({
+    method: 'POST',
+    url: '/auth/refresh',
+    withCredentials: true,
+  }) as Promise<RefreshTokenResponse>;
 };

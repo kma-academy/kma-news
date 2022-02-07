@@ -1,7 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-// import { refreshToken } from './api/auth';
-// import { APIResponse } from './types';
+import { RefreshTokenResponse, refreshToken } from './auth';
 const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8888',
   headers: {
@@ -20,7 +19,9 @@ axiosClient.interceptors.request.use(async (config) => {
   }
   return config;
 });
-// const refreshTokenRequest: Promise<APIResponse.Login> | null = null;
+
+export const ignorePath = ['/auth/login', '/auth/logout'];
+let refreshTokenRequest: Promise<RefreshTokenResponse> | null = null;
 axiosClient.interceptors.response.use(
   (response) => {
     if (response?.data) return response.data;
@@ -29,21 +30,29 @@ axiosClient.interceptors.response.use(
   (error) => {
     // Token hết hạn
     if (error?.response?.status === 401) {
-      console.log('Token expired...');
-      // const refresh_token = localStorage.getItem('refresh_token')
-      // if (!!refresh_token) {
-      // refreshTokenRequest = refreshTokenRequest || refreshToken();
-      // return refreshTokenRequest
-      //   .then((data) => {
-      //     localStorage.setItem('access_token', data.access_token);
-      //     refreshTokenRequest = null;
-      //     return axiosClient.request(error.config);
-      //   })
-      //   .catch((err) => {
-      //     localStorage.removeItem('access_token');
-      //     refreshTokenRequest = null;
-      //   });
-      // // }
+      console.group('Refresh token');
+      console.log('Token expired');
+      if (ignorePath.includes(window.location.pathname)) {
+        console.log('Skip refresh token');
+      } else {
+        console.log('Refresh token');
+        refreshTokenRequest = refreshTokenRequest || refreshToken();
+        return refreshTokenRequest
+          .then((data) => {
+            console.log('Refresh token success');
+            localStorage.setItem('access_token', data.access_token);
+            return axiosClient.request(error.config);
+          })
+          .catch((error) => {
+            if (error?.response?.status === 403) {
+              console.log('Refresh token failed');
+              localStorage.removeItem('access_token');
+            }
+            refreshTokenRequest = null;
+            throw error;
+          });
+      }
+      console.groupEnd();
     }
     const status = error?.response?.status && `[${error.response.status}] `;
     if (error?.response?.data?.message) {

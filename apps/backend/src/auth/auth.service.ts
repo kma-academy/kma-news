@@ -60,6 +60,13 @@ export class AuthService {
       const [access_token] = this.tokenService.signAccessToken(payload);
       return {
         access_token,
+        user: {
+          id: user.id,
+          email: user.email,
+          avatarURL: user.avatarURL,
+          name: user.name,
+          role: user.role,
+        },
       };
     } catch (error) {
       if (error instanceof HttpException) throw error;

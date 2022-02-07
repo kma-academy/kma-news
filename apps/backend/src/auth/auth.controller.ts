@@ -12,7 +12,6 @@ import {
   ApiBearerAuth,
   ApiBody,
   ApiCookieAuth,
-  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
