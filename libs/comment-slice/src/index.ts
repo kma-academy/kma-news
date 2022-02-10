@@ -55,8 +55,7 @@ const commentSlice = createSlice({
       })
       .addCase(createCommentAction.fulfilled, (state, action) => {
         state.loading = 'done';
-        // state.comments.push({})
-        state.comments.push(action.payload);
+        state.comments.unshift(action.payload);
       });
   },
 });

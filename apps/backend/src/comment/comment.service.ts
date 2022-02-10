@@ -49,6 +49,7 @@ export class CommentService {
         'author.name',
         'author.avatarURL',
       ])
+      .addOrderBy('comment.createAt', 'DESC')
       .printSql()
       .getMany();
   }
