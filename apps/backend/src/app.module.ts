@@ -19,6 +19,8 @@ import { Paragraph } from './post/entities/paragraph.entity';
 import { Channel } from './channel/entities/channel.entity';
 import { EnvValidationSchema } from '@kma-news/env-validation-schema';
 import { TokenModule } from './token/token.module';
+import { CommentModule } from './comment/comment.module';
+import { Comment } from './comment/entities/comment.entity';
 
 @Module({
   imports: [
@@ -39,7 +41,16 @@ import { TokenModule } from './token/token.module';
         password: configService.get<string>('database.password'),
         database: configService.get<string>('database.name'),
         synchronize: configService.get<string>('NODE_ENV') !== 'production',
-        entities: [User, Category, Publisher, Option, Post, Paragraph, Channel],
+        entities: [
+          User,
+          Category,
+          Publisher,
+          Option,
+          Post,
+          Paragraph,
+          Channel,
+          Comment,
+        ],
         // entities: ['dist/apps/**/*.entity{.ts,.js}'],
         // autoLoadEntities: true,
       }),
@@ -53,6 +64,7 @@ import { TokenModule } from './token/token.module';
     PostModule,
     ChannelModule,
     TokenModule,
+    CommentModule,
   ],
   providers: [],
 })

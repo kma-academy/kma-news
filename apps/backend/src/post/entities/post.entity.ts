@@ -35,7 +35,7 @@ export class Post {
   @Column()
   slug: string;
 
-  @Column()
+  @Column('mediumtext')
   description: string;
 
   @Column()
