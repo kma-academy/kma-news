@@ -31,14 +31,11 @@ export class CommentService {
     if (!user) throw new BadRequestException();
     const post = await this.postRepository.findOne(postId);
     if (!post) throw new NotFoundException('Cannot found post');
-    await this.commentRepository.save({
+    return await this.commentRepository.save({
       author: user,
       content: createCommentDto.message,
       post,
     });
-    return {
-      message: 'Comment successfully!',
-    };
   }
 
   findAll(postId: number) {
@@ -57,7 +54,17 @@ export class CommentService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} comment`;
+    return this.commentRepository
+      .createQueryBuilder('comment')
+      .leftJoin('comment.author', 'author')
+      .where('comment.id= :id', { id })
+      .addSelect([
+        'author.id',
+        'author.email',
+        'author.name',
+        'author.avatarURL',
+      ])
+      .getOne();
   }
 
   async update(
@@ -78,9 +85,17 @@ export class CommentService {
     await this.commentRepository.update(id, {
       content: updateCommentDto.message,
     });
-    return {
-      message: 'Update comment success',
-    };
+    return await this.commentRepository
+      .createQueryBuilder('comment')
+      .leftJoin('comment.author', 'author')
+      .where('comment.id= :id', { id })
+      .addSelect([
+        'author.id',
+        'author.email',
+        'author.name',
+        'author.avatarURL',
+      ])
+      .getOne();
   }
 
   remove(userId: number, id: number) {

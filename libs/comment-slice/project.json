@@ -1,0 +1,23 @@
+{
+  "root": "libs/comment-slice",
+  "sourceRoot": "libs/comment-slice/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/comment-slice/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/comment-slice"],
+      "options": {
+        "jestConfig": "libs/comment-slice/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import covid19Slice from '@/features/covid19/covid19Slice';
 import authSlice from '@/features/Auth/authSlice';
@@ -6,6 +7,7 @@ import categorySlice from '@/features/Category/categorySlice';
 import homeSlice from '@/features/HomePage/homeSlice';
 import optionSlice from '@/features/Option/optionSlice';
 import topicSlice from '@/features/Topic/topicSlice';
+import commentSlice from '@kma-news/comment-slice';
 
 console.log(process.env['REACT_APP_API_URL']);
 
@@ -18,6 +20,7 @@ export const store = configureStore({
     home: homeSlice,
     option: optionSlice,
     topic: topicSlice,
+    comment: commentSlice,
   },
 });
 
