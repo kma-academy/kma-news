@@ -30,8 +30,6 @@ export class OptionService {
     if (data.type === OptionType.PLAIN_TEXT) {
       return data;
     }
-    console.log(data);
-
     if (data.type === OptionType.JSON_TEXT) {
       return {
         ...data,
