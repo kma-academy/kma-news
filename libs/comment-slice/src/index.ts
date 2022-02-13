@@ -50,12 +50,16 @@ const commentSlice = createSlice({
         state.message = action.error.message;
       });
     builder
-      .addCase(getCommentByPostAction.pending, (state) => {
+      .addCase(createCommentAction.pending, (state) => {
         state.loading = 'pending';
       })
       .addCase(createCommentAction.fulfilled, (state, action) => {
         state.loading = 'done';
         state.comments.unshift(action.payload);
+      })
+      .addCase(createCommentAction.rejected, (state, action) => {
+        state.loading = 'error';
+        state.message = action.error.message;
       });
   },
 });
