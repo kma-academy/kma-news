@@ -21,6 +21,8 @@ import { EnvValidationSchema } from '@kma-news/env-validation-schema';
 import { TokenModule } from './token/token.module';
 import { CommentModule } from './comment/comment.module';
 import { Comment } from './comment/entities/comment.entity';
+import { HistoryModule } from './history/history.module';
+import { History } from './history/entities/history.entity';
 
 @Module({
   imports: [
@@ -50,6 +52,7 @@ import { Comment } from './comment/entities/comment.entity';
           Paragraph,
           Channel,
           Comment,
+          History,
         ],
         // entities: ['dist/apps/**/*.entity{.ts,.js}'],
         // autoLoadEntities: true,
@@ -65,6 +68,7 @@ import { Comment } from './comment/entities/comment.entity';
     ChannelModule,
     TokenModule,
     CommentModule,
+    HistoryModule,
   ],
   providers: [],
 })

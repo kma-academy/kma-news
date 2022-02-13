@@ -16,5 +16,6 @@ import { Paragraph } from './entities/paragraph.entity';
   imports: [
     TypeOrmModule.forFeature([Post, Publisher, Category, User, Paragraph]),
   ],
+  exports: [PostService],
 })
 export class PostModule {}
