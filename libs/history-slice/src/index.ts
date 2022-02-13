@@ -3,6 +3,7 @@ import {
   getUserHistory,
   GetUserHistoryResponse,
   LoadingState,
+  updateViewPost,
 } from '@kma-news/api-interface';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
@@ -14,6 +15,13 @@ export const deleteHistoryAction = createAsyncThunk(
   'history/delete',
   (id: number) => {
     return deleteHistory(id);
+  }
+);
+
+export const updateViewPostAction = createAsyncThunk(
+  'history/add',
+  (postId: number) => {
+    return updateViewPost(postId);
   }
 );
 
@@ -40,7 +48,7 @@ const historySlice = createSlice({
         state.loading = 'done';
         state.histories = action.payload;
       })
-      .addCase(getUserHistoryAction.rejected, (state, action) => {
+      .addCase(getUserHistoryAction.rejected, (state) => {
         state.loading = 'error';
       });
     builder

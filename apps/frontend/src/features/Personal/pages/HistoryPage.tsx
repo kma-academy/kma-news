@@ -15,7 +15,7 @@ const HistoryPage = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getUserHistoryAction());
-  }, []);
+  }, [dispatch]);
   return (
     <div>
       <div className="user-page__header">

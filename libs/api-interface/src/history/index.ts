@@ -12,3 +12,7 @@ export const getUserHistory = () => {
 export const deleteHistory = (id: number) => {
   return client.delete(`/views/${id}`) as Promise<{ message: string }>;
 };
+
+export const updateViewPost = (postId: number) => {
+  return client.post(`/views/${postId}`) as Promise<{ message: string }>;
+};

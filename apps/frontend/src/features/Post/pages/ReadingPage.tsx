@@ -12,6 +12,7 @@ import { HiOutlineDocumentDuplicate, HiOutlineKey } from 'react-icons/hi';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { FullScreenImage } from '../components/FullScreenImage';
 import { selectData, getPostAction, selectLoading } from '../postSlice';
+import { updateViewPostAction } from '@kma-news/history-slice';
 // import '../components/HotTopic/'
 interface ImageDetail {
   id: number;
@@ -29,9 +30,13 @@ const ReadingPage: React.FC = () => {
   useEffect(() => {
     if (id) dispatch(getPostAction(+id));
   }, [dispatch, id]);
+
   useEffect(() => {
     if (loading === 'done' && data?.slug !== slug) {
       navigate('/');
+    }
+    if (loading === 'done' && data) {
+      dispatch(updateViewPostAction(data.id));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
@@ -99,12 +104,17 @@ const ReadingPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="page-desc">{data?.description}</div>
-                  {data?.paragraphs.map((paragraph) => {
-                    if (paragraph.type === 'text')
-                      return <p className="page-word">{paragraph.content}</p>;
+                  {data?.paragraphs.map((paragraph, i) => {
+                    if (paragraph.type === 'text') {
+                      return (
+                        <p className="page-word" key={i}>
+                          {paragraph.content}
+                        </p>
+                      );
+                    }
 
                     return (
-                      <>
+                      <React.Fragment key={i}>
                         <p
                           className="page-img"
                           onClick={() => toggleVisible(true)}
@@ -116,7 +126,7 @@ const ReadingPage: React.FC = () => {
                           />
                         </p>
                         <p className="page-caption">{paragraph.content}</p>
-                      </>
+                      </React.Fragment>
                     );
                   })}
                   <p className="page-author">{data?.owner || 'Sưu tầm'} </p>
