@@ -1,20 +1,36 @@
-import React from 'react'
-import './index.css'
-const BoxRecent = () => {
+import React from 'react';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
+import './index.css';
+export interface BoxRecentProps {
+  title: string;
+  url: string;
+  thumbnailURL: string;
+  visitDate: string;
+}
+const BoxRecent: React.FC<BoxRecentProps> = ({
+  url,
+  thumbnailURL,
+  title,
+  visitDate,
+}) => {
   return (
     <div className="box-recent">
       <div className="box-recent__frame-img">
-        <a href="/#">
+        <Link to={url}>
           <img
-            src="https://i.ytimg.com/vi/sYDmUyCj9JY/maxresdefault.jpg"
-            alt=""
+            src={
+              thumbnailURL ||
+              'https://i.ytimg.com/vi/sYDmUyCj9JY/maxresdefault.jpg'
+            }
+            alt={title}
             className="box-recent__img"
           />
-        </a>
+        </Link>
       </div>
       <div className="box-recent__content">
         <div className="box-recent__title">
-          <a href="/#">Lào Cai: Tạm giữ hàng nghìn bao thuốc lá ngoại âsasas lậu</a>
+          <Link to={url}>{title}</Link>
         </div>
         <div className="box-exten">
           <img
@@ -22,9 +38,11 @@ const BoxRecent = () => {
             alt="logo bài báo"
             className="box-exten--brand"
           />
-          <div className="box-exten--time">1 giờ</div>
+          <div className="box-exten--time">
+            {moment(visitDate, moment.ISO_8601, 'vn').fromNow()}
+          </div>
           <div className="box-exten--involve">
-            <a href="/#">11 liên quân</a>
+            <a href="/#">11 liên quan</a>
           </div>
           <a href="/#" className="">
             <img
@@ -39,6 +57,6 @@ const BoxRecent = () => {
         </div>
       </div>
     </div>
-  )
-}
-export default BoxRecent
+  );
+};
+export default BoxRecent;

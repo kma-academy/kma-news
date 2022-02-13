@@ -1,8 +1,17 @@
-import React from 'react'
-import { BsTrash } from 'react-icons/bs'
-import BoxRecent from '@/components/BoxRecent'
+import React, { useEffect } from 'react';
+import { BsTrash } from 'react-icons/bs';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import BoxRecent from '@/components/BoxRecent';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { selectHistory, getUserHistoryAction } from '@kma-news/history-slice';
 
 const HistoryPage = () => {
+  const histories = useAppSelector(selectHistory);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getUserHistoryAction());
+  }, []);
   return (
     <div>
       <div className="user-page__header">
@@ -13,11 +22,19 @@ const HistoryPage = () => {
         </div>
       </div>
       <div className="user-page__body">
-        <BoxRecent />
-        <BoxRecent />
-        <BoxRecent />
+        {histories.map((e, i) => {
+          return (
+            <BoxRecent
+              thumbnailURL={e.post?.thumbnailURL}
+              title={e.post?.title}
+              url={e.post?.url}
+              visitDate={e.visitDate}
+              key={i}
+            />
+          );
+        })}
       </div>
     </div>
-  )
-}
-export default HistoryPage
+  );
+};
+export default HistoryPage;
