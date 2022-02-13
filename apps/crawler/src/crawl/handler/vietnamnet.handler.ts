@@ -10,37 +10,33 @@ import { ParagraphDto } from '../../post/dto/paragraph.dto';
 import { ParagraphType } from '../../post/entities/paragraph.entity';
 
 @Injectable()
-export class VNExpressHandler extends BaseHandler {
+export class VietNamNetHandler extends BaseHandler {
   constructor(
     @InjectRepository(Post)
     protected readonly postRepository: Repository<Post>,
     protected readonly httpService: HttpService
   ) {
-    super(
-      'vnexpress.net',
-      'ddd, DD/MM/YYYY, HH:mm (Z)',
-      postRepository,
-      httpService
-    );
+    super('vietnamnet.vn', 'DD/MM/YYYY hh:mm', postRepository, httpService);
   }
   getTitle($: CheerioAPI): string {
-    return this.formatText($('.title-detail').text());
+    return this.formatText($('.ArticleDetail > h1').text());
   }
   getDescription($: CheerioAPI): string {
-    return this.formatText($('.description').text());
+    return this.formatText($('#ArticleContent > .ArticleLead > p').text());
   }
   getKeywords($: CheerioAPI): string[] {
-    const keywordsRaw = $('.tags .item-tag');
-    const keywords = [...keywordsRaw].map((e) => this.formatText($(e).text()));
+    const keywords = [...$('.tagBoxContent .clearfix li a')].map((e) =>
+      this.formatText($(e).text())
+    );
     return keywords;
   }
   getParagraphs($: CheerioAPI): ParagraphDto[] {
     const paragraphs: ParagraphDto[] = [];
-    const content = [...$('.fck_detail').children()];
+    const content = [...$('.ArticleContent').children()];
     content.forEach((el) => {
       const elem = $(el);
-      // && elem.attr('class') == 'Normal'
-      if (el.tagName == 'p' && !elem.attr('style')) {
+
+      if (el.tagName == 'p' && elem.children().length == 0) {
         const content = this.formatText(elem.text());
         if (!content) return;
         paragraphs.push({
@@ -49,27 +45,13 @@ export class VNExpressHandler extends BaseHandler {
           imageURL: [],
         });
       }
-      if (el.tagName == 'figure') {
-        let imageUrl = elem.find('meta[itemprop="url"]').attr('src');
-        const imageDescription = elem
-          .find('figcaption[itemprop="description"] p')
-          .text();
-        if (!imageUrl) {
-          const srcSet =
-            elem.find('source').attr('data-srcset')?.split(',') || [];
-          if (srcSet.length == 0) return;
-          imageUrl = srcSet[srcSet.length - 1].trim().split(' ')[0];
-        }
-        if (!imageUrl) {
-          imageUrl =
-            elem.find('img').attr('data-src') ||
-            elem.find('img').attr('src') ||
-            '';
-        }
-        // if (!imageUrl) return
+      if (el.tagName == 'table') {
+        const imageURL = elem.find('img').attr('src');
+        const imageDescription = elem.find('td.image_desc').text();
+        if (!imageURL) return;
         paragraphs.push({
           type: ParagraphType.IMAGE,
-          imageURL: [imageUrl],
+          imageURL: [imageURL],
           content: this.formatText(imageDescription),
         });
       }
@@ -78,17 +60,18 @@ export class VNExpressHandler extends BaseHandler {
   }
 
   getCategories($: CheerioAPI): string[] {
-    const categoriesName = [...$('.top-cate-head-title').find('a')].map((e) =>
+    const categoriesName = [...$('ul.breadcrumb').find('li')].map((e) =>
       this.formatText($(e).text())
     );
     return categoriesName;
   }
 
   getOwner($: CheerioAPI): string {
-    return this.formatText($('#ArticleContent p.t-j').last().text());
+    const owner = $('#ArticleContent > p > strong').first().text();
+    return this.formatText(owner);
   }
 
   getTimeString($: CheerioAPI): string {
-    return this.formatText($('.ArticleDate').text());
+    return this.formatText($('span.date').text());
   }
 }

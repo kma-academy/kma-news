@@ -24,6 +24,8 @@ export class PostProcessor {
   constructor(
     @Inject('VNEXPRESS_HANDLER')
     private readonly vnexpress: BaseHandler,
+    @Inject('VIETNAMNET_HANDLER')
+    private readonly vietnamnet: BaseHandler,
     @InjectRepository(Post)
     private readonly postRepository: Repository<Post>,
     private readonly paragraphService: ParagraphService,
@@ -38,6 +40,29 @@ export class PostProcessor {
   async handleVNExpress(job: Job<string>) {
     //
     const post = await this.vnexpress.getNewDetail(job.data);
+    if (!post) return;
+    const { categories, paragraphs, publisherHostname, ...data } = post;
+    const paragraphData = await this.paragraphService.createBatch(paragraphs);
+    const publisher = await this.publisherService.findOne(publisherHostname);
+    const admin = await this.userService.findOneByRole(UserRole.ADMIN);
+    const postData = await this.postRepository.save({
+      ...data,
+      paragraphs: paragraphData,
+      publisher,
+      categories: [],
+      writter: admin,
+      slug: this.slugHelper.slugify(data.title),
+    });
+    this.categoryQueue.add('add_to_post', {
+      postId: postData.id,
+      categories,
+    });
+  }
+
+  @Process('vietnamnet')
+  async handleVietnamNet(job: Job<string>) {
+    //
+    const post = await this.vietnamnet.getNewDetail(job.data);
     if (!post) return;
     const { categories, paragraphs, publisherHostname, ...data } = post;
     const paragraphData = await this.paragraphService.createBatch(paragraphs);

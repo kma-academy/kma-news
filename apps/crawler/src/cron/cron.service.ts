@@ -21,6 +21,11 @@ export class CronService {
         cron: '* * * * *',
       },
     });
+    await this.lastestQueue.add('vietnamnet', '', {
+      repeat: {
+        cron: '* * * * *',
+      },
+    });
   }
 
   @Cron(CronExpression.EVERY_30_MINUTES)

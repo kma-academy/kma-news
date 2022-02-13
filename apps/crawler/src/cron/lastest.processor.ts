@@ -21,24 +21,36 @@ export class LastestProcessor {
     @Inject(CACHE_MANAGER)
     private readonly cacheManager: Cache
   ) {}
-  @Process('vnexpress')
-  async getLastestNew() {
-    const feed = await rssParser.parseURL(
-      'https://vnexpress.net/rss/tin-moi-nhat.rss'
-    );
+  async getLastestNew(rssURL: string, processor: string) {
+    const feed = await rssParser.parseURL(rssURL);
     for (const item of feed.items) {
       const link = item.link;
       if (!link) continue;
       // eslint-disable-next-line no-empty
       const isCrawled = await this.cacheManager.get(`CRAWLED_LINK_${link}`);
       if (isCrawled) return;
-      this.postQueue.add('vnexpress', link);
+      this.postQueue.add(processor, link);
       await this.cacheManager.set(
         `CRAWLED_LINK_${link}`,
         new Date().toISOString()
       );
     }
     return;
+  }
+  @Process('vnexpress')
+  getLastestNewVNExpress() {
+    return this.getLastestNew(
+      'https://vnexpress.net/rss/tin-moi-nhat.rss',
+      'vnexpress'
+    );
+  }
+
+  @Process('vietnamnet')
+  getLastestNewVietNamNet() {
+    return this.getLastestNew(
+      'https://vietnamnet.vn/rss/tin-moi-nhat.rss',
+      'vietnamnet'
+    );
   }
 
   @OnQueueActive()
