@@ -8,6 +8,7 @@ export interface PostByChannelParameter {
 }
 
 export interface PostByChannelResponse {
+  id: number;
   name: string;
   url: string;
   contents: Post[];

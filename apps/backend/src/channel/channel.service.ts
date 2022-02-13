@@ -107,6 +107,7 @@ export class ChannelService {
     const post = await query.getMany();
 
     return {
+      id: channel.id,
       name: channel.name,
       url: channel.url,
       contents: post,

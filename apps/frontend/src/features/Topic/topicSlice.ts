@@ -7,6 +7,7 @@ import {
   PostByChannelResponse,
   HomeTopicResponse,
 } from '@kma-news/api-interface';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { RootState } from '@/app/store';
 
 export const getPostsOnTopicAction = createAsyncThunk(

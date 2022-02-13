@@ -1,3 +1,4 @@
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { RootState } from '@/app/store';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {

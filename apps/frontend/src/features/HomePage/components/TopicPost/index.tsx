@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import { PostByChannelResponse } from '@kma-news/api-interface';
 import { TopicPostItem } from './TopicPostItem';
 
-export const TopicPost: React.FC<PostByChannelResponse> = (props) => {
+export const TopicPost: React.FC<Omit<PostByChannelResponse, 'id'>> = (
+  props
+) => {
   const { name, contents, url } = props;
   return (
     <div className="section">

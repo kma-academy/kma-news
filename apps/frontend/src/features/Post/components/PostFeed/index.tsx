@@ -1,7 +1,7 @@
 import React from 'react';
 import { PostByChannelResponse } from '@kma-news/api-interface';
 import PostFeedItem from '../PostFeedItem';
-export interface PostFeedProps extends PostByChannelResponse {
+export interface PostFeedProps extends Omit<PostByChannelResponse, 'id'> {
   loadMore: () => void;
 }
 const PostFeed: React.FC<PostFeedProps> = (props) => {
