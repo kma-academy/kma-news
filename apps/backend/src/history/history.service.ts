@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Post } from '../post/entities/post.entity';
 import { PostService } from '../post/post.service';
 import { UserService } from '../user/user.service';
-import { UpdateHistoryDto } from './dto/update-history.dto';
 import { History } from './entities/history.entity';
 
 @Injectable()
@@ -45,8 +45,8 @@ export class HistoryService {
     };
   }
 
-  findAll(userId: number) {
-    return this.historyRepository.find({
+  async findAll(userId: number) {
+    const data = await this.historyRepository.find({
       where: {
         user: {
           id: userId,
@@ -55,7 +55,16 @@ export class HistoryService {
       order: {
         visitDate: 'DESC',
       },
+      relations: ['post'],
     });
+    return data.map((e) => {
+      e.post = new Post(e.post);
+      return e;
+    });
+    // return this.historyRepository.createQueryBuilder('history')
+    // .leftJoin('history.post', 'post')
+    // .leftJoin('history.user', 'user')
+    // .addSelect('use')
   }
 
   remove(id: number) {

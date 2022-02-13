@@ -1,3 +1,4 @@
+import { Expose } from 'class-transformer';
 import {
   Column,
   DeleteDateColumn,
@@ -24,4 +25,8 @@ export class History {
 
   @DeleteDateColumn()
   deleteAt: Date;
+
+  constructor(partial: Partial<History>) {
+    Object.assign(this, partial);
+  }
 }

@@ -6,6 +6,8 @@ import {
   Delete,
   UseGuards,
   ParseIntPipe,
+  ClassSerializerInterceptor,
+  UseInterceptors,
 } from '@nestjs/common';
 import { HistoryService } from './history.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -15,6 +17,7 @@ import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 @Controller('views')
 @ApiTags('history')
 @ApiBearerAuth()
+@UseInterceptors(ClassSerializerInterceptor)
 export class HistoryController {
   constructor(private readonly historyService: HistoryService) {}
 

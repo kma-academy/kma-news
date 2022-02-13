@@ -7,6 +7,7 @@
     "crawler": "apps/crawler",
     "env-validation-schema": "libs/env-validation-schema",
     "frontend": "apps/frontend",
-    "frontend-e2e": "apps/frontend-e2e"
+    "frontend-e2e": "apps/frontend-e2e",
+    "history-slice": "libs/history-slice"
   }
 }

@@ -6,5 +6,6 @@ export * from './option';
 export * from './post';
 export * from './channel';
 export * from './comment';
+export * from './history';
 
 export type LoadingState = 'idle' | 'pending' | 'done' | 'error';

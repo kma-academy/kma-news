@@ -8,6 +8,7 @@ import homeSlice from '@/features/HomePage/homeSlice';
 import optionSlice from '@/features/Option/optionSlice';
 import topicSlice from '@/features/Topic/topicSlice';
 import commentSlice from '@kma-news/comment-slice';
+import historySlice from '@kma-news/history-slice';
 
 console.log(process.env['REACT_APP_API_URL']);
 
@@ -21,6 +22,7 @@ export const store = configureStore({
     option: optionSlice,
     topic: topicSlice,
     comment: commentSlice,
+    history: historySlice,
   },
 });
 
