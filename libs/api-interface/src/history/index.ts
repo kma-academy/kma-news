@@ -8,3 +8,7 @@ export type GetUserHistoryResponse = Array<{
 export const getUserHistory = () => {
   return client.get('/views') as Promise<GetUserHistoryResponse>;
 };
+
+export const deleteHistory = (id: number) => {
+  return client.delete(`/views/${id}`) as Promise<{ message: string }>;
+};

@@ -1,4 +1,5 @@
 import {
+  deleteHistory,
   getUserHistory,
   GetUserHistoryResponse,
   LoadingState,
@@ -8,6 +9,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 export const getUserHistoryAction = createAsyncThunk('history/fetch', () => {
   return getUserHistory();
 });
+
+export const deleteHistoryAction = createAsyncThunk(
+  'history/delete',
+  (id: number) => {
+    return deleteHistory(id);
+  }
+);
 
 export interface HistoryState {
   loading: LoadingState;
@@ -33,6 +41,19 @@ const historySlice = createSlice({
         state.histories = action.payload;
       })
       .addCase(getUserHistoryAction.rejected, (state, action) => {
+        state.loading = 'error';
+      });
+    builder
+      .addCase(deleteHistoryAction.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(deleteHistoryAction.fulfilled, (state, action) => {
+        state.loading = 'done';
+        state.histories = state.histories.filter(
+          (e) => e.id !== action.meta.arg
+        );
+      })
+      .addCase(deleteHistoryAction.rejected, (state) => {
         state.loading = 'error';
       });
   },

@@ -7,12 +7,14 @@ export interface BoxRecentProps {
   url: string;
   thumbnailURL: string;
   visitDate: string;
+  onDelete: () => void;
 }
 const BoxRecent: React.FC<BoxRecentProps> = ({
   url,
   thumbnailURL,
   title,
   visitDate,
+  onDelete,
 }) => {
   return (
     <div className="box-recent">
@@ -52,7 +54,9 @@ const BoxRecent: React.FC<BoxRecentProps> = ({
             />
           </a>
           <div className="box-exten__remove">
-            <div className="box-exten__remove-x">x</div>
+            <div className="box-exten__remove-x" onClick={onDelete}>
+              x
+            </div>
           </div>
         </div>
       </div>

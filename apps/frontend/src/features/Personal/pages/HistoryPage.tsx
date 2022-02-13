@@ -4,7 +4,11 @@ import { BsTrash } from 'react-icons/bs';
 import BoxRecent from '@/components/BoxRecent';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
-import { selectHistory, getUserHistoryAction } from '@kma-news/history-slice';
+import {
+  selectHistory,
+  getUserHistoryAction,
+  deleteHistoryAction,
+} from '@kma-news/history-slice';
 
 const HistoryPage = () => {
   const histories = useAppSelector(selectHistory);
@@ -30,6 +34,7 @@ const HistoryPage = () => {
               url={e.post?.url}
               visitDate={e.visitDate}
               key={i}
+              onDelete={() => dispatch(deleteHistoryAction(e.id))}
             />
           );
         })}
