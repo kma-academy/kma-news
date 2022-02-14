@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import './index.css';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { defaultThumbnail } from '@/constants/thumnail';
 export interface BoxRecentProps {
   title: string;
   url: string;
@@ -21,10 +23,7 @@ const BoxRecent: React.FC<BoxRecentProps> = ({
       <div className="box-recent__frame-img">
         <Link to={url}>
           <img
-            src={
-              thumbnailURL ||
-              'https://i.ytimg.com/vi/sYDmUyCj9JY/maxresdefault.jpg'
-            }
+            src={thumbnailURL || defaultThumbnail}
             alt={title}
             className="box-recent__img"
           />
