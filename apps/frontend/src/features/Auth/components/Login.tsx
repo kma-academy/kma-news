@@ -3,12 +3,15 @@ import { useAppDispatch } from '../../../app/hooks';
 import { loginAction } from '@kma-news/auth-slice';
 import './auth.css';
 import createZaloLoginUrl from '../../../services/createZaloLoginUrl';
+import { environment } from '../../../environments/environment';
 export interface LoginPopupProps {
   visible: boolean;
   toggleVisible: (visible: boolean) => void;
 }
-const { REACT_APP_ZALO_CALLBACK_URL = '', REACT_APP_ZALO_APP_ID = '' } =
-  process.env;
+const {
+  zaloCallbackURL: REACT_APP_ZALO_CALLBACK_URL,
+  zaloAppId: REACT_APP_ZALO_APP_ID,
+} = environment;
 const Login: React.FC<LoginPopupProps> = React.memo((props) => {
   const dispatch = useAppDispatch();
   const { visible, toggleVisible } = props;
