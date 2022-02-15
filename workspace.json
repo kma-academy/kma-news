@@ -4,6 +4,7 @@
     "admin": "apps/admin",
     "admin-e2e": "apps/admin-e2e",
     "api-interface": "libs/api-interface",
+    "auth-slice": "libs/auth-slice",
     "backend": "apps/backend",
     "channel-slice": "libs/channel-slice",
     "comment-slice": "libs/comment-slice",

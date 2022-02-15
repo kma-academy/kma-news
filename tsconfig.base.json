@@ -18,6 +18,7 @@
     "paths": {
       "@/*": ["apps/frontend/src/*"],
       "@kma-news/api-interface": ["libs/api-interface/src/index.ts"],
+      "@kma-news/auth-slice": ["libs/auth-slice/src/index.ts"],
       "@kma-news/channel-slice": ["libs/channel-slice/src/index.ts"],
       "@kma-news/comment-slice": ["libs/comment-slice/src/index.ts"],
       "@kma-news/env-validation-schema": [

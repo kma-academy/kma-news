@@ -1,0 +1,23 @@
+{
+  "root": "libs/auth-slice",
+  "sourceRoot": "libs/auth-slice/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/auth-slice/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/auth-slice"],
+      "options": {
+        "jestConfig": "libs/auth-slice/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

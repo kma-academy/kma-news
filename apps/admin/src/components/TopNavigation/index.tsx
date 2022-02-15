@@ -9,7 +9,7 @@ import {
   CaretDownOutlined,
 } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
-import { selectProfile, logoutAction } from '@/features/Auth/authSlice';
+import { selectProfile, logoutAction } from '@kma-news/auth-slice';
 import styles from './index.module.css';
 const { Header } = Layout;
 
