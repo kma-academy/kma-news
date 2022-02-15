@@ -118,6 +118,16 @@ export class ChannelService {
     return this.channelRepository.findOne(id);
   }
 
+  findPersonalChannel(userId: number) {
+    return this.channelRepository.find({
+      where: {
+        owner: {
+          id: userId,
+        },
+      },
+      select: ['id', 'isPublic', 'name'],
+    });
+  }
   async update(userId: number, id: number, updateChannelDto: UpdateChannelDto) {
     const channel = await this.channelRepository.findOne(id, {
       relations: ['owner'],

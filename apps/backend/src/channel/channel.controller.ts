@@ -46,6 +46,12 @@ export class ChannelController {
     return this.channelService.findHomePage();
   }
 
+  @Get('/mychannel')
+  @UseGuards(JwtAuthGuard)
+  findPersonalChannel(@CurrentUserId() userId) {
+    return this.channelService.findPersonalChannel(userId);
+  }
+
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   findOne(@Param('id', ParseIntPipe) id: number) {
