@@ -27,3 +27,9 @@ export type HomeTopicResponse = PostByChannelResponse[];
 export const getHomeChannel = () => {
   return client.get('/channels/homepage') as Promise<HomeTopicResponse>;
 };
+
+export type PersonalChannelResponse = Omit<PostByChannelResponse, 'contents'>[];
+
+export const getPersonalChannel = () => {
+  return client.get('/channels/mychannel') as Promise<PersonalChannelResponse>;
+};
