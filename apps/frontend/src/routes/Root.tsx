@@ -22,6 +22,9 @@ const FavoritePage = React.lazy(
 const CategoryPage = React.lazy(
   () => import('@/features/Personal/pages/CategoryPage/CategoryPage')
 );
+const CategoryCreatePage = React.lazy(
+  () => import('@/features/Personal/pages/CategoryPage/CategoryPageCreate')
+);
 const SubscriptionPage = React.lazy(
   () => import('@/features/Personal/pages/SubscriptionPage')
 );
@@ -53,6 +56,10 @@ export const RootRouter = () => {
               <Route path="doc-gan-day" element={<HistoryPage />} />
               <Route path="muc-da-luu" element={<FavoritePage />} />
               <Route path="muc-cua-ban" element={<CategoryPage />} />
+              <Route
+                path="muc-cua-ban/tao-moi"
+                element={<CategoryCreatePage />}
+              />
               <Route path="theo-doi" element={<SubscriptionPage />} />
             </Route>
           </Route>

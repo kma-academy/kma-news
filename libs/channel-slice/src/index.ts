@@ -3,12 +3,18 @@ import {
   PersonalChannelResponse,
   getPersonalChannel,
   LoadingState,
+  createPersonalChannel,
+  CreatePersonalChannelParameter,
 } from '@kma-news/api-interface';
 
-export const getPersonalChannelAction = createAsyncThunk(
-  'channel/mychannel',
-  () => {
-    return getPersonalChannel();
+export const getPersonalChannelAction = createAsyncThunk('channel/get', () => {
+  return getPersonalChannel();
+});
+
+export const createPersonalChannelAction = createAsyncThunk(
+  'channel/create',
+  (data: CreatePersonalChannelParameter) => {
+    return createPersonalChannel(data);
   }
 );
 
@@ -35,6 +41,17 @@ const channelSlice = createSlice({
         state.channels = action.payload;
       })
       .addCase(getPersonalChannelAction.rejected, (state) => {
+        state.loading = 'error';
+      });
+    builder
+      .addCase(createPersonalChannelAction.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(createPersonalChannelAction.fulfilled, (state, action) => {
+        state.loading = 'pending';
+        state.channels.push(action.payload);
+      })
+      .addCase(createPersonalChannelAction.rejected, (state) => {
         state.loading = 'error';
       });
   },

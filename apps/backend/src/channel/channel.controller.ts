@@ -13,10 +13,13 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CurrentUserId } from '../common/decorators/current-user.decorator';
+import { hasRoles, UserRole } from '../common/decorators/role.decorator';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
 import { ChannelService } from './channel.service';
 import { ChannelContentDto } from './dto/channel-content.dto';
 import { CreateChannelDto } from './dto/create-channel.dto';
+import { CreatePersonalChannelDto } from './dto/create-personal-channel.dto';
 import { UpdateChannelDto } from './dto/update-channel.dto';
 
 @Controller('channels')
@@ -27,7 +30,8 @@ export class ChannelController {
   constructor(private readonly channelService: ChannelService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @hasRoles(UserRole.ADMIN)
   create(
     @CurrentUserId() userId: number,
     @Body() createChannelDto: CreateChannelDto
@@ -50,6 +54,18 @@ export class ChannelController {
   @UseGuards(JwtAuthGuard)
   findPersonalChannel(@CurrentUserId() userId) {
     return this.channelService.findPersonalChannel(userId);
+  }
+
+  @Post('/mychannel')
+  @UseGuards(JwtAuthGuard)
+  createPersonalChannel(
+    @CurrentUserId() userId,
+    @Body() createPersonalChannelDto: CreatePersonalChannelDto
+  ) {
+    return this.channelService.createPersonalChannel(
+      userId,
+      createPersonalChannelDto
+    );
   }
 
   @Get(':id')

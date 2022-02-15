@@ -33,3 +33,24 @@ export type PersonalChannelResponse = Omit<PostByChannelResponse, 'contents'>[];
 export const getPersonalChannel = () => {
   return client.get('/channels/mychannel') as Promise<PersonalChannelResponse>;
 };
+
+export type CreatePersonalChannelReponse = Omit<
+  PostByChannelResponse,
+  'contents'
+>;
+export interface CreatePersonalChannelParameter {
+  name: string;
+  keywords: string[];
+  excludedKeywords: string[];
+  categories: number[];
+  excludedCategories: number[];
+  publishers: number[];
+  excludedPublishers: number[];
+}
+
+export const createPersonalChannel = (data: CreatePersonalChannelParameter) => {
+  return client.post(
+    '/channels/mychannel',
+    data
+  ) as Promise<CreatePersonalChannelReponse>;
+};
