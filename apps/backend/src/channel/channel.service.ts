@@ -124,6 +124,7 @@ export class ChannelService {
         owner: {
           id: userId,
         },
+        isPublic: false,
       },
       select: ['id', 'isPublic', 'name'],
     });
