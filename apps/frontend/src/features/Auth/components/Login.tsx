@@ -8,10 +8,7 @@ export interface LoginPopupProps {
   visible: boolean;
   toggleVisible: (visible: boolean) => void;
 }
-const {
-  zaloCallbackURL: REACT_APP_ZALO_CALLBACK_URL,
-  zaloAppId: REACT_APP_ZALO_APP_ID,
-} = environment;
+const { zaloCallbackURL, zaloAppId } = environment;
 const Login: React.FC<LoginPopupProps> = React.memo((props) => {
   const dispatch = useAppDispatch();
   const { visible, toggleVisible } = props;
@@ -23,7 +20,7 @@ const Login: React.FC<LoginPopupProps> = React.memo((props) => {
   const handleLoginZalo = (event: MouseEvent) => {
     event.preventDefault();
     const popupLogin = window.open(
-      createZaloLoginUrl(REACT_APP_ZALO_APP_ID, REACT_APP_ZALO_CALLBACK_URL),
+      createZaloLoginUrl(zaloAppId, zaloCallbackURL),
       'popup',
       'width=600,height=600'
     );
