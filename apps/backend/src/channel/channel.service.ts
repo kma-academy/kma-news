@@ -66,7 +66,7 @@ export class ChannelService {
   ) {
     return this.create(userId, {
       ...createPersonalChannelDto,
-      isPublic: true,
+      isPublic: false,
     });
   }
   async contentByChannel(channel: Channel, page: number, limit: number) {

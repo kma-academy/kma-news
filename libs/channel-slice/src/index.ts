@@ -48,7 +48,7 @@ const channelSlice = createSlice({
         state.loading = 'pending';
       })
       .addCase(createPersonalChannelAction.fulfilled, (state, action) => {
-        state.loading = 'pending';
+        state.loading = 'done';
         state.channels.push(action.payload);
       })
       .addCase(createPersonalChannelAction.rejected, (state) => {
