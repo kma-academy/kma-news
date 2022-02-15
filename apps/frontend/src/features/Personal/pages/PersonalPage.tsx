@@ -9,8 +9,7 @@ import './index.css';
 import { Link, Outlet } from 'react-router-dom';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { useAppSelector } from '@/app/hooks';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { selectProfile } from '@/features/Auth/authSlice';
+import { selectProfile } from '@kma-news/auth-slice';
 const PersonalPage = () => {
   const profile = useAppSelector(selectProfile);
   return (

@@ -1,29 +1,30 @@
-import React, { useState, MouseEvent } from 'react'
-import { useAppDispatch } from '@/app/hooks'
-import { loginAction } from '../authSlice'
-import './auth.css'
-import createZaloLoginUrl from '@/services/createZaloLoginUrl'
+import React, { useState, MouseEvent } from 'react';
+import { useAppDispatch } from '../../../app/hooks';
+import { loginAction } from '@kma-news/auth-slice';
+import './auth.css';
+import createZaloLoginUrl from '../../../services/createZaloLoginUrl';
 export interface LoginPopupProps {
-  visible: boolean
-  toggleVisible: (visible: boolean) => void
+  visible: boolean;
+  toggleVisible: (visible: boolean) => void;
 }
-const { REACT_APP_ZALO_CALLBACK_URL = '', REACT_APP_ZALO_APP_ID = '' } = process.env
+const { REACT_APP_ZALO_CALLBACK_URL = '', REACT_APP_ZALO_APP_ID = '' } =
+  process.env;
 const Login: React.FC<LoginPopupProps> = React.memo((props) => {
-  const dispatch = useAppDispatch()
-  const { visible, toggleVisible } = props
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const dispatch = useAppDispatch();
+  const { visible, toggleVisible } = props;
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const handleSubmit = () => {
-    dispatch(loginAction({ email, password }))
-  }
+    dispatch(loginAction({ email, password }));
+  };
   const handleLoginZalo = (event: MouseEvent) => {
-    event.preventDefault()
+    event.preventDefault();
     const popupLogin = window.open(
       createZaloLoginUrl(REACT_APP_ZALO_APP_ID, REACT_APP_ZALO_CALLBACK_URL),
       'popup',
       'width=600,height=600'
-    )
-  }
+    );
+  };
 
   return (
     <div className={visible ? 'modal' : 'modal-none'} id="modal">
@@ -62,7 +63,11 @@ const Login: React.FC<LoginPopupProps> = React.memo((props) => {
               <p className="auth-form__group-forget">Bạn quên mật khẩu ?</p>
             </div>
             <div className="auth-form__btn">
-              <input type="button" className="auth-btn auth-btn--regis" value="Đăng kí" />
+              <input
+                type="button"
+                className="auth-btn auth-btn--regis"
+                value="Đăng kí"
+              />
               <input
                 type="button"
                 className="auth-btn auth-btn--login"
@@ -82,7 +87,9 @@ const Login: React.FC<LoginPopupProps> = React.memo((props) => {
                 alt=""
                 className="auth-socails__logo"
               />
-              <p className="auth-socials__name auth-socials__name--zalo">Đăng nhập bằng Zalo</p>
+              <p className="auth-socials__name auth-socials__name--zalo">
+                Đăng nhập bằng Zalo
+              </p>
             </a>
             <a href="/#" className="auth-socials__btn auth-socials__btn--face">
               <img
@@ -90,12 +97,14 @@ const Login: React.FC<LoginPopupProps> = React.memo((props) => {
                 alt=""
                 className="auth-socails__logo"
               />
-              <p className="auth-socials__name auth-socials__name--face">Đăng nhập bằng Facebook</p>
+              <p className="auth-socials__name auth-socials__name--face">
+                Đăng nhập bằng Facebook
+              </p>
             </a>
           </div>
         </div>
       </div>
     </div>
-  )
-})
-export default Login
+  );
+});
+export default Login;

@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import React, { useEffect } from 'react';
 import { AiOutlineUser, AiOutlineMenu } from 'react-icons/ai';
 import { BsPhone, BsSearch } from 'react-icons/bs';
@@ -5,7 +6,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Login from '@/features/Auth/components/Login';
 import { AuthDropDown } from '@/features/Auth/components/AuthDropDown/';
-import { selectLoggedIn, selectProfile } from '@/features/Auth/authSlice';
+import { selectLoggedIn, selectProfile } from '@kma-news/auth-slice';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { HeaderMenu } from './HeaderMenu';

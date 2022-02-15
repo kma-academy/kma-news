@@ -1,19 +1,19 @@
-import React from 'react'
-import { useAppDispatch } from '@/app/hooks'
-import { BsSave2 } from 'react-icons/bs'
-import { GiRibbonMedal, GiBackwardTime } from 'react-icons/gi'
-import { IoMdExit } from 'react-icons/io'
-import { Link } from 'react-router-dom'
-import { logoutAction } from '@/features/Auth/authSlice'
-import './index.css'
+import React from 'react';
+import { useAppDispatch } from '../../../../app/hooks';
+import { BsSave2 } from 'react-icons/bs';
+import { GiRibbonMedal, GiBackwardTime } from 'react-icons/gi';
+import { IoMdExit } from 'react-icons/io';
+import { Link } from 'react-router-dom';
+import { logoutAction } from '@kma-news/auth-slice';
+import './index.css';
 export interface AuthDropDownProps {
-  visible: boolean
-  toggleVisible: (visible: boolean) => void
+  visible: boolean;
+  toggleVisible: (visible: boolean) => void;
 }
 
 export const AuthDropDown: React.FC<AuthDropDownProps> = (props) => {
-  const dispatch = useAppDispatch()
-  const { visible } = props
+  const dispatch = useAppDispatch();
+  const { visible } = props;
   return (
     <div className={visible ? 'auth-drop' : 'auth-drop--hide'}>
       <ul className="auth-drop__list">
@@ -39,7 +39,11 @@ export const AuthDropDown: React.FC<AuthDropDownProps> = (props) => {
             </div>
           </li>
         </Link>
-        <Link to="#" className="auth-drop__item" onClick={() => dispatch(logoutAction())}>
+        <Link
+          to="#"
+          className="auth-drop__item"
+          onClick={() => dispatch(logoutAction())}
+        >
           <li>
             <div className="auth-drop__item--a">
               <IoMdExit className="auth-drop__icon" />
@@ -49,5 +53,5 @@ export const AuthDropDown: React.FC<AuthDropDownProps> = (props) => {
         </Link>
       </ul>
     </div>
-  )
-}
+  );
+};
