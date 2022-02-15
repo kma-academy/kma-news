@@ -1,0 +1,13 @@
+.editable-tag-input {
+    width: 100px;
+    margin-right: 8px;
+    vertical-align: top;
+}
+
+.editable-edit-tag {
+    user-select: none;
+}
+.editable-tag-plus {
+    background: #fff;
+    border-style: dashed;
+}
