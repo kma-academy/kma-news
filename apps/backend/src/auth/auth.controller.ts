@@ -24,11 +24,15 @@ import { LoginWithEmailDto } from './dto/login-with-email.dto';
 import { Cookies } from '../common/decorators/cookie.decorator';
 import { AuthService } from './auth.service';
 import { LoginWithZaloDto } from './dto/login-with-zalo.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly configService: ConfigService
+  ) {}
 
   @Post('login')
   @UseGuards(LocalAuthGuard)
@@ -39,7 +43,7 @@ export class AuthController {
   login(@Req() req, @Res({ passthrough: true }) res: Response) {
     const { refresh_token, ...data } = req.user as LoginResultInterface;
     res.cookie('refresh_token', refresh_token, {
-      domain: 'localhost',
+      domain: this.configService.get('COOKIE_DOMAIN'),
       expires: new Date(data.expiredAt),
       httpOnly: true,
     });
@@ -47,8 +51,19 @@ export class AuthController {
   }
 
   @Post('login/zalo')
-  loginByZalo(@Body() loginWithZaloDto: LoginWithZaloDto) {
-    return this.authService.loginByZalo(loginWithZaloDto.code);
+  async loginByZalo(
+    @Body() dto: LoginWithZaloDto,
+    @Res({ passthrough: true }) res: Response
+  ) {
+    const { refresh_token, ...data } = await this.authService.loginByZalo(
+      dto.code
+    );
+    res.cookie('refresh_token', refresh_token, {
+      domain: this.configService.get('COOKIE_DOMAIN'),
+      expires: new Date(data.expiredAt),
+      httpOnly: true,
+    });
+    return data;
   }
 
   @Get('profile')

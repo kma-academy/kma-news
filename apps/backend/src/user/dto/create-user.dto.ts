@@ -16,4 +16,7 @@ export class CreateUserDto {
 
   @ApiProperty({ example: 'Admin', required: true })
   name?: string;
+
+  @ApiProperty({ example: 'https://', required: true })
+  avatarURL?: string;
 }

@@ -91,6 +91,7 @@ export class AuthService {
       password,
       name,
       role: UserRole.USER,
+      avatarURL: picture?.data?.url,
     });
     return this.login(user);
   }

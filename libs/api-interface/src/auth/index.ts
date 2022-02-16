@@ -22,6 +22,17 @@ export const loginWithEmail = (data: LoginParameter) => {
   }) as Promise<LoginResponse>;
 };
 
+export const loginWithZalo = (code: string) => {
+  return client.request({
+    url: '/auth/login/zalo',
+    method: 'POST',
+    withCredentials: true,
+    data: {
+      code,
+    },
+  }) as Promise<LoginResponse>;
+};
+
 export interface LogoutResponse {
   message: string;
 }

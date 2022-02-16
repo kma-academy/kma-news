@@ -78,7 +78,7 @@ const Login: React.FC<LoginPopupProps> = React.memo((props) => {
           </form>
           <div className="auth-form__socials">
             <a
-              href="/#"
+              href={createZaloLoginUrl(zaloAppId, zaloCallbackURL)}
               className="auth-socials__btn auth-socials__btn--zalo"
               onClick={handleLoginZalo}
             >

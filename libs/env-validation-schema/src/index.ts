@@ -14,9 +14,12 @@ export const EnvValidationSchema = Joi.object({
     .min(1)
     .max(10 * 60),
   REFRESH_TOKEN_SECRET: Joi.string()
-    // .invalid(Joi.ref('ACCESS_TOKEN_SECRET'))
+    .invalid(Joi.ref('ACCESS_TOKEN_SECRET'))
     .required(),
   REFRESH_TOKEN_TTL: Joi.number()
     .min(24 * 60 * 60)
     .required(),
+  ZALO_SECRET_KEY: Joi.string().required(),
+  ZALO_APP_ID: Joi.string().required(),
+  COOKIE_DOMAIN: Joi.string().required(),
 });

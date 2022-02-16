@@ -27,10 +27,8 @@ const ZaloLoginPage: React.FC = () => {
   return (
     <div>
       <h1>Zalo Login</h1>
-      {/* <p>Token: {code}</p> */}
-      {loading === 'pending' && <p>Loading...</p>}
-      {loading === 'error' && <p>{message}</p>}
-      <p>{message}</p>
+      <p>Token: {code}</p>
+      {loading === 'pending' ? <p>Loading...</p> : <p>{message}</p>}
     </div>
   );
 };
