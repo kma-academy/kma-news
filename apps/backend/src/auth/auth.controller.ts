@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Get,
   HttpCode,
@@ -22,6 +23,7 @@ import { User } from '../user/entities/user.entity';
 import { LoginWithEmailDto } from './dto/login-with-email.dto';
 import { Cookies } from '../common/decorators/cookie.decorator';
 import { AuthService } from './auth.service';
+import { LoginWithZaloDto } from './dto/login-with-zalo.dto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -42,6 +44,11 @@ export class AuthController {
       httpOnly: true,
     });
     return data;
+  }
+
+  @Post('login/zalo')
+  loginByZalo(@Body() loginWithZaloDto: LoginWithZaloDto) {
+    return this.authService.loginByZalo(loginWithZaloDto.code);
   }
 
   @Get('profile')

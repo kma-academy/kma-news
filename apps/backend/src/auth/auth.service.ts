@@ -1,8 +1,9 @@
 import { ForbiddenException, HttpException, Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
-import { User } from '../user/entities/user.entity';
+import { User, UserRole } from '../user/entities/user.entity';
 import { TokenService } from '../token/token.service';
 import { LoginResultInterface } from '../common/interfaces/login-result.interface';
+import { ZaloService } from '@kma-news/zalo-auth';
 
 // Function compare two number
 
@@ -10,7 +11,8 @@ import { LoginResultInterface } from '../common/interfaces/login-result.interfac
 export class AuthService {
   constructor(
     private readonly userService: UserService,
-    private readonly tokenService: TokenService
+    private readonly tokenService: TokenService,
+    private readonly zaloService: ZaloService
   ) {}
 
   async validate(email: string, password: string) {
@@ -72,5 +74,24 @@ export class AuthService {
       if (error instanceof HttpException) throw error;
       return new ForbiddenException('Token expired');
     }
+  }
+
+  async loginByZalo(code: string) {
+    const { access_token } =
+      await this.zaloService.getTokenFromAuthorizationCode(code);
+    const { id, name, picture } = await this.zaloService.getUserDataFromToken(
+      access_token
+    );
+    const email = `${id}@zalo.com.vn`;
+    const password = `password_${Date.now()}`;
+    const existUser = await this.userService.findByEmail(email);
+    if (existUser) return this.login(existUser);
+    const user = await this.userService.create({
+      email,
+      password,
+      name,
+      role: UserRole.USER,
+    });
+    return this.login(user);
   }
 }
