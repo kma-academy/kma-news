@@ -35,7 +35,7 @@ export class AuthService {
     // Access token
     return {
       access_token: access_token,
-      expiredAt: token_expiredTime,
+      expiredAt: token_expiredTime.toISOString(),
       refresh_token,
       user: {
         id: user.id,

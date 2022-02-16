@@ -35,11 +35,10 @@ export class AuthController {
   })
   @HttpCode(200)
   login(@Req() req, @Res({ passthrough: true }) res: Response) {
-    const { refresh_token, expiredAt, ...data } =
-      req.user as LoginResultInterface;
+    const { refresh_token, ...data } = req.user as LoginResultInterface;
     res.cookie('refresh_token', refresh_token, {
       domain: 'localhost',
-      expires: expiredAt,
+      expires: new Date(data.expiredAt),
       httpOnly: true,
     });
     return data;

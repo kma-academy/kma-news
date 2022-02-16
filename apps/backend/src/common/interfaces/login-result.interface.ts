@@ -1,7 +1,7 @@
 import { UserRole } from '../../user/entities/user.entity';
 export interface LoginResultInterface {
   access_token: string;
-  expiredAt: Date;
+  expiredAt: string;
   refresh_token: string;
   user: {
     id: number;

@@ -20,6 +20,16 @@ axiosClient.interceptors.request.use(async (config) => {
   return config;
 });
 
+const getCookieExpiredDate = () => {
+  try {
+    const dateStr = localStorage.getItem('expiredAt');
+    if (!dateStr) return new Date();
+    return new Date(dateStr);
+  } catch (error) {
+    return new Date();
+  }
+};
+
 export const ignorePath = ['/auth/login', '/auth/logout'];
 let refreshTokenRequest: Promise<RefreshTokenResponse> | null = null;
 axiosClient.interceptors.response.use(
@@ -30,10 +40,18 @@ axiosClient.interceptors.response.use(
   (error) => {
     // Token hết hạn
     if (error?.response?.status === 401) {
-      console.group('Refresh token');
       console.log('Token expired');
-      if (ignorePath.includes(window.location.pathname)) {
+      const cookieExpiredDate = getCookieExpiredDate();
+      // Cookie hết hạn
+      if (
+        Math.abs(cookieExpiredDate.getTime() - new Date().getTime()) <
+        10 * 1000
+      ) {
+        console.log('Session expired');
+        throw error;
+      } else if (ignorePath.includes(window.location.pathname)) {
         console.log('Skip refresh token');
+        throw error;
       } else {
         console.log('Refresh token');
         refreshTokenRequest = refreshTokenRequest || refreshToken();
@@ -41,10 +59,11 @@ axiosClient.interceptors.response.use(
           .then((data) => {
             console.log('Refresh token success');
             localStorage.setItem('access_token', data.access_token);
+            refreshTokenRequest = null;
             return axiosClient.request(error.config);
           })
           .catch((error) => {
-            if (error?.response?.status === 403) {
+            if (error?.response?.status !== 500) {
               console.log('Refresh token failed');
               localStorage.removeItem('access_token');
             }
@@ -52,7 +71,6 @@ axiosClient.interceptors.response.use(
             throw error;
           });
       }
-      console.groupEnd();
     }
     const status = error?.response?.status && `[${error.response.status}] `;
     if (error?.response?.data?.message) {

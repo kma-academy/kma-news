@@ -14,7 +14,12 @@ export interface LoginResponse {
 }
 
 export const loginWithEmail = (data: LoginParameter) => {
-  return client.post('/auth/login', data) as Promise<LoginResponse>;
+  return client.request({
+    method: 'POST',
+    url: '/auth/login',
+    withCredentials: true,
+    data,
+  }) as Promise<LoginResponse>;
 };
 
 export interface LogoutResponse {

@@ -73,9 +73,10 @@ const authSlice = createSlice({
         .addCase(act.fulfilled, (state, action) => {
           state.loading = 'done';
           state.loggedIn = true;
-          const { access_token, user } = action.payload;
+          const { access_token, expiredAt, user } = action.payload;
           state.profile = user;
           localStorage.setItem('access_token', access_token);
+          localStorage.setItem('expiredAt', expiredAt);
         })
         .addCase(act.rejected, (state, action) => {
           state.loading = 'error';
