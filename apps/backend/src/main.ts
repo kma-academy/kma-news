@@ -43,7 +43,11 @@ async function bootstrap() {
   SwaggerModule.setup('/', app, document, customOptions);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.enableCors({
-    origin: ['http://localhost:4200', 'http://localhost:4201'],
+    origin: [
+      'http://localhost:4200',
+      'http://localhost:4201',
+      'https://kma-news.herokuapp.com',
+    ],
     credentials: true,
   });
   app.use(cookieParser());

@@ -43,8 +43,8 @@ export const logoutAction = createAsyncThunk(
 
 export const loginZaloAction = createAsyncThunk(
   'auth/login_zalo',
-  async (_: string, thunkAPI) => {
-    const result = await loginWithEmail({ email: '_', password: '' });
+  async (code: string) => {
+    const result = await loginWithEmail({ email: code, password: '' });
     return result;
   }
 );

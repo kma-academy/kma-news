@@ -12,6 +12,7 @@
     "env-validation-schema": "libs/env-validation-schema",
     "frontend": "apps/frontend",
     "frontend-e2e": "apps/frontend-e2e",
-    "history-slice": "libs/history-slice"
+    "history-slice": "libs/history-slice",
+    "zalo-auth": "libs/zalo-auth"
   }
 }

@@ -24,7 +24,8 @@
       "@kma-news/env-validation-schema": [
         "libs/env-validation-schema/src/index.ts"
       ],
-      "@kma-news/history-slice": ["libs/history-slice/src/index.ts"]
+      "@kma-news/history-slice": ["libs/history-slice/src/index.ts"],
+      "@kma-news/zalo-auth": ["libs/zalo-auth/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
