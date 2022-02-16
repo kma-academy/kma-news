@@ -43,7 +43,7 @@ async function bootstrap() {
   SwaggerModule.setup('/', app, document, customOptions);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.enableCors({
-    origin: ['http://localhost:4200'],
+    origin: ['http://localhost:4200', 'http://localhost:4201'],
     credentials: true,
   });
   app.use(cookieParser());

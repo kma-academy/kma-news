@@ -10,7 +10,7 @@ import {
 } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectProfile, logoutAction } from '@kma-news/auth-slice';
-import styles from './index.module.css';
+import './index.css';
 const { Header } = Layout;
 
 export const TopNavigation = () => {
@@ -44,26 +44,26 @@ export const TopNavigation = () => {
           <Menu.SubMenu
             key="setting"
             icon={<CaretDownOutlined />}
-            title={profile.name}
+            title={profile?.name}
           >
             <Menu.Item
               key="profile"
               icon={<UserOutlined />}
-              className={styles['submenu_child']}
+              className="submenu_child"
             >
               Chỉnh sửa tài khoản
             </Menu.Item>
             <Menu.Item
               key="follow"
               icon={<BookOutlined />}
-              className={styles['submenu_child']}
+              className="submenu_child"
             >
               Tin tức
             </Menu.Item>
             <Menu.Item
               key="logout"
               icon={<LogoutOutlined />}
-              className={styles['submenu_child']}
+              className="submenu_child"
               onClick={() => dispatch(logoutAction())}
             >
               Đăng xuất

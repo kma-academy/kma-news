@@ -20,7 +20,7 @@ export const BasicLayout: React.FC = (props) => {
             style={{
               padding: 24,
               margin: 0,
-              minHeight: '100vh',
+              // minHeight: '100vh',
               overflowY: 'scroll',
             }}
           >

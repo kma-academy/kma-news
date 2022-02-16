@@ -1,4 +1,3 @@
-import './app.css';
 import { RootRoute } from '../routes/Root';
 
 export function App() {
