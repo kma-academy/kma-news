@@ -4,7 +4,7 @@ import { Category } from '../category/entities/category.entity';
 import { SlugHelper } from '../common/helpers/slug.helper';
 import { Publisher } from '../publisher/entities/publisher.entity';
 import { User } from '../user/entities/user.entity';
-import { In, Repository } from 'typeorm';
+import { In, Repository, Brackets } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post, PostStatus } from './entities/post.entity';
@@ -56,6 +56,33 @@ export class PostService {
       skip: (page - 1) * limit,
       take: limit,
     });
+  }
+
+  search(query: string, page: number, limit: number) {
+    const builder = this.postRepository.createQueryBuilder('post');
+    builder.where('status =:status', { status: PostStatus.PUBLISHED });
+    const keywords = query?.split(/\s+/g) || [];
+    if (keywords.length > 0) {
+      builder.andWhere(
+        new Brackets((qb) => {
+          const [first, ...other] = keywords;
+          qb.where('title LIKE :title', { title: `%${first}%` });
+          for (const keyword of other) {
+            qb.orWhere('title LIKE :title', { title: `%${keyword}%` });
+          }
+        })
+      );
+    }
+    builder.skip((page - 1) * limit);
+    builder.take(limit);
+    builder.orderBy('post.publishedAt', 'DESC');
+    builder.innerJoinAndMapOne(
+      'post.publisher',
+      Publisher,
+      'publisher',
+      'post.publisherHostname = publisher.hostname'
+    );
+    return builder.getMany();
   }
 
   findOne(id: number) {

@@ -21,6 +21,7 @@ import { RecentPostDto } from './dto/recent-post.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { hasRoles, UserRole } from '../common/decorators/role.decorator';
+import { SearchPostDto } from './dto/search-post.dto';
 
 @Controller('posts')
 @ApiTags('post')
@@ -41,6 +42,18 @@ export class PostController {
     findAllDto: RecentPostDto
   ) {
     return this.postService.findAll(findAllDto.page, findAllDto.limit);
+  }
+
+  @Get('search')
+  search(
+    @Query(new ValidationPipe({ transform: true }))
+    searchPostDto: SearchPostDto
+  ) {
+    return this.postService.search(
+      searchPostDto.q,
+      searchPostDto.page,
+      searchPostDto.limit
+    );
   }
 
   @Get(':id')
