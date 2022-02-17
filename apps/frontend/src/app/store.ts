@@ -10,6 +10,7 @@ import commentSlice from '@kma-news/comment-slice';
 import authSlice from '@kma-news/auth-slice';
 import historySlice from '@kma-news/history-slice';
 import channelSlice from '@kma-news/channel-slice';
+import searchSlice from '@kma-news/search-slice';
 
 console.log(process.env['NX_API_URL']);
 
@@ -25,6 +26,7 @@ export const store = configureStore({
     comment: commentSlice,
     history: historySlice,
     channel: channelSlice,
+    search: searchSlice,
   },
 });
 
