@@ -12,7 +12,7 @@ import { HiOutlineDocumentDuplicate, HiOutlineKey } from 'react-icons/hi';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { FullScreenImage } from '../components/FullScreenImage';
 import { selectData, getPostAction, selectLoading } from '../postSlice';
-import { updateViewPostAction } from '@kma-news/history-slice';
+import { CommentBox } from '../components/Comments/CommentBox';
 // import '../components/HotTopic/'
 interface ImageDetail {
   id: number;
@@ -30,13 +30,9 @@ const ReadingPage: React.FC = () => {
   useEffect(() => {
     if (id) dispatch(getPostAction(+id));
   }, [dispatch, id]);
-
   useEffect(() => {
     if (loading === 'done' && data?.slug !== slug) {
       navigate('/');
-    }
-    if (loading === 'done' && data) {
-      dispatch(updateViewPostAction(data.id));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
@@ -169,6 +165,7 @@ const ReadingPage: React.FC = () => {
                   <a href={data?.sourceURL || '#'}>{data?.sourceURL}</a>
                 </span>
               </p>
+              <CommentBox/>
               <div className="page-news">
                 <div className="page-news-header">
                   <p className="page-news-title">TIN KHÁC</p>

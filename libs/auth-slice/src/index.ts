@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import {
   LoadingState,
   logout,
@@ -55,14 +55,20 @@ export interface AuthState {
   loggedIn: boolean;
   profile?: ProfileResponse;
   message?: string;
+  showLoginPopup: boolean;
 }
 const initialState: AuthState = {
   loading: 'idle',
   loggedIn: !!localStorage.getItem('access_token'),
+  showLoginPopup: false,
 };
 const authSlice = createSlice({
   name: 'auth',
-  reducers: {},
+  reducers: {
+    togglePopup: (state, action: PayloadAction<boolean>) => {
+      state.showLoginPopup = action.payload;
+    },
+  },
   initialState,
   extraReducers: (builder) => {
     const allLoginAction = [loginAction, loginZaloAction] as const;
@@ -74,6 +80,7 @@ const authSlice = createSlice({
         .addCase(act.fulfilled, (state, action) => {
           state.loading = 'done';
           state.loggedIn = true;
+          state.showLoginPopup = false;
           const { access_token, expiredAt, user } = action.payload;
           state.profile = user;
           localStorage.setItem('access_token', access_token);
@@ -130,5 +137,9 @@ export const selectProfile = <T extends RootState>(state: T) =>
   state.auth.profile;
 export const selectMessage = <T extends RootState>(state: T) =>
   state.auth.message;
+export const selectShowPopup = <T extends RootState>(state: T) =>
+  state.auth.showLoginPopup;
+
+export const { togglePopup } = authSlice.actions;
 
 export default authSlice.reducer;

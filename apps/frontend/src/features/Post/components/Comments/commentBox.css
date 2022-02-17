@@ -1,0 +1,89 @@
+.frameComment {
+    width: 100%;
+}
+
+.comment__title {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.comment__number {
+    font-weight: 500;
+}
+
+.comment__box {
+    padding: 0 10px;
+    margin-top: 20px;
+
+}
+
+.comment__textBox {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    resize: none;
+    border-radius: 10px;
+    border: 2px solid #556677;
+}
+
+.comment__textBox--full {
+    width: 100%;
+    padding: 10px;
+    min-height: 120px;
+    height: auto;
+    overflow: hidden;
+    resize: none;
+    border-radius: 10px;
+    border: 2px solid #556677;
+}
+
+
+
+.comment__textBox__btn {
+    height: 40px;
+    width: 100px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 5px;
+    border: 2px solid #556677;
+}
+
+.comment__textBox__btnBox {
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+.comment__textBox__btn:hover {
+    background-color: bisque;
+    cursor: pointer;
+}
+
+.comment__action {
+    display: flex;
+    height: 30px;
+    border-bottom: 1px solid #556677;
+}
+
+.comment__sort {
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    min-width: max-content;
+    cursor: pointer;
+}
+
+.comment__sort--un-active:hover {
+    color: tomato;
+}
+
+.comment__sort+.comment__sort {
+    margin-left: 20px;
+}
+
+.comment__sort--active {
+    color: brown;
+    border-bottom: 1px solid brown;
+}

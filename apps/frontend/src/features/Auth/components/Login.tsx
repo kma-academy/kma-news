@@ -1,17 +1,19 @@
 import React, { useState, MouseEvent } from 'react';
-import { useAppDispatch } from '../../../app/hooks';
-import { loginAction } from '@kma-news/auth-slice';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import {
+  loginAction,
+  selectShowPopup,
+  togglePopup,
+} from '@kma-news/auth-slice';
 import './auth.css';
 import createZaloLoginUrl from '../../../services/createZaloLoginUrl';
 import { environment } from '../../../environments/environment';
-export interface LoginPopupProps {
-  visible: boolean;
-  toggleVisible: (visible: boolean) => void;
-}
+
 const { zaloCallbackURL, zaloAppId } = environment;
-const Login: React.FC<LoginPopupProps> = React.memo((props) => {
+
+const Login: React.FC = React.memo((props) => {
   const dispatch = useAppDispatch();
-  const { visible, toggleVisible } = props;
+  const isShowing = useAppSelector(selectShowPopup);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const handleSubmit = () => {
@@ -27,8 +29,11 @@ const Login: React.FC<LoginPopupProps> = React.memo((props) => {
   };
 
   return (
-    <div className={visible ? 'modal' : 'modal-none'} id="modal">
-      <div className="modal__overlay" onClick={() => toggleVisible(false)} />
+    <div className={isShowing ? 'modal' : 'modal-none'} id="modal">
+      <div
+        className="modal__overlay"
+        onClick={() => dispatch(togglePopup(false))}
+      ></div>
       <div className="modal__body">
         <div className="auth-form">
           <div className="auth-form__header">

@@ -1,0 +1,77 @@
+.commentBox {
+    display: flex;
+    width: 100%;
+}
+
+.commentBox__image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.commentBox__right {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.commentBox__content {
+
+    font-size: 15px
+}
+
+.commentBox-name {
+    font-size: 20px;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.commentBox__action-list {
+    display: flex;
+    align-items: center;
+    height: 40px;
+}
+
+.commentBox__action-item {
+    display: flex;
+    align-items: center;
+    min-width: 70px;
+
+}
+
+.commentBox__number {}
+
+.commentBox__reply:hover {
+    cursor: pointer;
+    color: #28B463;
+}
+
+.commentBox__time {}
+
+.commentBox-icon {
+    margin-left: 5px;
+}
+
+.commentBox-icon--like:hover {
+    color: #0C8AF0;
+}
+
+.commentBox-icon--dislike:hover {
+    color: #F35369;
+}
+
+.comment__reply {
+
+    display: flex;
+
+    align-items: center;
+}
+
+.comment__reply-icon {
+    font-size: 20px;
+}
+
+.comment__reply:hover .comment__reply-icon {
+    color: #28B463;
+}
+
+.comment__reply-count {}

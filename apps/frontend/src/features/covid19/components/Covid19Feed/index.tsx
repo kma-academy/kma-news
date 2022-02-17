@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { BsFlagFill } from 'react-icons/bs';
 import { FaUserInjured, FaUsersSlash } from 'react-icons/fa';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { fetchCovid19Data, selectData } from '@/features/covid19/covid19Slice';
 
 const numberFormat = new Intl.NumberFormat('en-EN');

@@ -2,11 +2,10 @@
 import React, { useEffect } from 'react';
 import { AiOutlineUser, AiOutlineMenu } from 'react-icons/ai';
 import { BsPhone, BsSearch } from 'react-icons/bs';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Login from '@/features/Auth/components/Login';
 import { AuthDropDown } from '@/features/Auth/components/AuthDropDown/';
-import { selectLoggedIn, selectProfile } from '@kma-news/auth-slice';
+import { selectLoggedIn, selectProfile, togglePopup } from '@kma-news/auth-slice';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { HeaderMenu } from './HeaderMenu';
@@ -26,15 +25,13 @@ const Header = () => {
     useClickOutside<HTMLDivElement>(false);
   const [refDropMenu, activeDropMenu, setActiveDropMenu] =
     useClickOutside<HTMLDivElement>(false);
-  const [loginVisible, toggleLogin] = useState(false);
 
   useEffect(() => {
     // Nếu đăng nhập thành công
     if (loggedIn) {
-      toggleLogin(false);
       toggleUserMenu(false);
     }
-  }, [loggedIn, toggleLogin, toggleUserMenu]);
+  }, [loggedIn, toggleUserMenu]);
   useEffect(() => {
     dispatch(getHeaderMenusAction());
     dispatch(getHeaderCategoriesAction());
@@ -110,11 +107,11 @@ const Header = () => {
             <div>
               <div
                 className="logo-user"
-                onClick={() => toggleLogin(!loginVisible)}
+                onClick={() => dispatch(togglePopup(true))}
               >
                 <AiOutlineUser size="25px" />
               </div>
-              <Login visible={loginVisible} toggleVisible={toggleLogin} />
+              <Login />
             </div>
           )}
 
