@@ -399,6 +399,11 @@ a {
 
 }
 
+.page-extension-font--action:hover {
+    cursor: pointer;
+    color: #44ABBB;
+}
+
 .page-extension-origin {
     display: flex;
     align-items: center;

@@ -1,4 +1,6 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { defaultThumbnail } from '@/constants/thumnail';
+import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -9,6 +11,7 @@ export interface LastestNewProps {
   thumbnailURL: string;
   publisherLogo?: string;
   publisherName?: string;
+  sourceURL: string;
 }
 
 export const LastestNew: React.FC<LastestNewProps> = (props) => {
@@ -19,6 +22,7 @@ export const LastestNew: React.FC<LastestNewProps> = (props) => {
     publishedAt,
     publisherLogo,
     publisherName,
+    sourceURL,
   } = props;
   return (
     <div className="section">
@@ -42,7 +46,9 @@ export const LastestNew: React.FC<LastestNewProps> = (props) => {
               alt={publisherName}
             />
           </Link>
-          <span className="news-time">{publishedAt.toISOString()}</span>
+          <span className="news-time">
+            {moment(publishedAt).locale('vi').fromNow()}
+          </span>
         </div>
       </div>
     </div>

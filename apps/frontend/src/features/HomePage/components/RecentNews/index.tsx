@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { useAppSelector } from '@/app/hooks';
 import React from 'react';
 import { selectData } from '../../homeSlice';
@@ -20,6 +21,7 @@ export const RecentNews = () => {
         title={lastestPost.title}
         publisherLogo={lastestPost.publisher.logo}
         publisherName={lastestPost.publisher.name}
+        sourceURL={lastestPost.sourceURL}
       />
       <div className="section">
         <div className="list-news">

@@ -89,13 +89,23 @@ const ReadingPage: React.FC = () => {
                       alt={data?.publisher?.name}
                     />
                     <AiOutlineStar className="page-extension-icon--like" />
-                    <h3 className="page-extension-font">{data?.publishedAt}</h3>
-                    <h3 className="page-extension-font">7 đăng lại</h3>
-                    <h3 className="page-extension-font">63 liên quan</h3>
+                    <h3 className="page-extension-font ">
+                      {data?.publishedAt &&
+                        new Date(data.publishedAt).toLocaleString('en-US')}
+                    </h3>
+                    <h3 className="page-extension-font page-extension-font--action">
+                      7 đăng lại
+                    </h3>
+                    <h3 className="page-extension-font page-extension-font--action">
+                      63 liên quan
+                    </h3>
                     <div className="page-extension-origin">
                       <HiOutlineDocumentDuplicate className="page-extension-icon--origin" />
-                      <h3 className="page-extension-font">
-                        <a href="/#">s</a>
+                      <h3
+                        className="page-extension-font page-extension-font--action"
+                        onClick={() => window.open(data?.sourceURL, '_blank')}
+                      >
+                        Gốc
                       </h3>
                     </div>
                   </div>
@@ -167,6 +177,39 @@ const ReadingPage: React.FC = () => {
               </p>
               <CommentBox />
               <PostOther />
+              <div className="page-news">
+                <div className="page-news-header">
+                  <p className="page-news-title">TIN KHÁC</p>
+                  <div className="page-news-decor"></div>
+                </div>
+                <div className="page-news-content">
+                  <BoxNews />
+                  <BoxNews />
+                  <BoxNews />
+                </div>
+              </div>
+              <div className="page-news">
+                <div className="page-news-header">
+                  <p className="page-news-title">TIN NÓNG</p>
+                  <div className="page-news-decor"></div>
+                </div>
+                <div className="page-news-content">
+                  <BoxNews />
+                  <BoxNews />
+                  <BoxNews />
+                </div>
+              </div>
+              <div className="page-news">
+                <div className="page-news-header">
+                  <p className="page-news-title">TIN MỚI</p>
+                  <div className="page-news-decor"></div>
+                </div>
+                <div className="page-news-content">
+                  <BoxNews />
+                  <BoxNews />
+                  <BoxNews />
+                </div>
+              </div>
             </div>
             <div className="col-4 content-right">
               <div className="videoFrame">
