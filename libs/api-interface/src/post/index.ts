@@ -19,3 +19,18 @@ export type PostWithDetailResponse = PostWithDetail;
 export const getPostDetail = (id: number) => {
   return client.get(`/posts/${id}`) as Promise<PostWithDetail>;
 };
+
+export interface SearchPostParameter {
+  page?: number;
+  limit?: number;
+  q: string;
+}
+
+export type SearchPostResponse = Post[];
+
+export const searchPost = (data: SearchPostParameter) => {
+  return client.request({
+    url: '/posts/search',
+    params: data,
+  }) as Promise<SearchPostResponse>;
+};

@@ -1,0 +1,23 @@
+{
+  "root": "libs/search-slice",
+  "sourceRoot": "libs/search-slice/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/search-slice/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/search-slice"],
+      "options": {
+        "jestConfig": "libs/search-slice/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

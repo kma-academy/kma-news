@@ -16,6 +16,7 @@ import {
   getHeaderTagsAction,
 } from '@/features/Option/optionSlice';
 import { HeaderCategory } from './HeaderCategory';
+import { SearchBox } from '../SearchBox';
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -60,27 +61,7 @@ const Header = () => {
             </Link>
             <span className="logo-description">trang thông tin điện tử</span>
           </div>
-          <div className="header-input">
-            <input type="text" placeholder="Nhập nội dung tìm kiếm" />
-            <div className="icon-search">
-              <BsSearch />
-            </div>
-            <div className="result-search" style={{ display: 'none' }}>
-              <div className="list-result-search">
-                <Link to="">
-                  <div className="item-result-search">
-                    Hội thảo: Đột phá hạ tầng phát triển kinh tế vùng TP.Hồ Chí
-                    Minh - Đồng Nai - Bà Rịa Vũng Tàu -
-                  </div>
-                </Link>
-                <Link to="">
-                  <div className="item-result-search">
-                    xem các kết quả của 'key'
-                  </div>
-                </Link>
-              </div>
-            </div>
-          </div>
+          <SearchBox />
         </div>
         <div className="header-top-right">
           {profile ? (
