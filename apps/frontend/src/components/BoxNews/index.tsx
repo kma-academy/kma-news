@@ -13,7 +13,7 @@ const BoxNews: React.FC<BoxNewProps> = ({ data }) => {
       <div className="boxNews-photo video-icon">
         <img
           className="news-photo "
-          src="https://photo-baomoi.zadn.vn/w300_r3x2_sm/2021_12_19_30_41248238/bb2a1e69ad2b44751d3a.jpg"
+          src={data.thumbnailURL || defaultThumbnail}
           alt="Park-sensei"
         />
       </div>
@@ -23,7 +23,7 @@ const BoxNews: React.FC<BoxNewProps> = ({ data }) => {
         </Link>
         <div className="box-exten">
           <img
-            src={data.thumbnailURL || defaultThumbnail}
+            src="https://photo-baomoi.zadn.vn/c6b35edd839e6ac0338f.png"
             alt="logo bài báo"
             className="box-exten--brand"
           />

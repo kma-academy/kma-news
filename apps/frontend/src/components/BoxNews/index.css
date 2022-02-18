@@ -103,6 +103,7 @@
   height: 100px;
   width: 155px;
   border-radius: 5px;
+  object-fit: cover;
 }
 
 .boxNews:hover .video-icon::before {
