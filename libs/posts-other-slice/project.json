@@ -1,0 +1,23 @@
+{
+  "root": "libs/posts-other-slice",
+  "sourceRoot": "libs/posts-other-slice/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/posts-other-slice/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/posts-other-slice"],
+      "options": {
+        "jestConfig": "libs/posts-other-slice/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

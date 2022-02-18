@@ -13,7 +13,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { FullScreenImage } from '../components/FullScreenImage';
 import { selectData, getPostAction, selectLoading } from '../postSlice';
 import { CommentBox } from '../components/Comments/CommentBox';
-// import '../components/HotTopic/'
+import { PostOther } from '../components/PostOther';
 interface ImageDetail {
   id: number;
   url: string;
@@ -165,40 +165,8 @@ const ReadingPage: React.FC = () => {
                   <a href={data?.sourceURL || '#'}>{data?.sourceURL}</a>
                 </span>
               </p>
-              <CommentBox/>
-              <div className="page-news">
-                <div className="page-news-header">
-                  <p className="page-news-title">TIN KHÁC</p>
-                  <div className="page-news-decor"></div>
-                </div>
-                <div className="page-news-content">
-                  <BoxNews />
-                  <BoxNews />
-                  <BoxNews />
-                </div>
-              </div>
-              <div className="page-news">
-                <div className="page-news-header">
-                  <p className="page-news-title">TIN NÓNG</p>
-                  <div className="page-news-decor"></div>
-                </div>
-                <div className="page-news-content">
-                  <BoxNews />
-                  <BoxNews />
-                  <BoxNews />
-                </div>
-              </div>
-              <div className="page-news">
-                <div className="page-news-header">
-                  <p className="page-news-title">TIN MỚI</p>
-                  <div className="page-news-decor"></div>
-                </div>
-                <div className="page-news-content">
-                  <BoxNews />
-                  <BoxNews />
-                  <BoxNews />
-                </div>
-              </div>
+              <CommentBox />
+              <PostOther />
             </div>
             <div className="col-4 content-right">
               <div className="videoFrame">

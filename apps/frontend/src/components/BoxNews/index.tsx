@@ -1,8 +1,13 @@
-import React from 'react'
-import './index.css'
-interface BoxNewProps {}
+import { defaultThumbnail } from '@/constants/thumnail';
+import { PostResponse } from '@kma-news/api-interface';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './index.css';
+interface BoxNewProps {
+  data: PostResponse;
+}
 
-const BoxNews: React.FC<BoxNewProps> = (props) => {
+const BoxNews: React.FC<BoxNewProps> = ({ data }) => {
   return (
     <div className="boxNews">
       <div className="boxNews-photo video-icon">
@@ -13,12 +18,12 @@ const BoxNews: React.FC<BoxNewProps> = (props) => {
         />
       </div>
       <div className="boxNews-left">
-        <div className="boxNews-title">
-          Gặp kình địch ở bán kết, HLV Parksdsds Hang-seo bất ngờ kêu một việc khó.
-        </div>
+        <Link to={`/bai-bao/${data.slug}/${data.id}`}>
+          <div className="boxNews-title">{data.description}</div>
+        </Link>
         <div className="box-exten">
           <img
-            src="https://photo-baomoi.zadn.vn/c6b35edd839e6ac0338f.png"
+            src={data.thumbnailURL || defaultThumbnail}
             alt="logo bài báo"
             className="box-exten--brand"
           />
@@ -32,6 +37,6 @@ const BoxNews: React.FC<BoxNewProps> = (props) => {
         </div>
       </div>
     </div>
-  )
-}
-export default BoxNews
+  );
+};
+export default BoxNews;
