@@ -183,9 +183,14 @@ const ReadingPage: React.FC = () => {
                   <div className="page-news-decor"></div>
                 </div>
                 <div className="page-news-content">
-                  <BoxNews />
-                  <BoxNews />
-                  <BoxNews />
+                  {Array.from(Array(4)).map((e, i) => (
+                    <BoxNews
+                      url="#"
+                      publishedAt={new Date().toISOString()}
+                      description="Bai bao rat hay"
+                      key={i}
+                    />
+                  ))}
                 </div>
               </div>
               <div className="page-news">
@@ -194,9 +199,14 @@ const ReadingPage: React.FC = () => {
                   <div className="page-news-decor"></div>
                 </div>
                 <div className="page-news-content">
-                  <BoxNews />
-                  <BoxNews />
-                  <BoxNews />
+                  {Array.from(Array(4)).map((e, i) => (
+                    <BoxNews
+                      url="#"
+                      publishedAt={new Date().toISOString()}
+                      description="Bai bao rat hay"
+                      key={i}
+                    />
+                  ))}
                 </div>
               </div>
               <div className="page-news">
@@ -205,9 +215,14 @@ const ReadingPage: React.FC = () => {
                   <div className="page-news-decor"></div>
                 </div>
                 <div className="page-news-content">
-                  <BoxNews />
-                  <BoxNews />
-                  <BoxNews />
+                  {Array.from(Array(4)).map((e, i) => (
+                    <BoxNews
+                      url="#"
+                      publishedAt={new Date().toISOString()}
+                      description="Bai bao rat hay"
+                      key={i}
+                    />
+                  ))}
                 </div>
               </div>
             </div>

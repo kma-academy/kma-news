@@ -1,7 +1,6 @@
 import BoxNews from '@/components/BoxNews';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import {
   selectPostOther,
   getPostsOtherAction,
@@ -20,7 +19,7 @@ export const PostOther = () => {
       </div>
       <div className="page-news-content">
         {data.map((e, i) => (
-          <BoxNews data={e} />
+          <BoxNews {...e} key={i} />
         ))}
       </div>
     </div>

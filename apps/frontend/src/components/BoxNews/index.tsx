@@ -1,25 +1,34 @@
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { defaultThumbnail } from '@/constants/thumnail';
-import { PostResponse } from '@kma-news/api-interface';
+import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './index.css';
 interface BoxNewProps {
-  data: PostResponse;
+  thumbnailURL?: string;
+  url: string;
+  description?: string;
+  publishedAt: string;
 }
 
-const BoxNews: React.FC<BoxNewProps> = ({ data }) => {
+const BoxNews: React.FC<BoxNewProps> = ({
+  thumbnailURL,
+  url,
+  description,
+  publishedAt,
+}) => {
   return (
     <div className="boxNews">
       <div className="boxNews-photo video-icon">
         <img
           className="news-photo "
-          src={data.thumbnailURL || defaultThumbnail}
+          src={thumbnailURL || defaultThumbnail}
           alt="Park-sensei"
         />
       </div>
       <div className="boxNews-left">
-        <Link to={`/bai-bao/${data.slug}/${data.id}`}>
-          <div className="boxNews-title">{data.description}</div>
+        <Link to={url}>
+          <div className="boxNews-title">{description}</div>
         </Link>
         <div className="box-exten">
           <img
@@ -27,7 +36,9 @@ const BoxNews: React.FC<BoxNewProps> = ({ data }) => {
             alt="logo bài báo"
             className="box-exten--brand"
           />
-          <div className="box-exten--time">1 giờ</div>
+          <div className="box-exten--time">
+            {moment(publishedAt).locale('vi').fromNow()}
+          </div>
           <div className="box-exten--involve">11 liên quân</div>
           <img
             src="https://baomoi-static.zadn.vn/favicons/favicon-32x32.png"

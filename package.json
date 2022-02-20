@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "fe": "cross-env NX_API_URL=http://localhost:8888 nx serve frontend"
   },
   "private": true,
   "dependencies": {
