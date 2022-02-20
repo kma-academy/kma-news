@@ -72,7 +72,7 @@ export class AuthService {
       };
     } catch (error) {
       if (error instanceof HttpException) throw error;
-      return new ForbiddenException('Token expired');
+      throw new ForbiddenException('Token expired');
     }
   }
 
