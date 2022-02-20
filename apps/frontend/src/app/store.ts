@@ -12,6 +12,7 @@ import historySlice from '@kma-news/history-slice';
 import channelSlice from '@kma-news/channel-slice';
 import postOtherSlice from '@kma-news/posts-other-slice';
 import searchSlice from '@kma-news/search-slice';
+import saveSlice from '@kma-news/save-slice';
 console.log(process.env['NX_API_URL']);
 
 export const store = configureStore({
@@ -28,6 +29,7 @@ export const store = configureStore({
     channel: channelSlice,
     postOther: postOtherSlice,
     search: searchSlice,
+    save: saveSlice,
   },
 });
 

@@ -1,78 +1,108 @@
-// import {
-//   deleteHistory,
-//   getUserHistory,
-//   GetUserHistoryResponse,
-//   LoadingState,
-//   updateViewPost,
-// } from '@kma-news/api-interface';
-// import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  savePost,
+  getSavePost,
+  deleteSavePost,
+  getAllSavePost,
+  GetUserSaveResponse,
+  LoadingState,
+} from '@kma-news/api-interface';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-// export const getSavePostAction = createAsyncThunk('post/save/fetch', (postId:number) => {
-//   return getUserHistory();
-// });
+export const savePostAction = createAsyncThunk(
+  'post/save/fetch',
+  (id: number) => {
+    return savePost(id);
+  }
+);
 
-// export const deleteHistoryAction = createAsyncThunk(
-//   'history/delete',
-//   (id: number) => {
-//     return deleteHistory(id);
-//   }
-// );
+export const deleteSavePostAction = createAsyncThunk(
+  'post/save/delete',
+  (id: number) => {
+    return deleteSavePost(id);
+  }
+);
 
-// export const updateViewPostAction = createAsyncThunk(
-//   'history/add',
-//   (postId: number) => {
-//     return updateViewPost(postId);
-//   }
-// );
+export const getSavePostAction = createAsyncThunk(
+  'post/save/fetchOne',
+  (id: number) => {
+    return getSavePost(id);
+  }
+);
+export const getAllSavePostAction = createAsyncThunk('post/save/fetch', () => {
+  return getAllSavePost();
+});
+export interface SavePostState {
+  loading: LoadingState;
+  savePosts: GetUserSaveResponse;
+  isSave: boolean;
+}
 
-// export interface HistoryState {
-//   loading: LoadingState;
-//   histories: GetUserHistoryResponse;
-// }
+const initialState: SavePostState = {
+  loading: 'idle',
+  savePosts: [],
+  isSave: false,
+};
 
-// const initialState: HistoryState = {
-//   loading: 'idle',
-//   histories: [],
-// };
+const saveSlice = createSlice({
+  name: 'save',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllSavePostAction.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(getAllSavePostAction.fulfilled, (state, action) => {
+        state.loading = 'done';
+        state.savePosts = action.payload;
+      })
+      .addCase(getAllSavePostAction.rejected, (state) => {
+        state.loading = 'error';
+      });
+    builder
+      .addCase(deleteSavePostAction.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(deleteSavePostAction.fulfilled, (state, action) => {
+        state.loading = 'done';
+        state.savePosts = state.savePosts.filter(
+          (e) => e.id !== action.meta.arg
+        );
+      })
+      .addCase(deleteSavePostAction.rejected, (state) => {
+        state.loading = 'error';
+      });
+    builder
+      .addCase(savePostAction.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(savePostAction.fulfilled, (state) => {
+        state.loading = 'done';
+      })
+      .addCase(savePostAction.rejected, (state) => {
+        state.loading = 'error';
+      });
+    builder
+      .addCase(getSavePostAction.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(getSavePostAction.fulfilled, (state, action) => {
+        state.loading = 'done';
+        state.isSave = action.payload.isSave;
+      })
+      .addCase(getSavePostAction.rejected, (state) => {
+        state.loading = 'error';
+      });
+  },
+});
 
-// const historySlice = createSlice({
-//   name: 'history',
-//   initialState,
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(getUserHistoryAction.pending, (state) => {
-//         state.loading = 'pending';
-//       })
-//       .addCase(getUserHistoryAction.fulfilled, (state, action) => {
-//         state.loading = 'done';
-//         state.histories = action.payload;
-//       })
-//       .addCase(getUserHistoryAction.rejected, (state) => {
-//         state.loading = 'error';
-//       });
-//     builder
-//       .addCase(deleteHistoryAction.pending, (state) => {
-//         state.loading = 'pending';
-//       })
-//       .addCase(deleteHistoryAction.fulfilled, (state, action) => {
-//         state.loading = 'done';
-//         state.histories = state.histories.filter(
-//           (e) => e.id !== action.meta.arg
-//         );
-//       })
-//       .addCase(deleteHistoryAction.rejected, (state) => {
-//         state.loading = 'error';
-//       });
-//   },
-// });
-
-// type RootState = {
-//   history: HistoryState;
-// };
-// export const selectHistory = <T extends RootState>(state: T) =>
-//   state.history.histories;
-// export const selectLoading = <T extends RootState>(state: T) =>
-//   state.history.loading;
-
-// export default historySlice.reducer;
+type RootState = {
+  savePost: SavePostState;
+};
+export const selectAllSave = <T extends RootState>(state: T) =>
+  state.savePost.savePosts;
+export const selectLoading = <T extends RootState>(state: T) =>
+  state.savePost.loading;
+export const selectSave = <T extends RootState>(state: T) =>
+  state.savePost.isSave;
+export default saveSlice.reducer;

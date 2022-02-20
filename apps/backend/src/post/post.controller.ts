@@ -16,7 +16,7 @@ import {
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RecentPostDto } from './dto/recent-post.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
@@ -27,6 +27,7 @@ import { CurrentUserId } from '../common/decorators/current-user.decorator';
 @Controller('posts')
 @ApiTags('post')
 @UseInterceptors(ClassSerializerInterceptor)
+@ApiBearerAuth()
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
@@ -93,7 +94,15 @@ export class PostController {
   ) {
     return this.postService.savePost(userId, postId);
   }
-  
+  @Get(':id/save')
+  @UseGuards(JwtAuthGuard)
+  findSavePost(
+    @CurrentUserId() userId: number,
+    @Param('id', ParseIntPipe) postId: number
+  ) {
+    return this.postService.findSavePost(postId, userId);
+  }
+
   @Delete(':id/save')
   @UseGuards(JwtAuthGuard)
   removeSavePost(@Param('id', ParseIntPipe) id: number) {

@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Post } from './post.entity';
 
@@ -13,7 +19,7 @@ export class SavePost {
   @ManyToOne(() => Post)
   post: Post;
 
-  @Column()
+  @CreateDateColumn()
   savedAt: Date;
 
   constructor(partial: Partial<SavePost>) {

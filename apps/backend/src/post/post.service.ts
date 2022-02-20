@@ -157,7 +157,20 @@ export class PostService {
     // .leftJoin('history.user', 'user')
     // .addSelect('use')
   }
-
+  async findSavePost(postId: number, userId: number) {
+    const data = await this.savePostRepository.find({
+      where: {
+        user: {
+          id: userId,
+        },
+        post: {
+          id: postId,
+        },
+      },
+      relations: ['post'],
+    });
+    return data[0] ? true : false;
+  }
   removeSavePost(id: number) {
     return this.savePostRepository.softDelete(id);
   }
