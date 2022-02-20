@@ -11,6 +11,7 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CategoryService } from './category.service';
@@ -36,6 +37,11 @@ export class CategoryController {
   @Get()
   findAll() {
     return this.categoryService.findAll();
+  }
+
+  @Get('search')
+  searchCategory(@Query('q') q: string) {
+    return this.categoryService.searchCategory(q);
   }
 
   @Get(':id')
