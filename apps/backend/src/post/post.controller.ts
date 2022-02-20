@@ -22,6 +22,7 @@ import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { hasRoles, UserRole } from '../common/decorators/role.decorator';
 import { SearchPostDto } from './dto/search-post.dto';
+import { CurrentUserId } from '../common/decorators/current-user.decorator';
 
 @Controller('posts')
 @ApiTags('post')
@@ -42,6 +43,12 @@ export class PostController {
     findAllDto: RecentPostDto
   ) {
     return this.postService.findAll(findAllDto.page, findAllDto.limit);
+  }
+
+  @Get('save')
+  @UseGuards(JwtAuthGuard)
+  findAllSavePost(@CurrentUserId() userId: number) {
+    return this.postService.findAllSavePost(userId);
   }
 
   @Get('search')
@@ -76,5 +83,20 @@ export class PostController {
   @hasRoles(UserRole.ADMIN, UserRole.WRITTER)
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.postService.remove(id);
+  }
+
+  @Post(':postId/save')
+  @UseGuards(JwtAuthGuard)
+  savePost(
+    @CurrentUserId() userId: number,
+    @Param('postId', ParseIntPipe) postId: number
+  ) {
+    return this.postService.savePost(userId, postId);
+  }
+  
+  @Delete(':id/save')
+  @UseGuards(JwtAuthGuard)
+  removeSavePost(@Param('id', ParseIntPipe) id: number) {
+    return this.postService.removeSavePost(id);
   }
 }

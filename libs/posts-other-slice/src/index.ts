@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { RootState } from '@/app/store';
 import {
   getRecentPost,
   RecentPostParameter,
@@ -43,8 +42,15 @@ const postOtherSlice = createSlice({
   },
 });
 
-export const selectPostOther = (state: RootState) => state.postOther.posts;
-export const selectLoading = (state: RootState) => state.postOther.loading;
-export const selectMessage = (state: RootState) => state.postOther.message;
+type RootState = {
+  postOther: PostState;
+};
+
+export const selectPostOther = <T extends RootState>(state: T) =>
+  state.postOther.posts;
+export const selectLoading = <T extends RootState>(state: T) =>
+  state.postOther.loading;
+export const selectMessage = <T extends RootState>(state: T) =>
+  state.postOther.message;
 
 export default postOtherSlice.reducer;
