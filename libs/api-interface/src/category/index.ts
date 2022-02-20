@@ -17,3 +17,4 @@ export const searchCategory = (q: string) => {
     },
   }) as Promise<SearchCategoryResponse>;
 };
+export type CategoryType = Category;
