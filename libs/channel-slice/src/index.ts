@@ -5,11 +5,20 @@ import {
   LoadingState,
   createPersonalChannel,
   CreatePersonalChannelParameter,
+  searchCategory,
+  SearchCategoryResponse,
 } from '@kma-news/api-interface';
 
 export const getPersonalChannelAction = createAsyncThunk('channel/get', () => {
   return getPersonalChannel();
 });
+
+export const searchCategoryAction = createAsyncThunk(
+  'channel/search_category',
+  (q: string) => {
+    return searchCategory(q);
+  }
+);
 
 export const createPersonalChannelAction = createAsyncThunk(
   'channel/create',
@@ -20,11 +29,13 @@ export const createPersonalChannelAction = createAsyncThunk(
 
 export interface ChannelState {
   channels: PersonalChannelResponse;
+  categories: SearchCategoryResponse;
   loading: LoadingState;
 }
 const initialState: ChannelState = {
   channels: [],
   loading: 'idle',
+  categories: [],
 };
 
 const channelSlice = createSlice({
@@ -54,6 +65,9 @@ const channelSlice = createSlice({
       .addCase(createPersonalChannelAction.rejected, (state) => {
         state.loading = 'error';
       });
+    builder.addCase(searchCategoryAction.fulfilled, (state, action) => {
+      state.categories = action.payload;
+    });
   },
 });
 
@@ -65,5 +79,7 @@ export const selectChannel = <T extends RootState>(state: T) =>
   state.channel.channels;
 export const selectLoading = <T extends RootState>(state: T) =>
   state.channel.loading;
+export const selectCategory = <T extends RootState>(state: T) =>
+  state.channel.categories;
 
 export default channelSlice.reducer;
