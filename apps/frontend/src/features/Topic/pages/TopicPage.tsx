@@ -70,7 +70,7 @@ const Topic = () => {
 
                               <div className="description-item-news">
                                 <Link to={content.url}>
-                                  <span>{content.description}</span>
+                                  <span>{content.title}</span>
                                 </Link>
                                 <div className="news-source">
                                   <Link to={content.title}>
