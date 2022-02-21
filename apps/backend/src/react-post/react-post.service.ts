@@ -18,16 +18,42 @@ export class ReactPostService {
     if (!user) throw new BadRequestException();
     const post = await this.postService.findOne(postId);
     if (!post) throw new BadRequestException();
-    const reactPost = await this.reactPostService.create({ userId, postId });
-    return this.reactPostService.save(reactPost);
+
+    const reactPost = await this.reactPostService.findOne({
+      where: {
+        postId,
+        userId,
+      },
+    });
+
+    if (!reactPost) {
+      const createReactPost = await this.reactPostService.create({
+        userId,
+        postId,
+      });
+      return this.reactPostService.save(createReactPost);
+    }
+    return this.reactPostService.remove(reactPost);
   }
 
   findAll() {
     return `This action returns all reactPost`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} reactPost`;
+  async findOne(userId: number, postId: number) {
+    const reactPost = await this.reactPostService.findOne({
+      where: {
+        postIdId: userId,
+      },
+    });
+    console.log(reactPost);
+    if (reactPost) {
+      console.log('hi');
+      return true;
+    } else {
+      console.log('hoho');
+      return false;
+    }
   }
 
   update(id: number, updateReactPostDto: UpdateReactPostDto) {

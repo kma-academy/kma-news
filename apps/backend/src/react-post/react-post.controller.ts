@@ -34,9 +34,12 @@ export class ReactPostController {
     return this.reactPostService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.reactPostService.findOne(+id);
+  @Get(':postId')
+  findOne(
+    @CurrentUserId() userId: number,
+    @Param('postId', ParseIntPipe) postId: number
+  ) {
+    return this.reactPostService.findOne(userId, postId);
   }
 
   @Patch(':id')

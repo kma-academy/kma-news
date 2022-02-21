@@ -15,6 +15,7 @@ import { selectData, getPostAction, selectLoading } from '../postSlice';
 import { CommentBox } from '../components/Comments/CommentBox';
 import { PostOther } from '../components/PostOther';
 import { createReatPostAction } from 'libs/react-post-slice/src';
+import { getReactByPost } from 'libs/api-interface/src/react';
 interface ImageDetail {
   id: number;
   url: string;
@@ -28,6 +29,7 @@ const ReadingPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const data = useAppSelector(selectData);
   const navigate = useNavigate();
+  const [activeReact, setActiveReact] = useState(false);
   useEffect(() => {
     if (id) dispatch(getPostAction(+id));
   }, [dispatch, id]);
@@ -39,7 +41,9 @@ const ReadingPage: React.FC = () => {
   }, [loading]);
 
   const btnReactPost = () => {
-    if (id) dispatch(createReatPostAction(+id));
+    if (id) {
+      dispatch(createReatPostAction(+id));
+    }
   };
 
   const allImages = useMemo(() => {

@@ -1,13 +1,21 @@
 import {
   createReactPost,
+  getReactByPost,
   ReactPostResponse,
 } from '../../api-interface/src/react';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { LoadingState } from '@kma-news/api-interface';
 export const createReatPostAction = createAsyncThunk(
-  'reactPost/fetch',
+  'reactPost/add',
   (postId: number) => {
     return createReactPost(postId);
+  }
+);
+
+export const getReactPostAction = createAsyncThunk(
+  'reactPost/fetch',
+  (postId: number) => {
+    return getReactByPost(postId);
   }
 );
 export interface ReactPostState {
@@ -34,6 +42,16 @@ const reactPostSlice = createSlice({
         state.reacts = action.payload;
       })
       .addCase(createReatPostAction.rejected, (state) => {
+        state.loading = 'error';
+      });
+    builder
+      .addCase(getReactPostAction.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(getReactPostAction.fulfilled, (state, action) => {
+        state.loading = 'done';
+      })
+      .addCase(getReactPostAction.rejected, (state) => {
         state.loading = 'error';
       });
   },
