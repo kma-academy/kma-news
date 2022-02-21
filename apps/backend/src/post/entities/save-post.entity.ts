@@ -1,6 +1,7 @@
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -21,6 +22,9 @@ export class SavePost {
 
   @CreateDateColumn()
   savedAt: Date;
+
+  @DeleteDateColumn()
+  deleteAt: Date;
 
   constructor(partial: Partial<SavePost>) {
     Object.assign(this, partial);

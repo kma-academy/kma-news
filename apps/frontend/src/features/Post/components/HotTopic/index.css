@@ -317,6 +317,17 @@ a {
     justify-content: center;
 }
 
+.action-isLiked {
+    font-size: 20px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: #2FA1B3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .action-like:hover .action-like--hover {
     color: violet;
 }

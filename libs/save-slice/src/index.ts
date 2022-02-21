@@ -8,12 +8,9 @@ import {
 } from '@kma-news/api-interface';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-export const savePostAction = createAsyncThunk(
-  'post/save/fetch',
-  (id: number) => {
-    return savePost(id);
-  }
-);
+export const savePostAction = createAsyncThunk('post/save', (id: number) => {
+  return savePost(id);
+});
 
 export const deleteSavePostAction = createAsyncThunk(
   'post/save/delete',
@@ -35,6 +32,7 @@ export interface SavePostState {
   loading: LoadingState;
   savePosts: GetUserSaveResponse;
   isSave: boolean;
+  idSave?: number;
 }
 
 const initialState: SavePostState = {
@@ -65,6 +63,7 @@ const saveSlice = createSlice({
       })
       .addCase(deleteSavePostAction.fulfilled, (state, action) => {
         state.loading = 'done';
+        state.isSave = false;
         state.savePosts = state.savePosts.filter(
           (e) => e.id !== action.meta.arg
         );
@@ -78,6 +77,7 @@ const saveSlice = createSlice({
       })
       .addCase(savePostAction.fulfilled, (state) => {
         state.loading = 'done';
+        state.isSave = !state.isSave;
       })
       .addCase(savePostAction.rejected, (state) => {
         state.loading = 'error';
@@ -88,7 +88,9 @@ const saveSlice = createSlice({
       })
       .addCase(getSavePostAction.fulfilled, (state, action) => {
         state.loading = 'done';
-        state.isSave = action.payload.isSave;
+        if (action.payload.idSave) state.idSave = action.payload.idSave;
+        if (action.payload.isSave == true) state.isSave = true;
+        else state.isSave = false;
       })
       .addCase(getSavePostAction.rejected, (state) => {
         state.loading = 'error';
@@ -96,13 +98,14 @@ const saveSlice = createSlice({
   },
 });
 
-type RootState = {
-  savePost: SavePostState;
-};
+interface RootState {
+  save: SavePostState;
+}
 export const selectAllSave = <T extends RootState>(state: T) =>
-  state.savePost.savePosts;
+  state.save.savePosts;
 export const selectLoading = <T extends RootState>(state: T) =>
-  state.savePost.loading;
-export const selectSave = <T extends RootState>(state: T) =>
-  state.savePost.isSave;
+  state.save.loading;
+export const selectIdSave = <T extends RootState>(state: T) =>
+  state.save.idSave;
+export const selectSave = <T extends RootState>(state: T) => state.save.isSave;
 export default saveSlice.reducer;

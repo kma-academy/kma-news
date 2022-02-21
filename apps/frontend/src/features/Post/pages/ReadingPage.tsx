@@ -11,9 +11,21 @@ import { GoReport } from 'react-icons/go';
 import { HiOutlineDocumentDuplicate, HiOutlineKey } from 'react-icons/hi';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { FullScreenImage } from '../components/FullScreenImage';
-import { selectData, getPostAction, selectLoading } from '../postSlice';
+import {
+  selectData,
+  getPostAction,
+  selectLoading,
+  selectError,
+} from '../postSlice';
 import { CommentBox } from '../components/Comments/CommentBox';
 import { PostOther } from '../components/PostOther';
+import {
+  getSavePostAction,
+  selectSave,
+  savePostAction,
+  deleteSavePostAction,
+  selectIdSave,
+} from '@kma-news/save-slice';
 interface ImageDetail {
   id: number;
   url: string;
@@ -26,7 +38,10 @@ const ReadingPage: React.FC = () => {
   const loading = useAppSelector(selectLoading);
   const dispatch = useAppDispatch();
   const data = useAppSelector(selectData);
+  const isSave = useAppSelector(selectSave);
+  const idSave = useAppSelector(selectIdSave);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (id) dispatch(getPostAction(+id));
   }, [dispatch, id]);
@@ -36,6 +51,9 @@ const ReadingPage: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
+  useEffect(() => {
+    if (id) dispatch(getSavePostAction(parseInt(id)));
+  }, [dispatch, id]);
 
   const allImages = useMemo(() => {
     return data?.paragraphs
@@ -141,7 +159,19 @@ const ReadingPage: React.FC = () => {
                   <div className="action-box">
                     <div className="action--m action-share-zalo"></div>
                     <div className="action--m action-share-face"></div>
-                    <div className="action--m action-like">
+                    <div
+                      className={
+                        isSave
+                          ? 'action--m action-isLiked'
+                          : 'action--m action-like'
+                      }
+                      onClick={() => {
+                        if (data?.id && isSave == false)
+                          dispatch(savePostAction(data.id));
+                        if (data?.id && isSave == true)
+                          if (idSave) dispatch(deleteSavePostAction(idSave));
+                      }}
+                    >
                       <BiLike className="action-like--hover" />
                     </div>
                     <div className="action--m action-save">

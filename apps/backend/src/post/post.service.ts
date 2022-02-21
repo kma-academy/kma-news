@@ -10,6 +10,7 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { Post, PostStatus } from './entities/post.entity';
 import { ParagraphService } from './paragraph.service';
 import { SavePost } from './entities/save-post.entity';
+import { find } from 'rxjs';
 
 @Injectable()
 export class PostService {
@@ -152,10 +153,6 @@ export class PostService {
       e.post = new Post(e.post);
       return e;
     });
-    // return this.historyRepository.createQueryBuilder('history')
-    // .leftJoin('history.post', 'post')
-    // .leftJoin('history.user', 'user')
-    // .addSelect('use')
   }
   async findSavePost(postId: number, userId: number) {
     const data = await this.savePostRepository.find({
@@ -169,7 +166,7 @@ export class PostService {
       },
       relations: ['post'],
     });
-    return data[0] ? true : false;
+    return data[0] ? { isSave: true, idSave: data[0].id } : { isSave: false };
   }
   removeSavePost(id: number) {
     return this.savePostRepository.softDelete(id);
