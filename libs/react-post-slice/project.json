@@ -1,0 +1,23 @@
+{
+  "root": "libs/react-post-slice",
+  "sourceRoot": "libs/react-post-slice/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/react-post-slice/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/react-post-slice"],
+      "options": {
+        "jestConfig": "libs/react-post-slice/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

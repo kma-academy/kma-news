@@ -23,6 +23,8 @@ import { CommentModule } from './comment/comment.module';
 import { Comment } from './comment/entities/comment.entity';
 import { HistoryModule } from './history/history.module';
 import { History } from './history/entities/history.entity';
+import { ReactPostModule } from './react-post/react-post.module';
+import { ReactPost } from './react-post/entities/react-post.entity';
 
 @Module({
   imports: [
@@ -53,6 +55,7 @@ import { History } from './history/entities/history.entity';
           Channel,
           Comment,
           History,
+          ReactPost,
         ],
         // entities: ['dist/apps/**/*.entity{.ts,.js}'],
         // autoLoadEntities: true,
@@ -69,6 +72,7 @@ import { History } from './history/entities/history.entity';
     TokenModule,
     CommentModule,
     HistoryModule,
+    ReactPostModule,
   ],
   providers: [],
 })

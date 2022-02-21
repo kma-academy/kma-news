@@ -14,6 +14,7 @@
     "frontend-e2e": "apps/frontend-e2e",
     "history-slice": "libs/history-slice",
     "posts-other-slice": "libs/posts-other-slice",
+    "react-post-slice": "libs/react-post-slice",
     "search-slice": "libs/search-slice",
     "zalo-auth": "libs/zalo-auth"
   }

@@ -14,6 +14,7 @@ import { FullScreenImage } from '../components/FullScreenImage';
 import { selectData, getPostAction, selectLoading } from '../postSlice';
 import { CommentBox } from '../components/Comments/CommentBox';
 import { PostOther } from '../components/PostOther';
+import { createReatPostAction } from 'libs/react-post-slice/src';
 interface ImageDetail {
   id: number;
   url: string;
@@ -36,6 +37,10 @@ const ReadingPage: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
+
+  const btnReactPost = () => {
+    if (id) dispatch(createReatPostAction(+id));
+  };
 
   const allImages = useMemo(() => {
     return data?.paragraphs
@@ -141,7 +146,10 @@ const ReadingPage: React.FC = () => {
                   <div className="action-box">
                     <div className="action--m action-share-zalo"></div>
                     <div className="action--m action-share-face"></div>
-                    <div className="action--m action-like">
+                    <div
+                      className="action--m action-like"
+                      onClick={btnReactPost}
+                    >
                       <BiLike className="action-like--hover" />
                     </div>
                     <div className="action--m action-save">

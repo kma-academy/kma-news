@@ -26,6 +26,7 @@
       ],
       "@kma-news/history-slice": ["libs/history-slice/src/index.ts"],
       "@kma-news/posts-other-slice": ["libs/posts-other-slice/src/index.ts"],
+      "@kma-news/react-post-slice": ["libs/react-post-slice/src/index.ts"],
       "@kma-news/search-slice": ["libs/search-slice/src/index.ts"],
       "@kma-news/zalo-auth": ["libs/zalo-auth/src/index.ts"]
     }
