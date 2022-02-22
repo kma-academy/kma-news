@@ -25,7 +25,7 @@ import {
   createReatPostAction,
   getReactPostAction,
   selectActiveReact,
-} from 'libs/react-post-slice/src';
+} from '@kma-news/react-post-slice';
 import {
   deleteSavePostAction,
   getSavePostAction,
@@ -33,16 +33,12 @@ import {
   selectIdSave,
   selectSave,
 } from '@kma-news/save-slice';
-<<<<<<< HEAD
-=======
 import {
   selectLoggedIn,
   selectProfile,
   togglePopup,
 } from '@kma-news/auth-slice';
-import { createReatPostAction } from 'libs/react-post-slice/src';
-import { getReactByPost } from 'libs/api-interface/src/react';
->>>>>>> 804983f (done fix)
+import { getReactByPost } from '@kma-news/api-interface';
 
 interface ImageDetail {
   id: number;
@@ -60,15 +56,11 @@ const ReadingPage: React.FC = () => {
   const isSave = useAppSelector(selectSave);
   const idSave = useAppSelector(selectIdSave);
   const navigate = useNavigate();
-<<<<<<< HEAD
   const [activeReact, setActiveReact] = useState(
     useAppSelector(selectActiveReact)
   );
-=======
 
-  const [activeReact, setActiveReact] = useState(false);
   const [loggin, setLoggin] = useState(false);
->>>>>>> 804983f (done fix)
   useEffect(() => {
     if (id) {
       dispatch(getPostAction(+id));
@@ -87,12 +79,10 @@ const ReadingPage: React.FC = () => {
       setActiveReact(!activeReact);
     }
   };
-<<<<<<< HEAD
   useEffect(() => {
     if (id) dispatch(getSavePostAction(parseInt(id)));
   }, [dispatch, id]);
 
-=======
   const checkLoggin = () => {
     if (isLoggin == true) {
       setLoggin(true);
@@ -101,7 +91,6 @@ const ReadingPage: React.FC = () => {
         if (idSave) dispatch(deleteSavePostAction(idSave));
     } else dispatch(togglePopup(true));
   };
->>>>>>> 804983f (done fix)
   const allImages = useMemo(() => {
     return data?.paragraphs
       .filter((e) => e.type === 'image')
