@@ -33,6 +33,16 @@ import {
   selectIdSave,
   selectSave,
 } from '@kma-news/save-slice';
+<<<<<<< HEAD
+=======
+import {
+  selectLoggedIn,
+  selectProfile,
+  togglePopup,
+} from '@kma-news/auth-slice';
+import { createReatPostAction } from 'libs/react-post-slice/src';
+import { getReactByPost } from 'libs/api-interface/src/react';
+>>>>>>> 804983f (done fix)
 
 interface ImageDetail {
   id: number;
@@ -41,6 +51,7 @@ interface ImageDetail {
 }
 
 const ReadingPage: React.FC = () => {
+  const isLoggin = useAppSelector(selectLoggedIn);
   const { slug, id } = useParams<'slug' | 'id'>();
   const [visible, toggleVisible] = useState(false);
   const loading = useAppSelector(selectLoading);
@@ -49,9 +60,15 @@ const ReadingPage: React.FC = () => {
   const isSave = useAppSelector(selectSave);
   const idSave = useAppSelector(selectIdSave);
   const navigate = useNavigate();
+<<<<<<< HEAD
   const [activeReact, setActiveReact] = useState(
     useAppSelector(selectActiveReact)
   );
+=======
+
+  const [activeReact, setActiveReact] = useState(false);
+  const [loggin, setLoggin] = useState(false);
+>>>>>>> 804983f (done fix)
   useEffect(() => {
     if (id) {
       dispatch(getPostAction(+id));
@@ -70,10 +87,21 @@ const ReadingPage: React.FC = () => {
       setActiveReact(!activeReact);
     }
   };
+<<<<<<< HEAD
   useEffect(() => {
     if (id) dispatch(getSavePostAction(parseInt(id)));
   }, [dispatch, id]);
 
+=======
+  const checkLoggin = () => {
+    if (isLoggin == true) {
+      setLoggin(true);
+      if (data?.id && isSave == false) dispatch(savePostAction(data.id));
+      if (data?.id && isSave == true)
+        if (idSave) dispatch(deleteSavePostAction(idSave));
+    } else dispatch(togglePopup(true));
+  };
+>>>>>>> 804983f (done fix)
   const allImages = useMemo(() => {
     return data?.paragraphs
       .filter((e) => e.type === 'image')
@@ -190,10 +218,7 @@ const ReadingPage: React.FC = () => {
                           : 'action--m action-like'
                       }
                       onClick={() => {
-                        if (data?.id && isSave == false)
-                          dispatch(savePostAction(data.id));
-                        if (data?.id && isSave == true)
-                          if (idSave) dispatch(deleteSavePostAction(idSave));
+                        checkLoggin();
                       }}
                     >
                       <VscTag className="action-save--hover" />
