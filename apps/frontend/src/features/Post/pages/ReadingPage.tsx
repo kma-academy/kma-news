@@ -1,3 +1,5 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useMemo, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import BoxVideo from '../../../components/BoxVideo';
@@ -176,14 +178,25 @@ const ReadingPage: React.FC = () => {
                     <div className="action--m action-share-zalo"></div>
                     <div className="action--m action-share-face"></div>
                     <div
-                      className={
-                        activeReact
-                          ? 'action--m action-like action-like--active'
-                          : 'action--m action-like'
-                      }
+                      className="action--m action-like"
                       onClick={btnReactPost}
                     >
                       <BiLike className="action-like--hover" />
+                    </div>
+                    <div
+                      className={
+                        isSave
+                          ? 'action--m action-isLiked'
+                          : 'action--m action-like'
+                      }
+                      onClick={() => {
+                        if (data?.id && isSave == false)
+                          dispatch(savePostAction(data.id));
+                        if (data?.id && isSave == true)
+                          if (idSave) dispatch(deleteSavePostAction(idSave));
+                      }}
+                    >
+                      <VscTag className="action-save--hover" />
                     </div>
                     <div className="action--m action-save">
                       <div
