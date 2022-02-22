@@ -22,7 +22,7 @@
 **/secrets.dev.yaml
 **/values.dev.yaml
 README.md
-**/dist
+# **/dist
 **/.editorconfig
 **/eslintrc.json
 **/.gitignore

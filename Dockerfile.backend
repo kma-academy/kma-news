@@ -10,10 +10,6 @@ COPY package*.json .
 
 RUN npm i
 
-COPY . .
+COPY "dist/apps/${BUILD_TARGET}/main.js" /home/node/app/main.js
 
-ENV NX_DAEMON=false
-
-RUN npx nx build ${BUILD_TARGET}
-
-CMD [ "node", "./dist/apps/${BUILD_TARGET}/main.js" ]
+CMD [ "node", "main.js" ]

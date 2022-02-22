@@ -1,0 +1,44 @@
+version: '3.4'
+
+services:
+  backend:
+    image: notekunn/kma-news-backend
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        - BUILD_TARGET=backend
+
+  frontend:
+    image: notekunn/kma-news-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        BUILD_TARGET: frontend
+        API_URL: "https:${BACKEND_HOST}"
+        ZALO_APP_ID: "${ZALO_APP_ID}"
+        ZALO_CALLBACK_URL: "https://${FRONTEND_HOST}"
+
+  crawler:
+    image: notekunn/kma-news-crawler
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        BUILD_TARGET: crawler
+  # admin:
+  #   image: notekunn/kma-news-admin
+  #   container_name: kma-news-admin
+  #   environment:
+  #     REACT_APP_API_URL: "https://${BACKEND_HOST}"
+  #     VIRTUAL_HOST: "${ADMIN_HOST}"
+  #     LETSENCRYPT_HOST: "${ADMIN_HOST}"
+  #     VIRTUAL_PORT: 80
+  #   expose:
+  #     - 80
+  #   ports:
+  #     - "${ADMIN_PORT}:80"
+  #   networks:
+  #     - app-network
+  #   command: [ "nginx", "-g", "daemon off;" ]
