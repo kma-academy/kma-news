@@ -1,15 +1,16 @@
 import {
   Column,
+  CreateDateColumn,
   DeleteDateColumn,
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Post } from '../../post/entities/post.entity';
 import { User } from '../../user/entities/user.entity';
+import { Post } from './post.entity';
 
 @Entity()
-export class History {
+export class SavePost {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -19,13 +20,13 @@ export class History {
   @ManyToOne(() => Post)
   post: Post;
 
-  @Column()
-  visitDate: Date;
+  @CreateDateColumn()
+  savedAt: Date;
 
   @DeleteDateColumn()
   deleteAt: Date;
 
-  constructor(partial: Partial<History>) {
+  constructor(partial: Partial<SavePost>) {
     Object.assign(this, partial);
   }
 }

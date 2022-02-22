@@ -11,7 +11,12 @@ import { GoReport } from 'react-icons/go';
 import { HiOutlineDocumentDuplicate, HiOutlineKey } from 'react-icons/hi';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { FullScreenImage } from '../components/FullScreenImage';
-import { selectData, getPostAction, selectLoading } from '../postSlice';
+import {
+  selectData,
+  getPostAction,
+  selectLoading,
+  selectError,
+} from '../postSlice';
 import { CommentBox } from '../components/Comments/CommentBox';
 import { PostOther } from '../components/PostOther';
 import {
@@ -19,6 +24,18 @@ import {
   getReactPostAction,
   selectActiveReact,
 } from 'libs/react-post-slice/src';
+
+import {
+  getSavePostAction,
+  selectSave,
+  savePostAction,
+  deleteSavePostAction,
+  selectIdSave,
+} from '@kma-news/save-slice';
+
+import { createReatPostAction } from 'libs/react-post-slice/src';
+import { getReactByPost } from 'libs/api-interface/src/react';
+
 interface ImageDetail {
   id: number;
   url: string;
@@ -31,6 +48,8 @@ const ReadingPage: React.FC = () => {
   const loading = useAppSelector(selectLoading);
   const dispatch = useAppDispatch();
   const data = useAppSelector(selectData);
+  const isSave = useAppSelector(selectSave);
+  const idSave = useAppSelector(selectIdSave);
   const navigate = useNavigate();
   const [activeReact, setActiveReact] = useState(
     useAppSelector(selectActiveReact)
@@ -50,7 +69,13 @@ const ReadingPage: React.FC = () => {
   const btnReactPost = () => {
     if (id) {
       dispatch(createReatPostAction(+id));
-      setActiveReact(!activeReact);
+  useEffect(() => {
+    if (id) dispatch(getSavePostAction(parseInt(id)));
+  }, [dispatch, id]);
+
+  const btnReactPost = () => {
+    if (id) {
+      dispatch(createReatPostAction(+id));
     }
   };
 
@@ -165,10 +190,19 @@ const ReadingPage: React.FC = () => {
                           : 'action--m action-like'
                       }
                       onClick={btnReactPost}
-                    >
                       <BiLike className="action-like--hover" />
                     </div>
-                    <div className="action--m action-save">
+                    <div className={
+                        isSave
+                          ? 'action--m action-isLiked'
+                          : 'action--m action-like'
+                      }
+                      onClick={() => {
+                        if (data?.id && isSave == false)
+                          dispatch(savePostAction(data.id));
+                        if (data?.id && isSave == true)
+                          if (idSave) dispatch(deleteSavePostAction(idSave));
+                      }}>
                       <VscTag className="action-save--hover" />
                     </div>
                     <div className="action--m action-report">

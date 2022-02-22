@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import type { RootState } from '@/app/store';
+// import type { RootState } from '@/app/store';
 import {
   Covid19Response,
   fetchCovid19General,
@@ -40,6 +40,9 @@ export const covid19Slice = createSlice({
       });
   },
 });
+type RootState = {
+  covid19: Covid19State;
+};
 export const selectData = (state: RootState) => state.covid19.data;
 export const selectLoading = (state: RootState) => state.covid19.loading;
 export const selectError = (state: RootState) => state.covid19.error;

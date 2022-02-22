@@ -48,6 +48,7 @@ export class ReactPostService {
     });
     if (reactPost) return { isActive: true };
     return { isActive: false };
+
   }
 
   update(id: number, updateReactPostDto: UpdateReactPostDto) {

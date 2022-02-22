@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from '../category/entities/category.entity';
 import { SlugHelper } from '../common/helpers/slug.helper';
@@ -9,6 +9,8 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post, PostStatus } from './entities/post.entity';
 import { ParagraphService } from './paragraph.service';
+import { SavePost } from './entities/save-post.entity';
+import { find } from 'rxjs';
 
 @Injectable()
 export class PostService {
@@ -21,6 +23,8 @@ export class PostService {
     private readonly categoryRepository: Repository<Category>,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @InjectRepository(SavePost)
+    private readonly savePostRepository: Repository<SavePost>,
     private readonly slugHelper: SlugHelper,
     private readonly paragraphService: ParagraphService
   ) {}
@@ -104,5 +108,67 @@ export class PostService {
       .set({ status: PostStatus.DRAFT })
       .where('id = :id', { id })
       .execute();
+  }
+  async savePost(userId: number, postId: number) {
+    const user = await this.userRepository.findOne(userId);
+    if (!user) throw new BadRequestException();
+    const post = await this.findOne(postId);
+    if (!post) throw new BadRequestException();
+    const history = await this.savePostRepository.findOne({
+      where: {
+        post: {
+          id: postId,
+        },
+        user: {
+          id: userId,
+        },
+      },
+    });
+    if (!history) {
+      await this.savePostRepository.save({
+        post,
+        user,
+        visitDate: new Date(),
+      });
+    } else {
+      await this.savePostRepository.update(history.id, {
+        savedAt: new Date(),
+      });
+    }
+    return {
+      message: 'Update view success',
+    };
+  }
+
+  async findAllSavePost(userId: number) {
+    const data = await this.savePostRepository.find({
+      where: {
+        user: {
+          id: userId,
+        },
+      },
+      relations: ['post'],
+    });
+    return data.map((e) => {
+      e.post = new Post(e.post);
+      return e;
+    });
+  }
+  async findSavePost(postId: number, userId: number) {
+    const data = await this.savePostRepository.find({
+      where: {
+        user: {
+          id: userId,
+        },
+        post: {
+          id: postId,
+        },
+      },
+      relations: ['post'],
+    });
+    return data[0] ? { isSave: true, idSave: data[0].id } : { isSave: false };
+  }
+  removeSavePost(id: number) {
+    return this.savePostRepository.softDelete(id);
   }
 }

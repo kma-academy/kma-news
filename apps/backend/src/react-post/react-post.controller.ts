@@ -35,6 +35,7 @@ export class ReactPostController {
 
   @Get(':postId')
   @UseGuards(JwtAuthGuard)
+=======
   findOne(
     @CurrentUserId() userId: number,
     @Param('postId', ParseIntPipe) postId: number

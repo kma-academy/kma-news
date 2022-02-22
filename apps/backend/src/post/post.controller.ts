@@ -16,16 +16,18 @@ import {
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RecentPostDto } from './dto/recent-post.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { hasRoles, UserRole } from '../common/decorators/role.decorator';
 import { SearchPostDto } from './dto/search-post.dto';
+import { CurrentUserId } from '../common/decorators/current-user.decorator';
 
 @Controller('posts')
 @ApiTags('post')
 @UseInterceptors(ClassSerializerInterceptor)
+@ApiBearerAuth()
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
@@ -42,6 +44,12 @@ export class PostController {
     findAllDto: RecentPostDto
   ) {
     return this.postService.findAll(findAllDto.page, findAllDto.limit);
+  }
+
+  @Get('save')
+  @UseGuards(JwtAuthGuard)
+  findAllSavePost(@CurrentUserId() userId: number) {
+    return this.postService.findAllSavePost(userId);
   }
 
   @Get('search')
@@ -76,5 +84,28 @@ export class PostController {
   @hasRoles(UserRole.ADMIN, UserRole.WRITTER)
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.postService.remove(id);
+  }
+
+  @Post(':postId/save')
+  @UseGuards(JwtAuthGuard)
+  savePost(
+    @CurrentUserId() userId: number,
+    @Param('postId', ParseIntPipe) postId: number
+  ) {
+    return this.postService.savePost(userId, postId);
+  }
+  @Get(':id/save')
+  @UseGuards(JwtAuthGuard)
+  findSavePost(
+    @CurrentUserId() userId: number,
+    @Param('id', ParseIntPipe) postId: number
+  ) {
+    return this.postService.findSavePost(postId, userId);
+  }
+
+  @Delete(':id/save')
+  @UseGuards(JwtAuthGuard)
+  removeSavePost(@Param('id', ParseIntPipe) id: number) {
+    return this.postService.removeSavePost(id);
   }
 }

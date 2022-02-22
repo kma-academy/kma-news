@@ -9,12 +9,20 @@ import { User } from '../user/entities/user.entity';
 import { SlugHelper } from '../common/helpers/slug.helper';
 import { ParagraphService } from './paragraph.service';
 import { Paragraph } from './entities/paragraph.entity';
+import { SavePost } from './entities/save-post.entity';
 
 @Module({
   controllers: [PostController],
   providers: [PostService, SlugHelper, ParagraphService],
   imports: [
-    TypeOrmModule.forFeature([Post, Publisher, Category, User, Paragraph]),
+    TypeOrmModule.forFeature([
+      Post,
+      Publisher,
+      Category,
+      User,
+      Paragraph,
+      SavePost,
+    ]),
   ],
   exports: [PostService],
 })

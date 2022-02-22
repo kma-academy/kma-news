@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import BoxNews from '@/components/BoxNews';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -5,9 +6,10 @@ import {
   selectPostOther,
   getPostsOtherAction,
 } from '@kma-news/posts-other-slice';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 export const PostOther = () => {
-  const dispatch = useDispatch();
-  const data = useSelector(selectPostOther);
+  const dispatch = useAppDispatch();
+  const data = useAppSelector(selectPostOther);
   useEffect(() => {
     dispatch(getPostsOtherAction({ limit: 3, page: 1 }));
   }, [dispatch]);

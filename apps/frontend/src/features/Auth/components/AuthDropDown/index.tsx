@@ -31,7 +31,7 @@ export const AuthDropDown: React.FC<AuthDropDownProps> = (props) => {
             </div>
           </li>
         </Link>
-        <Link to="/ca-nhan/tin-da-luu" className="auth-drop__item">
+        <Link to="/ca-nhan/muc-da-luu" className="auth-drop__item">
           <li>
             <div className="auth-drop__item--a">
               <BsSave2 className="auth-drop__icon" />
