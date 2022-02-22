@@ -19,6 +19,7 @@ import {
 } from '../postSlice';
 import { CommentBox } from '../components/Comments/CommentBox';
 import { PostOther } from '../components/PostOther';
+
 import {
   getSavePostAction,
   selectSave,
@@ -26,6 +27,10 @@ import {
   deleteSavePostAction,
   selectIdSave,
 } from '@kma-news/save-slice';
+
+import { createReatPostAction } from 'libs/react-post-slice/src';
+import { getReactByPost } from 'libs/api-interface/src/react';
+
 interface ImageDetail {
   id: number;
   url: string;
@@ -42,6 +47,8 @@ const ReadingPage: React.FC = () => {
   const idSave = useAppSelector(selectIdSave);
   const navigate = useNavigate();
 
+  const [activeReact, setActiveReact] = useState(false);
+
   useEffect(() => {
     if (id) dispatch(getPostAction(+id));
   }, [dispatch, id]);
@@ -54,6 +61,12 @@ const ReadingPage: React.FC = () => {
   useEffect(() => {
     if (id) dispatch(getSavePostAction(parseInt(id)));
   }, [dispatch, id]);
+
+  const btnReactPost = () => {
+    if (id) {
+      dispatch(createReatPostAction(+id));
+    }
+  };
 
   const allImages = useMemo(() => {
     return data?.paragraphs
@@ -160,7 +173,11 @@ const ReadingPage: React.FC = () => {
                     <div className="action--m action-share-zalo"></div>
                     <div className="action--m action-share-face"></div>
                     <div
-                      className={
+                      className="action--m action-like"
+                      onClick={btnReactPost}
+                      <BiLike className="action-like--hover" />
+                    </div>
+                    <div className={
                         isSave
                           ? 'action--m action-isLiked'
                           : 'action--m action-like'
@@ -170,11 +187,7 @@ const ReadingPage: React.FC = () => {
                           dispatch(savePostAction(data.id));
                         if (data?.id && isSave == true)
                           if (idSave) dispatch(deleteSavePostAction(idSave));
-                      }}
-                    >
-                      <BiLike className="action-like--hover" />
-                    </div>
-                    <div className="action--m action-save">
+                      }}>
                       <VscTag className="action-save--hover" />
                     </div>
                     <div className="action--m action-report">

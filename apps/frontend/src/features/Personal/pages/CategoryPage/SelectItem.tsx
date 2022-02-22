@@ -1,8 +1,12 @@
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { useAppSelector } from '@/app/hooks';
+import { CategoryType } from '@kma-news/api-interface';
+import { selectCategory } from '@kma-news/channel-slice';
 import React from 'react';
 
 export interface ItemData {
   type: 'keyword' | 'publisher' | 'category';
-  content: string;
+  data: string | CategoryType;
 }
 
 export interface SelectItemProps {
@@ -13,6 +17,7 @@ export const SelectItem: React.FC<SelectItemProps> = ({
   onSelected,
   keyword,
 }) => {
+  const categories = useAppSelector(selectCategory);
   return (
     <div className="drop-table">
       {keyword && (
@@ -23,7 +28,7 @@ export const SelectItem: React.FC<SelectItemProps> = ({
             onClick={(e) =>
               onSelected({
                 type: 'keyword',
-                content: keyword,
+                data: keyword,
               })
             }
           >
@@ -34,18 +39,28 @@ export const SelectItem: React.FC<SelectItemProps> = ({
       <div>
         <div className="title-drop">Nguồn báo :</div>
         <div className="item-drop">
-          <span>Alo</span>
+          <span>Bao Moi</span>
         </div>
       </div>
-      <div>
-        <div className="title-drop">Chuyên mục :</div>
-        <div className="item-drop">
-          <span>Hình sự - Dân sự</span>
+      {categories.length > 0 && (
+        <div>
+          <div className="title-drop">Chuyên mục :</div>
+          {categories.map((e, i) => (
+            <div
+              className="item-drop"
+              key={i}
+              onClick={(evt) =>
+                onSelected({
+                  type: 'category',
+                  data: e,
+                })
+              }
+            >
+              <span>{e.title}</span>
+            </div>
+          ))}
         </div>
-        <div className="item-drop">
-          <span>Bóng đá quốc tế</span>
-        </div>
-      </div>
+      )}
     </div>
   );
 };

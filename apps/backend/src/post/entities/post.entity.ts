@@ -76,7 +76,6 @@ export class Post {
   get url(): string {
     return `/bai-bao/${this.slug || 'abc'}/${this.id}`;
   }
-
   constructor(partial: Partial<Post>) {
     Object.assign(this, partial);
   }

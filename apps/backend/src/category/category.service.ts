@@ -52,6 +52,18 @@ export class CategoryService {
     return this.categoryRepository.create(data);
   }
 
+  searchCategory(q: string) {
+    return this.categoryRepository.find({
+      where: {
+        title: Like(`%${q}%`),
+      },
+      take: 5,
+      order: {
+        title: 'ASC',
+      },
+    });
+  }
+
   remove(id: number) {
     this.categoryRepository.softDelete(id);
   }
