@@ -45,6 +45,7 @@ const ReadingPage: React.FC = () => {
     if (loading === 'done' && data?.slug !== slug) {
       navigate('/');
     }
+    window.scroll(0, 0);
   }, [loading]);
   const btnReactPost = () => {
     if (id) {
