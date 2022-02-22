@@ -24,17 +24,13 @@ import {
   getReactPostAction,
   selectActiveReact,
 } from 'libs/react-post-slice/src';
-
 import {
-  getSavePostAction,
-  selectSave,
-  savePostAction,
   deleteSavePostAction,
+  getSavePostAction,
+  savePostAction,
   selectIdSave,
+  selectSave,
 } from '@kma-news/save-slice';
-
-import { createReatPostAction } from 'libs/react-post-slice/src';
-import { getReactByPost } from 'libs/api-interface/src/react';
 
 interface ImageDetail {
   id: number;
@@ -69,15 +65,12 @@ const ReadingPage: React.FC = () => {
   const btnReactPost = () => {
     if (id) {
       dispatch(createReatPostAction(+id));
+      setActiveReact(!activeReact);
+    }
+  };
   useEffect(() => {
     if (id) dispatch(getSavePostAction(parseInt(id)));
   }, [dispatch, id]);
-
-  const btnReactPost = () => {
-    if (id) {
-      dispatch(createReatPostAction(+id));
-    }
-  };
 
   const allImages = useMemo(() => {
     return data?.paragraphs
@@ -160,7 +153,6 @@ const ReadingPage: React.FC = () => {
                         </p>
                       );
                     }
-
                     return (
                       <React.Fragment key={i}>
                         <p
@@ -185,102 +177,107 @@ const ReadingPage: React.FC = () => {
                     <div className="action--m action-share-face"></div>
                     <div
                       className={
-                        activeReact === true
+                        activeReact
                           ? 'action--m action-like action-like--active'
                           : 'action--m action-like'
                       }
                       onClick={btnReactPost}
+                    >
                       <BiLike className="action-like--hover" />
                     </div>
-                    <div className={
-                        isSave
-                          ? 'action--m action-isLiked'
-                          : 'action--m action-like'
-                      }
-                      onClick={() => {
-                        if (data?.id && isSave == false)
-                          dispatch(savePostAction(data.id));
-                        if (data?.id && isSave == true)
-                          if (idSave) dispatch(deleteSavePostAction(idSave));
-                      }}>
-                      <VscTag className="action-save--hover" />
-                    </div>
-                    <div className="action--m action-report">
-                      <GoReport className="action-report--hover" />
+                    <div className="action--m action-save">
+                      <div
+                        className={
+                          isSave
+                            ? 'action--m action-isLiked'
+                            : 'action--m action-like'
+                        }
+                        onClick={() => {
+                          if (data?.id && isSave == false)
+                            dispatch(savePostAction(data.id));
+                          if (data?.id && isSave == true)
+                            if (idSave) dispatch(deleteSavePostAction(idSave));
+                        }}
+                      >
+                        <VscTag className="action-save--hover" />
+                      </div>
+                      <div className="action--m action-report">
+                        <GoReport className="action-report--hover" />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="page-key">
-                <HiOutlineKey className="page-key-icon" />
-                <div className="page-key-box">
-                  <ul className="page-key-list">
-                    {data?.keywords.map((e, i) => (
-                      <li className="page-key-item" key={`keyword-${i}`}>
-                        {e}
-                      </li>
+                <div className="page-key">
+                  <HiOutlineKey className="page-key-icon" />
+                  <div className="page-key-box">
+                    <ul className="page-key-list">
+                      {data?.keywords.map((e, i) => (
+                        <li className="page-key-item" key={`keyword-${i}`}>
+                          {e}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <p className="page-source">
+                  Nguồn{' '}
+                  <span className="page-source-name">
+                    {data?.publisher?.name || 'Sưu tầm'}
+                  </span>
+                  {': '}
+                  <span className="page-source-link">
+                    <a href={data?.sourceURL || '#'}>{data?.sourceURL}</a>
+                  </span>
+                </p>
+                <CommentBox />
+                <PostOther />
+                <div className="page-news">
+                  <div className="page-news-header">
+                    <p className="page-news-title">TIN KHÁC</p>
+                    <div className="page-news-decor"></div>
+                  </div>
+                  <div className="page-news-content">
+                    {Array.from(Array(4)).map((e, i) => (
+                      <BoxNews
+                        url="#"
+                        publishedAt={new Date().toISOString()}
+                        description="Bai bao rat hay"
+                        key={i}
+                      />
                     ))}
-                  </ul>
+                  </div>
                 </div>
-              </div>
-              <p className="page-source">
-                Nguồn{' '}
-                <span className="page-source-name">
-                  {data?.publisher?.name || 'Sưu tầm'}
-                </span>
-                {': '}
-                <span className="page-source-link">
-                  <a href={data?.sourceURL || '#'}>{data?.sourceURL}</a>
-                </span>
-              </p>
-              <CommentBox />
-              <PostOther />
-              <div className="page-news">
-                <div className="page-news-header">
-                  <p className="page-news-title">TIN KHÁC</p>
-                  <div className="page-news-decor"></div>
+                <div className="page-news">
+                  <div className="page-news-header">
+                    <p className="page-news-title">TIN NÓNG</p>
+                    <div className="page-news-decor"></div>
+                  </div>
+                  <div className="page-news-content">
+                    {Array.from(Array(4)).map((e, i) => (
+                      <BoxNews
+                        url="#"
+                        publishedAt={new Date().toISOString()}
+                        description="Bai bao rat hay"
+                        key={i}
+                      />
+                    ))}
+                  </div>
                 </div>
-                <div className="page-news-content">
-                  {Array.from(Array(4)).map((e, i) => (
-                    <BoxNews
-                      url="#"
-                      publishedAt={new Date().toISOString()}
-                      description="Bai bao rat hay"
-                      key={i}
-                    />
-                  ))}
-                </div>
-              </div>
-              <div className="page-news">
-                <div className="page-news-header">
-                  <p className="page-news-title">TIN NÓNG</p>
-                  <div className="page-news-decor"></div>
-                </div>
-                <div className="page-news-content">
-                  {Array.from(Array(4)).map((e, i) => (
-                    <BoxNews
-                      url="#"
-                      publishedAt={new Date().toISOString()}
-                      description="Bai bao rat hay"
-                      key={i}
-                    />
-                  ))}
-                </div>
-              </div>
-              <div className="page-news">
-                <div className="page-news-header">
-                  <p className="page-news-title">TIN MỚI</p>
-                  <div className="page-news-decor"></div>
-                </div>
-                <div className="page-news-content">
-                  {Array.from(Array(4)).map((e, i) => (
-                    <BoxNews
-                      url="#"
-                      publishedAt={new Date().toISOString()}
-                      description="Bai bao rat hay"
-                      key={i}
-                    />
-                  ))}
+                <div className="page-news">
+                  <div className="page-news-header">
+                    <p className="page-news-title">TIN MỚI</p>
+                    <div className="page-news-decor"></div>
+                  </div>
+                  <div className="page-news-content">
+                    {Array.from(Array(4)).map((e, i) => (
+                      <BoxNews
+                        url="#"
+                        publishedAt={new Date().toISOString()}
+                        description="Bai bao rat hay"
+                        key={i}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
