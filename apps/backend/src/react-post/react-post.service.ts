@@ -21,15 +21,14 @@ export class ReactPostService {
 
     const reactPost = await this.reactPostService.findOne({
       where: {
-        postId,
-        userId,
+        post: postId,
+        user: userId,
       },
     });
-
     if (!reactPost) {
       const createReactPost = await this.reactPostService.create({
-        userId,
-        postId,
+        user: userId,
+        post: postId,
       });
       return this.reactPostService.save(createReactPost);
     }
@@ -43,17 +42,12 @@ export class ReactPostService {
   async findOne(userId: number, postId: number) {
     const reactPost = await this.reactPostService.findOne({
       where: {
-        postIdId: userId,
+        post: postId,
+        user: userId,
       },
     });
-    console.log(reactPost);
-    if (reactPost) {
-      console.log('hi');
-      return true;
-    } else {
-      console.log('hoho');
-      return false;
-    }
+    if (reactPost) return { isActive: true };
+    return { isActive: false };
   }
 
   update(id: number, updateReactPostDto: UpdateReactPostDto) {

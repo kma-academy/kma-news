@@ -14,7 +14,6 @@ import { CreateReactPostDto } from './dto/create-react-post.dto';
 import { UpdateReactPostDto } from './dto/update-react-post.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { CurrentUserId } from '../common/decorators/current-user.decorator';
-import { number } from 'joi';
 
 @Controller('react-post')
 export class ReactPostController {
@@ -35,6 +34,7 @@ export class ReactPostController {
   }
 
   @Get(':postId')
+  @UseGuards(JwtAuthGuard)
   findOne(
     @CurrentUserId() userId: number,
     @Param('postId', ParseIntPipe) postId: number

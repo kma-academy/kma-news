@@ -45,10 +45,7 @@ const topicSlice = createSlice({
         if (!state.topicContents) {
           state.topicContents = action.payload;
         } else {
-          state.topicContents.contents = [
-            ...state.topicContents.contents,
-            ...action.payload.contents,
-          ];
+          state.topicContents.contents = action.payload.contents;
         }
       })
       .addCase(getPostsOnTopicAction.rejected, (state, action) => {

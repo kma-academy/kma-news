@@ -13,7 +13,7 @@ export class ReactPost {
   @PrimaryGeneratedColumn()
   id: number;
   @ManyToOne(() => Post)
-  postId: number;
+  post: number;
   @ManyToOne(() => User)
-  userId: number;
+  user: number;
 }

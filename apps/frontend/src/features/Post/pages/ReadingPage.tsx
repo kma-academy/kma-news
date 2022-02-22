@@ -14,8 +14,11 @@ import { FullScreenImage } from '../components/FullScreenImage';
 import { selectData, getPostAction, selectLoading } from '../postSlice';
 import { CommentBox } from '../components/Comments/CommentBox';
 import { PostOther } from '../components/PostOther';
-import { createReatPostAction } from 'libs/react-post-slice/src';
-import { getReactByPost } from 'libs/api-interface/src/react';
+import {
+  createReatPostAction,
+  getReactPostAction,
+  selectActiveReact,
+} from 'libs/react-post-slice/src';
 interface ImageDetail {
   id: number;
   url: string;
@@ -29,20 +32,24 @@ const ReadingPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const data = useAppSelector(selectData);
   const navigate = useNavigate();
-  const [activeReact, setActiveReact] = useState(false);
+  const [activeReact, setActiveReact] = useState(
+    useAppSelector(selectActiveReact)
+  );
   useEffect(() => {
-    if (id) dispatch(getPostAction(+id));
+    if (id) {
+      dispatch(getPostAction(+id));
+      dispatch(getReactPostAction(+id));
+    }
   }, [dispatch, id]);
   useEffect(() => {
     if (loading === 'done' && data?.slug !== slug) {
       navigate('/');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
-
   const btnReactPost = () => {
     if (id) {
       dispatch(createReatPostAction(+id));
+      setActiveReact(!activeReact);
     }
   };
 
@@ -151,7 +158,11 @@ const ReadingPage: React.FC = () => {
                     <div className="action--m action-share-zalo"></div>
                     <div className="action--m action-share-face"></div>
                     <div
-                      className="action--m action-like"
+                      className={
+                        activeReact === true
+                          ? 'action--m action-like action-like--active'
+                          : 'action--m action-like'
+                      }
                       onClick={btnReactPost}
                     >
                       <BiLike className="action-like--hover" />

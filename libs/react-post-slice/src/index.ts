@@ -21,11 +21,13 @@ export const getReactPostAction = createAsyncThunk(
 export interface ReactPostState {
   loading: LoadingState;
   reacts: ReactPostResponse;
+  isActive: boolean;
 }
 
 const initialState: ReactPostState = {
   loading: 'idle',
   reacts: [],
+  isActive: false,
 };
 
 const reactPostSlice = createSlice({
@@ -50,6 +52,7 @@ const reactPostSlice = createSlice({
       })
       .addCase(getReactPostAction.fulfilled, (state, action) => {
         state.loading = 'done';
+        state.isActive = action.payload.isActive;
       })
       .addCase(getReactPostAction.rejected, (state) => {
         state.loading = 'error';
@@ -60,9 +63,11 @@ const reactPostSlice = createSlice({
 type RootState = {
   reactPost: ReactPostState;
 };
-export const selectHistory = <T extends RootState>(state: T) =>
+export const selectReact = <T extends RootState>(state: T) =>
   state.reactPost.reacts;
 export const selectLoading = <T extends RootState>(state: T) =>
   state.reactPost.loading;
+export const selectActiveReact = <T extends RootState>(state: T) =>
+  state.reactPost.isActive;
 
 export default reactPostSlice.reducer;
