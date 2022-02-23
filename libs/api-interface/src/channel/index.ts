@@ -34,6 +34,10 @@ export const getPersonalChannel = () => {
   return client.get('/channels/mychannel') as Promise<PersonalChannelResponse>;
 };
 
+export const deletePersonalChannel = (id: number) => {
+  return client.delete(`/channels/${id}`);
+};
+
 export type CreatePersonalChannelReponse = Omit<
   PostByChannelResponse,
   'contents'

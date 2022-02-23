@@ -7,6 +7,7 @@ import {
   CreatePersonalChannelParameter,
   searchCategory,
   SearchCategoryResponse,
+  deletePersonalChannel,
 } from '@kma-news/api-interface';
 
 export const getPersonalChannelAction = createAsyncThunk('channel/get', () => {
@@ -24,6 +25,13 @@ export const createPersonalChannelAction = createAsyncThunk(
   'channel/create',
   (data: CreatePersonalChannelParameter) => {
     return createPersonalChannel(data);
+  }
+);
+
+export const deletePersonalChannelAction = createAsyncThunk(
+  'channel/delete',
+  (id: number) => {
+    return deletePersonalChannel(id);
   }
 );
 
@@ -73,6 +81,16 @@ const channelSlice = createSlice({
     builder.addCase(searchCategoryAction.fulfilled, (state, action) => {
       state.categories = action.payload;
     });
+    builder
+      .addCase(deletePersonalChannelAction.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(deletePersonalChannelAction.fulfilled, (state, action) => {
+        state.loading = 'done';
+      })
+      .addCase(deletePersonalChannelAction.rejected, (state) => {
+        state.loading = 'error';
+      });
   },
 });
 

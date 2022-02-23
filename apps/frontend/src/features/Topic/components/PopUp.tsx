@@ -31,7 +31,7 @@ export const PopUp: React.FC<PopUpProps> = ({ onClose: setShowPopUp }) => {
               </div>
               <div className="list-news-topic">
                 {topicContent.contents.map((content, i) => (
-                  <div className="col-3 item-news-navbar">
+                  <div className="col-3 item-news-navbar" key={i}>
                     <div className="img-news-navbar">
                       <Link to="/">
                         <img

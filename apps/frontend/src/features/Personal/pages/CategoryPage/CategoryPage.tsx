@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import {
   selectChannel,
   getPersonalChannelAction,
+  deletePersonalChannelAction,
 } from '@kma-news/channel-slice';
 import React, { useEffect, useState } from 'react';
 import { GiTrashCan } from 'react-icons/gi';
@@ -11,10 +12,21 @@ import { Link } from 'react-router-dom';
 function CategoryPageMain() {
   const channels = useAppSelector(selectChannel);
   const dispatch = useAppDispatch();
-  const [dropItem, setDropItem] = useState(false);
+  const [dropItem, setDropItem] = useState(-1);
+  const btnDropItem = (id: number) => {
+    if (id === dropItem) {
+      setDropItem(-1);
+    } else {
+      let selectItem = channels.filter((e) => e.id === id);
+      setDropItem(selectItem[0].id);
+    }
+  };
+  const btnDelChannel = (idChannel: number) => {
+    dispatch(deletePersonalChannelAction(idChannel));
+  };
   useEffect(() => {
     dispatch(getPersonalChannelAction());
-  }, [dispatch]);
+  }, [dispatch, btnDropItem]);
   if (channels.length > 0)
     return (
       <div className="category-page-main">
@@ -26,7 +38,7 @@ function CategoryPageMain() {
         </div>
         <div className="list-category-page-main col-12">
           {channels.map((e, i) => (
-            <div className="item-category-page-main">
+            <div className="item-category-page-main" key={i}>
               <div className="item-img">
                 <img
                   src="https://photo-baomoi.zadn.vn/w300_r3x2_sm/2022_02_16_119_41775537/da0037feadbc44e21dad.jpg"
@@ -34,15 +46,18 @@ function CategoryPageMain() {
                 />
               </div>
               <div className="item-name">{e.name}</div>
-              <div className="btn-item" onClick={() => setDropItem(!dropItem)}>
+              <div className="btn-item" onClick={() => btnDropItem(e.id)}>
                 <HiOutlineDotsHorizontal />
-                {dropItem && (
+                {dropItem === e.id && (
                   <div className="item-category-drop">
                     <div className="update-category">
                       <HiOutlinePencilAlt size="20px" />
                       <span>Sửa</span>
                     </div>
-                    <div className="remove-category">
+                    <div
+                      className="remove-category"
+                      onClick={() => btnDelChannel(dropItem)}
+                    >
                       <GiTrashCan size="20px" />
                       <span>Xóa</span>
                     </div>

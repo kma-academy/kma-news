@@ -40,6 +40,10 @@ export class ReactPostService {
   }
 
   async findOne(userId: number, postId: number) {
+    const user = await this.userService.findOne(userId);
+    if (!user) throw new BadRequestException();
+    const post = await this.postService.findOne(postId);
+    if (!post) throw new BadRequestException();
     const reactPost = await this.reactPostService.findOne({
       where: {
         post: postId,

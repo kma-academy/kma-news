@@ -59,7 +59,6 @@ const ReadingPage: React.FC = () => {
   const [activeReact, setActiveReact] = useState(
     useAppSelector(selectActiveReact)
   );
-
   const [loggin, setLoggin] = useState(false);
   useEffect(() => {
     if (id) {
@@ -195,7 +194,11 @@ const ReadingPage: React.FC = () => {
                     <div className="action--m action-share-zalo"></div>
                     <div className="action--m action-share-face"></div>
                     <div
-                      className="action--m action-like"
+                      className={
+                        activeReact
+                          ? 'action--m action-like action-like--active'
+                          : 'action--m action-like'
+                      }
                       onClick={btnReactPost}
                     >
                       <BiLike className="action-like--hover" />
