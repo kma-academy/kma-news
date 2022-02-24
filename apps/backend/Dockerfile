@@ -8,7 +8,7 @@ WORKDIR /home/node/app
 
 COPY package*.json .
 
-RUN npm i --production --quiet
+RUN npm i
 
 COPY "dist/apps/${BUILD_TARGET}/main.js" /home/node/app/main.js
 

@@ -6,7 +6,9 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
-    "fe": "cross-env NX_API_URL=http://localhost:8888 nx serve frontend"
+    "fe": "cross-env NX_API_URL=http://localhost:8888 nx serve frontend",
+    "docker:build": "nx build backend && nx build crawler && docker-compose -f docker-compose.build.yml build",
+    "docker:push": "docker-compose -f docker-compose.build.yml push"
   },
   "private": true,
   "dependencies": {
@@ -71,6 +73,7 @@
     "@nrwl/tao": "13.6.1",
     "@nrwl/web": "13.7.0",
     "@nrwl/workspace": "13.6.1",
+    "@nx-tools/nx-docker": "^2.3.0",
     "@testing-library/react": "12.1.2",
     "@testing-library/react-hooks": "7.0.2",
     "@types/bcrypt": "^5.0.0",

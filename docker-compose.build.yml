@@ -16,7 +16,7 @@ services:
       dockerfile: Dockerfile.frontend
       args:
         BUILD_TARGET: frontend
-        API_URL: "https:${BACKEND_HOST}"
+        API_URL: "https://${BACKEND_HOST}"
         ZALO_APP_ID: "${ZALO_APP_ID}"
         ZALO_CALLBACK_URL: "https://${FRONTEND_HOST}"
 
