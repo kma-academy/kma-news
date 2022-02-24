@@ -8,6 +8,13 @@ services:
       dockerfile: Dockerfile.backend
       args:
         - BUILD_TARGET=backend
+  crawler:
+    image: notekunn/kma-news-crawler
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        BUILD_TARGET: crawler
 
   frontend:
     image: notekunn/kma-news-frontend
@@ -16,17 +23,10 @@ services:
       dockerfile: Dockerfile.frontend
       args:
         BUILD_TARGET: frontend
-        API_URL: "https://${BACKEND_HOST}"
+        API_URL: "http://${BACKEND_HOST}"
         ZALO_APP_ID: "${ZALO_APP_ID}"
-        ZALO_CALLBACK_URL: "https://${FRONTEND_HOST}"
+        ZALO_CALLBACK_URL: "http://${FRONTEND_HOST}"
 
-  crawler:
-    image: notekunn/kma-news-crawler
-    build:
-      context: .
-      dockerfile: Dockerfile.backend
-      args:
-        BUILD_TARGET: crawler
   # admin:
   #   image: notekunn/kma-news-admin
   #   container_name: kma-news-admin

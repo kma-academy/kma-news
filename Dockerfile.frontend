@@ -37,7 +37,7 @@ RUN NX_API_URL=${API_URL} \
   NX_ZALO_CALLBACK_URL=${ZALO_CALLBACK_URL}/auth/login/zalo \
   NX_APP_ZALO_APP_ID=${ZALO_APP_ID} \
   GENERATE_SOURCEMAP=false \
-  nx build ${BUILD_TARGET} --prod
+  nx build ${BUILD_TARGET} --prod --skip-nx-cache
 
 FROM nginx:latest as product
 

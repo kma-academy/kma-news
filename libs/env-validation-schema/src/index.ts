@@ -25,7 +25,7 @@ export const EnvValidationSchema = Joi.object({
   BACKEND_PORT: Joi.number().required(),
   FRONTEND_PORT: Joi.number().required(),
   ADMIN_PORT: Joi.number().required(),
-  ADMIN_HOST: Joi.string().hostname().required(),
-  FRONTEND_HOST: Joi.string().hostname().required(),
-  BACKEND_HOST: Joi.string().hostname().required(),
+  ADMIN_HOST: Joi.string().required(),
+  FRONTEND_HOST: Joi.string().required(),
+  BACKEND_HOST: Joi.string().required(),
 });
