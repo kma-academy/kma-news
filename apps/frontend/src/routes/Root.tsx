@@ -63,6 +63,9 @@ export const RootRouter = () => {
               <Route path="theo-doi" element={<SubscriptionPage />} />
             </Route>
           </Route>
+          <Route path="/tin-moi" element={<BasicLayout />}>
+            
+          </Route>
           <Route path="/chu-de" element={<BasicLayout />}>
             <Route path="" element={<Topic />} />
             <Route path=":topicId" element={<PostOnTopic />} />

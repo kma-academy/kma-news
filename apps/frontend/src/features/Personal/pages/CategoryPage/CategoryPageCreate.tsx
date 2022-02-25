@@ -213,7 +213,10 @@ const CategoryCreatePage: React.FC = () => {
         </div>
         {loading === 'error' && <div>{message}</div>}
         <div className="group-btn">
-          <button className="btn cancel" onClick={() => navigate('../')}>
+          <button
+            className="btn cancel"
+            onClick={() => navigate('/ca-nhan/muc-cua-ban')}
+          >
             Hủy bỏ
           </button>
           <button className="btn create" onClick={handleSubmit}>
