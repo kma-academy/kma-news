@@ -29,17 +29,17 @@ export abstract class BaseHandler {
     this.timeFormat = timeFormat;
   }
 
-  protected abstract getTitle($: CheerioAPI): string;
-  protected abstract getDescription($: CheerioAPI): string;
-  protected abstract getKeywords($: CheerioAPI): Array<string>;
-  protected abstract getParagraphs($: CheerioAPI): Array<ParagraphDto>;
-  protected abstract getCategories($: CheerioAPI): Array<string>;
-  protected abstract getOwner($: CheerioAPI): string;
-  protected abstract getTimeString($: CheerioAPI): string;
-  protected formatText(text: string) {
+  abstract getTitle($: CheerioAPI): string;
+  abstract getDescription($: CheerioAPI): string;
+  abstract getKeywords($: CheerioAPI): Array<string>;
+  abstract getParagraphs($: CheerioAPI): Array<ParagraphDto>;
+  abstract getCategories($: CheerioAPI): Array<string>;
+  abstract getOwner($: CheerioAPI): string;
+  abstract getTimeString($: CheerioAPI): string;
+  formatText(text: string) {
     return text.replace(/\n/g, '').replace(/\s+/g, ' ').trim();
   }
-  protected formatTime(time = 'Thứ ba, 21/12/2021, 08:32 (GMT+7)') {
+  formatTime(time = 'Thứ ba, 21/12/2021, 08:32 (GMT+7)') {
     try {
       const date = moment(time, this.timeFormat);
       if (!date.isValid()) return new Date();
@@ -47,6 +47,10 @@ export abstract class BaseHandler {
     } catch (error) {
       return new Date();
     }
+  }
+  async getNewContent(url: string) {
+    const { data } = await firstValueFrom(this.httpService.get(url));
+    return cheerio.load(data);
   }
   async getNewDetail(url: string): Promise<PostRaw | undefined> {
     if (typeof url !== 'string' || !this.formatText(url)) return undefined;
@@ -56,8 +60,7 @@ export abstract class BaseHandler {
       },
     });
     if (countPostSameSource > 0) return undefined;
-    const { data } = await firstValueFrom(this.httpService.get(url));
-    const $ = cheerio.load(data);
+    const $ = await this.getNewContent(url);
     const post = new PostRaw({});
     post.publisherHostname = this.hostname;
     post.sourceURL = url;
