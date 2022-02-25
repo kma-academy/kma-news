@@ -5,9 +5,14 @@ import { BsPhone, BsSearch } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import Login from '@/features/Auth/components/Login';
 import { AuthDropDown } from '@/features/Auth/components/AuthDropDown/';
-import { selectLoggedIn, selectProfile, togglePopup } from '@kma-news/auth-slice';
+import {
+  selectLoggedIn,
+  selectProfile,
+  togglePopup,
+} from '@kma-news/auth-slice';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { useClickOutside } from '@/hooks/useClickOutside';
+import useClickInside from '@/hooks/useClickInside';
 import { HeaderMenu } from './HeaderMenu';
 import { HeaderTag } from './HeaderTag';
 import {
@@ -37,7 +42,6 @@ const Header = () => {
     dispatch(getHeaderMenusAction());
     dispatch(getHeaderCategoriesAction());
     dispatch(getHeaderTagsAction());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // const domNode = useClickOutside(() => {
   //   toggleUserMenu(false)
@@ -116,7 +120,10 @@ const Header = () => {
             </li>
           </ul>
         </div>
-        <div ref={refDropMenu}>
+        <div
+          ref={refDropMenu}
+          onClick={() => setActiveDropMenu(!activeDropMenu)}
+        >
           <div
             className="drop-menu"
             style={
