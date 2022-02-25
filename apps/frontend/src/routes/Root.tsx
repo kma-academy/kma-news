@@ -36,6 +36,10 @@ const ReadingPage = React.lazy(
   () => import('@/features/Post/pages/ReadingPage')
 );
 
+const PageCategory = React.lazy(
+  () => import('@/features/Category/pages/pageCategory')
+);
+
 export const RootRouter = () => {
   return (
     <div>
@@ -63,15 +67,16 @@ export const RootRouter = () => {
               <Route path="theo-doi" element={<SubscriptionPage />} />
             </Route>
           </Route>
-          <Route path="/tin-moi" element={<BasicLayout />}>
-            
-          </Route>
+          <Route path="/tin-moi" element={<BasicLayout />}></Route>
           <Route path="/chu-de" element={<BasicLayout />}>
             <Route path="" element={<Topic />} />
             <Route path=":topicId" element={<PostOnTopic />} />
           </Route>
           <Route path="auth/login" element={<BlankLayout />}>
             <Route path="zalo" element={<ZaloLoginPage />} />
+          </Route>
+          <Route path="/the-loai/:subItem" element={<BasicLayout />}>
+            <Route path="" element={<PageCategory />} />
           </Route>
         </Routes>
       </Suspense>

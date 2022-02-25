@@ -56,10 +56,9 @@ export class Post {
   @Column({ nullable: true })
   publishedAt?: Date;
 
-  @ManyToMany(() => Category)
+  @ManyToMany(() => Category, (category: Category) => category.posts)
   @JoinTable()
   categories: Category[];
-
   @Column('simple-array')
   @Index({
     fulltext: true,

@@ -33,8 +33,8 @@ export class Category {
     return `/the-loai/${this.slug || ''}`;
   }
 
-  @ManyToMany(() => Post)
-  posts: Post[];
+  @ManyToMany(() => Post, (post: Post) => post.categories)
+  posts: Promise<Post[]>;
 
   constructor(paratial: Partial<Category>) {
     Object.assign(this, paratial);

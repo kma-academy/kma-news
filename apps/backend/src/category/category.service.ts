@@ -37,8 +37,9 @@ export class CategoryService {
     return this.categoryRepository.find();
   }
 
-  findOne(id: number) {
-    return this.categoryRepository.findOne(id);
+  async findOne(id: number) {
+    const categories = await this.categoryRepository.findOne(id);
+    return await categories.posts;
   }
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
