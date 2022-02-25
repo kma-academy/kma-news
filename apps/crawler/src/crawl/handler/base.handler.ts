@@ -8,7 +8,7 @@ import { firstValueFrom } from 'rxjs';
 import { OmitType, PartialType } from '@nestjs/swagger';
 import { ParagraphDto } from '../../post/dto/paragraph.dto';
 import { ParagraphType } from '../../post/entities/paragraph.entity';
-class PostRaw extends PartialType(
+export class PostRaw extends PartialType(
   OmitType(Post, ['categories', 'paragraphs', 'publisher'])
 ) {
   categories: string[];
@@ -37,6 +37,7 @@ export abstract class BaseHandler {
   abstract getOwner($: CheerioAPI): string;
   abstract getTimeString($: CheerioAPI): string;
   formatText(text: string) {
+    if(!text) return ""
     return text.replace(/\n/g, '').replace(/\s+/g, ' ').trim();
   }
   formatTime(time = 'Thứ ba, 21/12/2021, 08:32 (GMT+7)') {

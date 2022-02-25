@@ -53,6 +53,11 @@ export class LastestProcessor {
     );
   }
 
+  @Process('vtcnew')
+  getLastestNewVTCNew() {
+    return this.getLastestNew('https://vtc.vn/rss/feed.rss', 'vtcnew');
+  }
+
   @OnQueueActive()
   onActive(job: Job) {
     this.logger.debug(`Handle job: ${job.name}`);

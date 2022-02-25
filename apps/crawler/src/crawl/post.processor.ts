@@ -15,7 +15,7 @@ import { ParagraphService } from '../post/paragraph.service';
 import { PublisherService } from '../publisher/publisher.service';
 import { UserRole } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
-import { BaseHandler } from './handler/base.handler';
+import { BaseHandler, PostRaw } from './handler/base.handler';
 
 @Processor('news')
 export class PostProcessor {
@@ -26,6 +26,8 @@ export class PostProcessor {
     private readonly vnexpress: BaseHandler,
     @Inject('VIETNAMNET_HANDLER')
     private readonly vietnamnet: BaseHandler,
+    @Inject('VTCNEW_HANDLER')
+    private readonly vtcnew: BaseHandler,
     @InjectRepository(Post)
     private readonly postRepository: Repository<Post>,
     private readonly paragraphService: ParagraphService,
@@ -36,11 +38,7 @@ export class PostProcessor {
     private readonly slugHelper: SlugHelper
   ) {}
 
-  @Process('vnexpress')
-  async handleVNExpress(job: Job<string>) {
-    //
-    const post = await this.vnexpress.getNewDetail(job.data);
-    if (!post) return;
+  async handlePost(post: PostRaw) {
     const { categories, paragraphs, publisherHostname, ...data } = post;
     const paragraphData = await this.paragraphService.createBatch(paragraphs);
     const publisher = await this.publisherService.findOne(publisherHostname);
@@ -59,27 +57,26 @@ export class PostProcessor {
     });
   }
 
+  @Process('vnexpress')
+  async handleVNExpress(job: Job<string>) {
+    const post = await this.vnexpress.getNewDetail(job.data);
+    if (!post) return;
+    return await this.handlePost(post);
+  }
+
   @Process('vietnamnet')
   async handleVietnamNet(job: Job<string>) {
     //
     const post = await this.vietnamnet.getNewDetail(job.data);
     if (!post) return;
-    const { categories, paragraphs, publisherHostname, ...data } = post;
-    const paragraphData = await this.paragraphService.createBatch(paragraphs);
-    const publisher = await this.publisherService.findOne(publisherHostname);
-    const admin = await this.userService.findOneByRole(UserRole.ADMIN);
-    const postData = await this.postRepository.save({
-      ...data,
-      paragraphs: paragraphData,
-      publisher,
-      categories: [],
-      writter: admin,
-      slug: this.slugHelper.slugify(data.title),
-    });
-    this.categoryQueue.add('add_to_post', {
-      postId: postData.id,
-      categories,
-    });
+    return await this.handlePost(post);
+  }
+
+  @Process('vtcnew')
+  async handlerVTCNew(job: Job<string>) {
+    const post = await this.vtcnew.getNewDetail(job.data);
+    if (!post) return;
+    return await this.handlePost(post);
   }
 
   @OnQueueActive()

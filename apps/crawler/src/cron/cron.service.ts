@@ -6,6 +6,10 @@ import { Queue } from 'bull';
 @Injectable()
 export class CronService {
   private readonly logger = new Logger(CronService.name);
+  private readonly services = ['vnexpress', 'vietnamnet', 'vtcnew'];
+  private readonly cron = {
+    cron: '* * * * *',
+  };
   constructor(
     @InjectQueue('lastest_news') private readonly lastestQueue: Queue
   ) {
@@ -13,19 +17,8 @@ export class CronService {
   }
 
   async setUp() {
-    await this.lastestQueue.removeRepeatable({
-      cron: '* * * * *',
-    });
-    await this.lastestQueue.add('vnexpress', '', {
-      repeat: {
-        cron: '* * * * *',
-      },
-    });
-    await this.lastestQueue.add('vietnamnet', '', {
-      repeat: {
-        cron: '* * * * *',
-      },
-    });
+    await this.lastestQueue.removeRepeatable(this.cron);
+    this.services.map((e) => this.lastestQueue.add(e, { repeat: this.cron }));
   }
 
   @Cron(CronExpression.EVERY_30_MINUTES)
