@@ -1,5 +1,6 @@
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { defaultThumbnail } from '@/constants/thumnail';
+import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
 export interface TopicPostItemProps {
@@ -42,7 +43,9 @@ export const TopicPostItem: React.FC<TopicPostItemProps> = (props) => {
               alt={publisherName || 'Báo mới'}
             />
           </Link>
-          <span className="news-time">{publishedAt.toISOString()}</span>
+          <span className="news-time">
+            {moment(publishedAt).locale('vi').fromNow()}
+          </span>
         </div>
       </div>
     </div>

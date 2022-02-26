@@ -29,14 +29,24 @@ export class ReactPostService {
       const createReactPost = await this.reactPostService.create({
         user: userId,
         post: postId,
+        visitDate: new Date(),
       });
       return this.reactPostService.save(createReactPost);
     }
     return this.reactPostService.remove(reactPost);
   }
 
-  findAll() {
-    return `This action returns all reactPost`;
+  async findAll(userId: number) {
+    const data = await this.reactPostService.find({
+      where: {
+        user: userId,
+      },
+      order: {
+        visitDate: 'ASC',
+      },
+      relations: ['post'],
+    });
+    return data;
   }
 
   async findOne(userId: number, postId: number) {

@@ -1,26 +1,28 @@
-import React from 'react'
-import BoxFollow from '@/components/BoxFollow'
+import React, { useEffect } from 'react';
+import BoxFollow from '@/components/BoxFollow';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import {
+  getListReactPostAction,
+  selectListReact,
+} from '@kma-news/react-post-slice';
 
 const SubscriptionPage = () => {
+  const dispatch = useAppDispatch();
+  const data = useAppSelector(selectListReact);
+  useEffect(() => {
+    dispatch(getListReactPostAction());
+  }, [dispatch]);
   return (
     <div>
       <div className="user-page__header">
-        <div className="user-page__title">Nguồn báo</div>
+        <div className="user-page__title">Danh sách theo dõi báo</div>
       </div>
       <div className="user-page__body">
-        <BoxFollow />
-        <BoxFollow />
-        <BoxFollow />
-      </div>
-      <div className="user-page__header">
-        <div className="user-page__title">Chuyên mục</div>
-      </div>
-      <div className="user-page__body">
-        <BoxFollow />
-        <BoxFollow />
-        <BoxFollow />
+        {data.map((e, i) => (
+          <BoxFollow data={e} key={i} />
+        ))}
       </div>
     </div>
-  )
-}
-export default SubscriptionPage
+  );
+};
+export default SubscriptionPage;

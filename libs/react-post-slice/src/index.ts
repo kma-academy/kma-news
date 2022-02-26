@@ -1,5 +1,6 @@
 import {
   createReactPost,
+  getListReact,
   getReactByPost,
   ReactPostResponse,
 } from '../../api-interface/src/react';
@@ -18,6 +19,11 @@ export const getReactPostAction = createAsyncThunk(
     return getReactByPost(postId);
   }
 );
+
+export const getListReactPostAction = createAsyncThunk('reactPost/get', () => {
+  return getListReact();
+});
+
 export interface ReactPostState {
   loading: LoadingState;
   reacts: ReactPostResponse;
@@ -57,6 +63,17 @@ const reactPostSlice = createSlice({
       .addCase(getReactPostAction.rejected, (state) => {
         state.loading = 'error';
       });
+    builder
+      .addCase(getListReactPostAction.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(getListReactPostAction.fulfilled, (state, action) => {
+        state.loading = 'done';
+        state.reacts = action.payload;
+      })
+      .addCase(getListReactPostAction.rejected, (state) => {
+        state.loading = 'error';
+      });
   },
 });
 
@@ -69,5 +86,8 @@ export const selectLoading = <T extends RootState>(state: T) =>
   state.reactPost.loading;
 export const selectActiveReact = <T extends RootState>(state: T) =>
   state.reactPost.isActive;
+
+export const selectListReact = <T extends RootState>(state: T) =>
+  state.reactPost.reacts;
 
 export default reactPostSlice.reducer;

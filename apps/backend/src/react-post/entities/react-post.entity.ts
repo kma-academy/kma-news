@@ -16,4 +16,8 @@ export class ReactPost {
   post: number;
   @ManyToOne(() => User)
   user: number;
+  @Column()
+  visitDate: Date;
+  @Column()
+  deleteAt: Date;
 }

@@ -403,7 +403,7 @@
 .description-item-news > a {
   color: #212529;
 }
-.description-item-news a:hover{
+.description-item-news a:hover {
   color: #2fa1b3;
 }
 
@@ -414,6 +414,10 @@
   font-size: 12px;
   height: 16px;
   margin-top: 10px;
+}
+
+.news-source > a {
+  height: 100%;
 }
 
 .logo-source {
@@ -594,48 +598,48 @@
 .news-horizontal .news-source {
   height: 20px;
 }
-.btn-list-posts{
+.btn-list-posts {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.btn-list-posts > a{
+.btn-list-posts > a {
   text-transform: uppercase;
   font-size: 14px;
   color: #2fa1b3;
 }
-.btn-list-posts > a:hover{
+.btn-list-posts > a:hover {
   text-decoration: underline;
 }
 
-.btn-group{
+.btn-group {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 20px;
 }
-.btn-group div{
+.btn-group div {
   padding: 3px 20px;
   border-radius: 14px;
   border: 1px solid #2fa1b3;
   margin: 5px;
 }
-.btn-group .btn-next{
+.btn-group .btn-next {
   background-color: #2fa1b3;
 }
-.btn-next a{
+.btn-next a {
   color: #fff;
 }
-.btn-next:hover{
+.btn-next:hover {
   opacity: 0.8;
 }
-.btn-next a:hover{
+.btn-next a:hover {
   color: #fff;
 }
-.btn-prev:hover{
+.btn-prev:hover {
   background-color: #2fa1b3;
 }
-.btn-prev:hover.btn-prev a{
+.btn-prev:hover.btn-prev a {
   color: #fff;
 }
 /* content-right */
@@ -667,7 +671,8 @@
   margin: auto;
   position: relative;
   width: 100%;
-  background: #f7f8fa url(https://baomoi-static.zadn.vn/web/styles/img/pls-bg-1.png)
+  background: #f7f8fa
+    url(https://baomoi-static.zadn.vn/web/styles/img/pls-bg-1.png)
     calc(50% - 60px) top/600px auto no-repeat;
   border: 1px solid #eee;
   padding: 8px 15px;
@@ -717,7 +722,8 @@
   margin: auto;
   position: relative;
   width: 100%;
-  background: #f7f8fa url(https://baomoi-static.zadn.vn/web/styles/img/pls-bg-1.png)
+  background: #f7f8fa
+    url(https://baomoi-static.zadn.vn/web/styles/img/pls-bg-1.png)
     calc(50% - 60px) top/600px auto no-repeat;
   border: 1px solid #eee;
   padding: 8px 15px;
@@ -789,7 +795,8 @@
 }
 
 .news-covid {
-  background: #fff url(https://baomoi-static.zadn.vn/web/styles/img/covid-sidebar-bg-6.png)
+  background: #fff
+    url(https://baomoi-static.zadn.vn/web/styles/img/covid-sidebar-bg-6.png)
     top/420px 115px no-repeat;
   padding: 43px 0 0;
   border: 1px solid #e9ecef;
@@ -870,7 +877,8 @@ table {
 }
 
 .location {
-  background: #fef9e6 url(https://baomoi-static.zadn.vn/web/styles/img/global-map.png) top/330px
+  background: #fef9e6
+    url(https://baomoi-static.zadn.vn/web/styles/img/global-map.png) top/330px
     164px no-repeat;
   padding: 15px;
 }
@@ -1208,7 +1216,8 @@ a:hover {
   width: 160px;
   height: 36px;
   display: inline-block;
-  background: url(https://baomoi-static.zadn.vn/web/styles/img/desktop-logo.png) 0 0/160px 72px;
+  background: url(https://baomoi-static.zadn.vn/web/styles/img/desktop-logo.png)
+    0 0/160px 72px;
 }
 
 .footer-body {

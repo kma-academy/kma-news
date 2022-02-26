@@ -56,16 +56,16 @@ const ReadingPage: React.FC = () => {
   const isSave = useAppSelector(selectSave);
   const idSave = useAppSelector(selectIdSave);
   const navigate = useNavigate();
-  const [activeReact, setActiveReact] = useState(
-    useAppSelector(selectActiveReact)
-  );
+  const [activeReact, setActiveReact] = useState(false);
   const [loggin, setLoggin] = useState(false);
+  let isActive = useAppSelector(selectActiveReact);
   useEffect(() => {
     if (id) {
       dispatch(getPostAction(+id));
       dispatch(getReactPostAction(+id));
+      setActiveReact(isActive);
     }
-  }, [dispatch, id]);
+  }, [dispatch, id, isActive]);
   useEffect(() => {
     if (loading === 'done' && data?.slug !== slug) {
       navigate('/');

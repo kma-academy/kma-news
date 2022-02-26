@@ -29,8 +29,9 @@ export class ReactPostController {
   }
 
   @Get()
-  findAll() {
-    return this.reactPostService.findAll();
+  @UseGuards(JwtAuthGuard)
+  findAll(@CurrentUserId() userId: number) {
+    return this.reactPostService.findAll(userId);
   }
 
   @Get(':postId')

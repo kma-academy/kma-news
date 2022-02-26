@@ -1,4 +1,6 @@
+import { defaultThumbnail } from '@/constants/thumnail';
 import { PostResponse, RecentPostResponse } from '@kma-news/api-interface';
+import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -14,18 +16,12 @@ export const ItemNews: React.FC<ItemNewsProps> = ({ children, data }) => {
   return (
     <div className="item-news-navbar">
       <div className="img-news-navbar">
-        <Link to="/">
-          <img
-            src={
-              data.thumbnailURL ||
-              'https://baomoi-static.zadn.vn/web/styles/img/logo-baomoi-gray.png'
-            }
-            alt=""
-          />
+        <Link to={data.url}>
+          <img src={data.thumbnailURL || defaultThumbnail} alt="" />
         </Link>
       </div>
       <div className="description-item-news">
-        <Link to="/">
+        <Link to={data.url}>
           <span>{data.title}</span>
         </Link>
         <div className="news-source">
@@ -36,7 +32,7 @@ export const ItemNews: React.FC<ItemNewsProps> = ({ children, data }) => {
               alt=""
             />
           </Link>
-          <span className="news-time">2 giờ</span>
+          <span className="news-time">{moment(data.publishedAt).locale('vi').fromNow()}</span>
           <span className="number-news-other">
             <Link to="/">60 liên quan</Link>
           </span>
