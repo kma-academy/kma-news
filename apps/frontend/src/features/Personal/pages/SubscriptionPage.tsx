@@ -17,11 +17,13 @@ const SubscriptionPage = () => {
       <div className="user-page__header">
         <div className="user-page__title">Danh sách theo dõi báo</div>
       </div>
-      <div className="user-page__body">
-        {data.map((e, i) => (
-          <BoxFollow data={e} key={i} />
-        ))}
-      </div>
+      {data.length > 0 && (
+        <div className="user-page__body">
+          {data.map((e, i) => (
+            <BoxFollow data={e} key={i} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

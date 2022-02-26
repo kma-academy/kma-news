@@ -1,6 +1,7 @@
 import { Expose } from 'class-transformer';
 import {
   Column,
+  DeleteDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
@@ -18,6 +19,6 @@ export class ReactPost {
   user: number;
   @Column()
   visitDate: Date;
-  @Column()
+  @DeleteDateColumn()
   deleteAt: Date;
 }

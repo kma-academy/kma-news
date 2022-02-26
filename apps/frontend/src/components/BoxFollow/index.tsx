@@ -28,7 +28,6 @@ const BoxFollow: React.FC<BoxFollowProps> = ({ data }) => {
       >
         <div className="box-follow__name">{data.post.title}</div>
       </Link>
-      <div className="box-follow__remove">X</div>
     </div>
   );
 };

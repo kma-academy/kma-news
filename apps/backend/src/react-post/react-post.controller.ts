@@ -52,7 +52,7 @@ export class ReactPostController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.reactPostService.remove(+id);
+  remove(id: number) {
+    return this.reactPostService.remove(id);
   }
 }
