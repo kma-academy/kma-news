@@ -9,6 +9,7 @@ import './auth.css';
 import createZaloLoginUrl from '../../../services/createZaloLoginUrl';
 import { environment } from '../../../environments/environment';
 import Register from './Register';
+import { ToastContainer } from 'react-toastify';
 const { zaloCallbackURL, zaloAppId } = environment;
 const Login: React.FC = React.memo((props) => {
   const dispatch = useAppDispatch();
@@ -118,6 +119,7 @@ const Login: React.FC = React.memo((props) => {
           <Register close={setIsLogin} />
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 });

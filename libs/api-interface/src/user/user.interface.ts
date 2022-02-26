@@ -10,3 +10,4 @@ export interface User {
 }
 
 export type UserWithoutPassword = Omit<User, 'password'>;
+export type CreateUser = Partial<User>;

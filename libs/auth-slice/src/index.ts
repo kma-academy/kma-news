@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import {
   LoadingState,
@@ -7,7 +8,9 @@ import {
   LoginParameter,
   ProfileResponse,
   loginWithZalo,
+  createUser,
 } from '@kma-news/api-interface';
+import { CreateUser } from 'libs/api-interface/src/user/user.interface';
 
 export const loginAction = createAsyncThunk(
   'auth/login',
@@ -49,7 +52,13 @@ export const loginZaloAction = createAsyncThunk(
     return result;
   }
 );
-
+export const createUserAction = createAsyncThunk(
+  'auth/create',
+  async (user: CreateUser) => {
+    const result = await createUser(user);
+    return result;
+  }
+);
 export interface AuthState {
   loading: LoadingState;
   loggedIn: boolean;
@@ -122,6 +131,16 @@ const authSlice = createSlice({
         state.profile = undefined;
         localStorage.removeItem('access_token');
         localStorage.removeItem('expiredAt');
+      });
+    builder
+      .addCase(createUserAction.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(createUserAction.fulfilled, (state) => {
+        state.loading = 'done';
+      })
+      .addCase(createUserAction.rejected, (state) => {
+        state.loading = 'error';
       });
   },
 });
