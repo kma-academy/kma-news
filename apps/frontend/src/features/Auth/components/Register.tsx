@@ -1,5 +1,7 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { useAppDispatch } from '@/app/hooks';
+import { environment } from '@/environments/environment.prod';
+import createZaloLoginUrl from '@/services/createZaloLoginUrl';
 import { registerAction } from '@kma-news/auth-slice';
 import React, { useRef, useState } from 'react';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
@@ -9,16 +11,24 @@ export interface Props {
   close: (isLoggin: boolean) => void;
 }
 const Regis: React.FC<Props> = (props) => {
+  const { zaloCallbackURL, zaloAppId } = environment;
   const passRef = useRef<HTMLInputElement>(null);
   const validatePassRef = useRef<HTMLInputElement>(null);
   const [showMessage, setShowMessage] = useState(false);
+  const { close } = props;
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [switchColor, setSwitchColor] = useState(false);
   const [seePass, setSeePass] = useState(false);
   const [seeValiPass, setSeeValiPass] = useState(false);
   const [message, setMessage] = useState('');
+  const [url, setUrl] = useState('');
   const dispatch = useAppDispatch();
+  const getRandomImageUrl = () => {
+    const randomId = Math.trunc(Math.random() * 2000);
+    return `https://placedog.net/500/500/?id=${randomId}`;
+  };
   const checkPass = () => {
     if (passRef.current?.value != validatePassRef.current?.value) {
       setShowMessage(true);
@@ -30,6 +40,19 @@ const Regis: React.FC<Props> = (props) => {
       setSwitchColor(true);
     }
   };
+  const handleRandomPhotoClick = () => {
+    setUrl(getRandomImageUrl());
+  };
+  // const handleLoginZalo = (event: MouseEvent) => {
+  //   event.preventDefault();
+  //   if (zaloAppId && zaloCallbackURL) {
+  //     const popupLogin = window.open(
+  //       createZaloLoginUrl(zaloAppId, zaloCallbackURL),
+  //       'popup',
+  //       'width=600,height=600'
+  //     );
+  //   }
+  // };
   const handleSubmit = () => {
     if (validatePassRef.current?.value === '' && switchColor === false) {
       if (
@@ -41,7 +64,12 @@ const Regis: React.FC<Props> = (props) => {
     } else {
       toast.success('Đăng kí thành công');
       dispatch(
-        registerAction({ email: email, password: password, name: 'User' })
+        registerAction({
+          email: email,
+          password: password,
+          name: name,
+          avatarURL: url,
+        })
       );
     }
   };
@@ -64,6 +92,14 @@ const Regis: React.FC<Props> = (props) => {
               className="auth-form__group-input "
               placeholder="Nhập email tài khoản của bạn"
               onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="auth-form__group">
+            <input
+              type="text"
+              className="auth-form__group-input "
+              placeholder="Nhập tên của bạn"
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="auth-form__group--pass">
@@ -109,37 +145,67 @@ const Regis: React.FC<Props> = (props) => {
           </p>
           {/* <p className="auth-form__group-forget">Bạn quên mật khẩu ?</p> */}
         </div>
-        <div className="auth-form__btn">
-          <input
-            type="button"
-            className="auth-btn"
-            value="Đăng kí"
-            onClick={handleSubmit}
-          />
-          {/* <input
-            type="button"
-            className="auth-btn"
-            value="Đăng nhập"
-            onClick={() => close(true)}
-          /> */}
+        <div className="extension">
+          <div className="random-photo">
+            <div className="random-photo__button">
+              <input
+                type="button"
+                // onBlur={onRandomButtonBlur}
+                onClick={handleRandomPhotoClick}
+                value="Random avatar"
+              />
+            </div>
+
+            <div className="random-photo__photo">
+              {url && (
+                <img
+                  src={url}
+                  alt="Ooops ... not found. Please click random again!"
+                  onError={handleRandomPhotoClick}
+                />
+              )}
+            </div>
+          </div>
+          <div className="auth-form__btn">
+            <input
+              type="button"
+              className="auth-btn auth-btn--regis"
+              value="Đăng kí"
+              onClick={handleSubmit}
+            />
+            <input
+              type="button"
+              className="auth-btn auth-btn--login"
+              value="Đăng nhập"
+              onClick={() => close(true)}
+            />
+          </div>
         </div>
       </form>
       <div className="auth-form__socials">
-        <a href="/#" className="auth-socials__btn">
+        <a
+          href="#"
+          className="auth-socials__btn auth-socials__btn--zalo"
+          // onClick={(event) => handleLoginZalo}
+        >
           <img
             src="https://page.widget.zalo.me/static/images/2.0/Logo.svg"
             alt=""
             className="auth-socails__logo"
           />
-          <p className="auth-socials__name">Đăng nhập bằng Zalo</p>
+          <p className="auth-socials__name auth-socials__name--zalo">
+            Đăng nhập bằng Zalo
+          </p>
         </a>
-        <a href="/#" className="auth-socials__btn">
+        <a href="/#" className="auth-socials__btn auth-socials__btn--face">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1024px-Facebook_Logo_%282019%29.png"
             alt=""
             className="auth-socails__logo"
           />
-          <p className="auth-socials__name">Đăng nhập bằng Zalo</p>
+          <p className="auth-socials__name auth-socials__name--face">
+            Đăng nhập bằng Facebook
+          </p>
         </a>
       </div>
     </div>

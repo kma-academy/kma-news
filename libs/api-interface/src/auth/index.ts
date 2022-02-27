@@ -66,6 +66,7 @@ export interface RegisterParameter {
   email: string;
   password: string;
   name?: string;
+  avatarURL?: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

@@ -13,4 +13,10 @@ export class RegisterDto {
   @ApiProperty({ example: 'Admin', required: false })
   @IsString()
   name: string;
+  @ApiProperty({
+    example: 'https://placedog.net/500/500/?id=6',
+    required: false,
+  })
+  @IsString()
+  avatarURL: string;
 }
