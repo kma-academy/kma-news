@@ -61,3 +61,21 @@ export const refreshToken = () => {
     withCredentials: true,
   }) as Promise<RefreshTokenResponse>;
 };
+
+export interface RegisterParameter {
+  email: string;
+  password: string;
+  name?: string;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface RegisterResponse extends LoginResponse {}
+
+export const register = (data: RegisterParameter) => {
+  return client.request({
+    method: 'POST',
+    url: '/auth/register',
+    withCredentials: true,
+    data,
+  }) as Promise<RegisterResponse>;
+};

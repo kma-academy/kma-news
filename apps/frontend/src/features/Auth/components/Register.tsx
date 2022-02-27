@@ -1,7 +1,7 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { useAppDispatch } from '@/app/hooks';
-import { createUserAction } from '@kma-news/auth-slice';
-import React, { createRef, useRef, useState } from 'react';
+import { registerAction } from '@kma-news/auth-slice';
+import React, { useRef, useState } from 'react';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -18,7 +18,6 @@ const Regis: React.FC<Props> = (props) => {
   const [seePass, setSeePass] = useState(false);
   const [seeValiPass, setSeeValiPass] = useState(false);
   const [message, setMessage] = useState('');
-  const { close } = props;
   const dispatch = useAppDispatch();
   const checkPass = () => {
     if (passRef.current?.value != validatePassRef.current?.value) {
@@ -32,13 +31,18 @@ const Regis: React.FC<Props> = (props) => {
     }
   };
   const handleSubmit = () => {
-    if (validatePassRef.current?.value == '' && switchColor == false) {
-      if (validatePassRef.current?.value == '' && passRef.current?.value == '')
+    if (validatePassRef.current?.value === '' && switchColor === false) {
+      if (
+        validatePassRef.current?.value === '' &&
+        passRef.current?.value === ''
+      )
         toast.error('Không được để trống mật khẩu');
-      else if (switchColor == false) toast.error('Mật khẩu không khớp');
+      else if (switchColor === false) toast.error('Mật khẩu không khớp');
     } else {
       toast.success('Đăng kí thành công');
-      dispatch(createUserAction({ email: email, password: password }));
+      dispatch(
+        registerAction({ email: email, password: password, name: 'User' })
+      );
     }
   };
   return (
