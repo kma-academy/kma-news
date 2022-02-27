@@ -1,9 +1,10 @@
-import { ForbiddenException, HttpException, Injectable } from '@nestjs/common';
+import { ConflictException, ForbiddenException, HttpException, Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { User, UserRole } from '../user/entities/user.entity';
 import { TokenService } from '../token/token.service';
 import { LoginResultInterface } from '../common/interfaces/login-result.interface';
 import { ZaloService } from '@kma-news/zalo-auth';
+import { RegisterDto } from './dto/register-dto';
 
 // Function compare two number
 
@@ -47,6 +48,11 @@ export class AuthService {
         role: user.role,
       },
     };
+  }
+
+  async register(registerDto: RegisterDto) {
+    const user = await this.userService.create(registerDto);
+    return this.login(user);
   }
 
   async refresh(refresh_token: string) {

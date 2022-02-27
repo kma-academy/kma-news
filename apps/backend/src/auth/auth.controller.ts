@@ -26,6 +26,7 @@ import { Cookies } from '../common/decorators/cookie.decorator';
 import { AuthService } from './auth.service';
 import { LoginWithZaloDto } from './dto/login-with-zalo.dto';
 import { ConfigService } from '@nestjs/config';
+import { RegisterDto } from './dto/register-dto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -49,6 +50,12 @@ export class AuthController {
       httpOnly: true,
     });
     return data;
+  }
+
+  @Post('register')
+  @HttpCode(201)
+  register(@Body() registerDto: RegisterDto) {
+    return this.authService.register(registerDto);
   }
 
   @Post('login/zalo')

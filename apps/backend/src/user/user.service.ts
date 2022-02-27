@@ -1,6 +1,6 @@
 import {
-  BadRequestException,
   CACHE_MANAGER,
+  ConflictException,
   Inject,
   Injectable,
   NotFoundException,
@@ -28,7 +28,7 @@ export class UserService {
       },
     });
     if (existUser)
-      throw new BadRequestException('Email is used by another one');
+      throw new ConflictException('Email is used by another one');
 
     return await this.userRepository.save({
       ...createUserDto,
@@ -46,7 +46,7 @@ export class UserService {
 
   async findOneFromCache(id: number) {
     const userRaw = (await this.cacheManager.get(`user:${id}`)) as string;
-    if (!!userRaw) {
+    if (userRaw) {
       const user = this.userRepository.create(JSON.parse(userRaw));
       return user;
     }
