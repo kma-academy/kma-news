@@ -9,4 +9,5 @@ export * from './comment';
 export * from './history';
 export * from './save';
 export * from './react';
+export * from './weather';
 export type LoadingState = 'idle' | 'pending' | 'done' | 'error';

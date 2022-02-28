@@ -1,6 +1,6 @@
 export default [
   'An Giang',
-  'BR-VT',
+  'Vũng Tàu',
   'Bắc Giang',
   'Bắc Cạn',
   'Bạc Liêu',
@@ -49,8 +49,8 @@ export default [
   'Sơn La',
   'Tây Ninh',
   'Tiền Giang',
-  'TP.HCM',
-  'TT Huế',
+  'Hồ Chí Minh',
+  'Thừa Thiên Huế',
   'Tuyên Quang',
   'Thái Bình',
   'Thái Nguyên',
@@ -59,7 +59,7 @@ export default [
   'Vĩnh Long',
   'Vĩnh Phúc',
   'Yên Bái',
-  'Đăk Nông',
+  'Đắc Nông',
   'Hậu Giang',
   'Điện Biên',
-] as const
+] as const;

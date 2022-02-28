@@ -16,6 +16,7 @@ import searchSlice from '@kma-news/search-slice';
 import saveSlice from '@kma-news/save-slice';
 
 import reactPostSlice from '../../../../libs/react-post-slice/src';
+import weatherSlice from '@/features/Weather/weatherSlice';
 
 console.log(process.env['NX_API_URL']);
 
@@ -33,11 +34,9 @@ export const store = configureStore({
     channel: channelSlice,
     postOther: postOtherSlice,
     search: searchSlice,
-
     save: saveSlice,
-
     reactPost: reactPostSlice,
-
+    weather: weatherSlice,
   },
 });
 

@@ -39,6 +39,7 @@ import {
   togglePopup,
 } from '@kma-news/auth-slice';
 import { getReactByPost } from '@kma-news/api-interface';
+import { updateViewPostAction } from '@kma-news/history-slice';
 
 interface ImageDetail {
   id: number;
@@ -81,7 +82,9 @@ const ReadingPage: React.FC = () => {
   useEffect(() => {
     if (id) dispatch(getSavePostAction(parseInt(id)));
   }, [dispatch, id]);
-
+  useEffect(() => {
+    if (id) dispatch(updateViewPostAction(+id));
+  });
   const checkLoggin = () => {
     if (isLoggin == true) {
       setLoggin(true);
@@ -216,21 +219,6 @@ const ReadingPage: React.FC = () => {
                       <VscTag className="action-save--hover" />
                     </div>
                     <div className="action--m action-save">
-                      <div
-                        className={
-                          isSave
-                            ? 'action--m action-isLiked'
-                            : 'action--m action-like'
-                        }
-                        onClick={() => {
-                          if (data?.id && isSave == false)
-                            dispatch(savePostAction(data.id));
-                          if (data?.id && isSave == true)
-                            if (idSave) dispatch(deleteSavePostAction(idSave));
-                        }}
-                      >
-                        <VscTag className="action-save--hover" />
-                      </div>
                       <div className="action--m action-report">
                         <GoReport className="action-report--hover" />
                       </div>
