@@ -45,6 +45,13 @@ export class PostController {
   ) {
     return this.postService.findAll(findAllDto.page, findAllDto.limit);
   }
+  @Get('top')
+  findTop(
+    @Query(new ValidationPipe({ transform: true }))
+    findTopDto: RecentPostDto
+  ) {
+    return this.postService.findTop(findTopDto.page, findTopDto.limit);
+  }
 
   @Get('save')
   @UseGuards(JwtAuthGuard)

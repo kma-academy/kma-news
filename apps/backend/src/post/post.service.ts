@@ -10,7 +10,6 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { Post, PostStatus } from './entities/post.entity';
 import { ParagraphService } from './paragraph.service';
 import { SavePost } from './entities/save-post.entity';
-import { find } from 'rxjs';
 
 @Injectable()
 export class PostService {
@@ -60,6 +59,18 @@ export class PostService {
       skip: (page - 1) * limit,
       take: limit,
     });
+  }
+
+  findTop(page: number, limit: number){
+    return this.postRepository.find({
+      relations: ["publisher"],
+      order: {
+        viewCount: "DESC",
+        publishedAt: "DESC"
+      },
+      skip: (page - 1) * limit,
+      take: limit
+    })
   }
 
   search(query: string, page: number, limit: number) {
