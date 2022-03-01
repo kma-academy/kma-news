@@ -231,6 +231,10 @@
   width: 100%;
 }
 
+.header-navbar-list a {
+  height: 100%;
+}
+
 .header-navbar-item--hotC {
   border-radius: 20px;
   border: 1px #ddd solid;

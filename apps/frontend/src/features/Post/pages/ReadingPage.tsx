@@ -73,9 +73,15 @@ const ReadingPage: React.FC = () => {
     window.scroll(0, 0);
   }, [loading]);
   const btnReactPost = () => {
-    if (id) {
-      dispatch(createReatPostAction(+id));
-      setActiveReact(!activeReact);
+    if (isLoggin) {
+      setLoggin(true);
+      if (id) {
+        dispatch(createReatPostAction(+id));
+        setActiveReact(!activeReact);
+      }
+    }
+    else{
+      dispatch(togglePopup(true))
     }
   };
   useEffect(() => {
