@@ -59,7 +59,7 @@ const ReadingPage: React.FC = () => {
   const navigate = useNavigate();
   const [activeReact, setActiveReact] = useState(false);
   const [loggin, setLoggin] = useState(false);
-  let isActive = useAppSelector(selectActiveReact);
+  const isActive = useAppSelector(selectActiveReact);
   useEffect(() => {
     if (id) {
       dispatch(getPostAction(+id));
@@ -80,9 +80,8 @@ const ReadingPage: React.FC = () => {
         dispatch(createReatPostAction(+id));
         setActiveReact(!activeReact);
       }
-    }
-    else{
-      dispatch(togglePopup(true))
+    } else {
+      dispatch(togglePopup(true));
     }
   };
   useEffect(() => {
