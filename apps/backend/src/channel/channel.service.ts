@@ -77,13 +77,19 @@ export class ChannelService {
         new Brackets((qb) => {
           channel.keywords.forEach((keyword, i) => {
             if (i === 0)
-              qb.where('keywords LIKE :keyword', {
-                keyword: `%${keyword}%`,
-              });
+              qb.where(
+                'keywords LIKE :keyword OR title LIKE :keyword OR description LIKE :keyword',
+                {
+                  keyword: `%${keyword}%`,
+                }
+              );
             else
-              qb.orWhere('keywords LIKE :keyword', {
-                keyword: `%${keyword}%`,
-              });
+              qb.orWhere(
+                'keywords LIKE :keyword OR title LIKE :keyword OR description LIKE :keyword',
+                {
+                  keyword: `%${keyword}%`,
+                }
+              );
           });
         })
       );
@@ -93,13 +99,19 @@ export class ChannelService {
         new Brackets((qb) => {
           channel.excludedKeywords.forEach((keyword, i) => {
             if (i === 0)
-              qb.where('keywords NOT LIKE :keyword', {
-                keyword: `%${keyword}%`,
-              });
+              qb.where(
+                'keywords NOT LIKE :keyword AND title NOT LIKE :keyword AND description NOT LIKE :keyword',
+                {
+                  keyword: `%${keyword}%`,
+                }
+              );
             else
-              qb.andWhere('keywords NOT LIKE :keyword', {
-                keyword: `%${keyword}%`,
-              });
+              qb.andWhere(
+                'keywords NOT LIKE :keyword AND title NOT LIKE :keyword AND description NOT LIKE :keyword',
+                {
+                  keyword: `%${keyword}%`,
+                }
+              );
           });
         })
       );
