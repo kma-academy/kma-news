@@ -8,7 +8,8 @@
     "test": "nx test",
     "fe": "cross-env NX_API_URL=http://localhost:8888 nx serve frontend",
     "docker:build": "nx build backend --prod --skip-nx-cache && nx build crawler --prod --skip-nx-cache && docker-compose -f docker-compose.build.yml build",
-    "docker:push": "docker-compose -f docker-compose.build.yml push"
+    "docker:push": "docker-compose -f docker-compose.build.yml push",
+    "docker:db": "docker-compose -f docker-compose.prod.yml up -d"
   },
   "private": true,
   "dependencies": {
