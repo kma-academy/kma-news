@@ -34,3 +34,7 @@ export const searchPost = (data: SearchPostParameter) => {
     params: data,
   }) as Promise<SearchPostResponse>;
 };
+
+export const increaseViewPost = (id: number) => {
+  return client.post(`/posts/${id}/view`) as Promise<{ message: string }>;
+};
