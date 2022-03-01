@@ -23,12 +23,9 @@ import { CommentModule } from './comment/comment.module';
 import { Comment } from './comment/entities/comment.entity';
 import { HistoryModule } from './history/history.module';
 import { History } from './history/entities/history.entity';
-
 import { SavePost } from './post/entities/save-post.entity';
-
 import { ReactPostModule } from './react-post/react-post.module';
 import { ReactPost } from './react-post/entities/react-post.entity';
-
 
 @Module({
   imports: [
@@ -59,11 +56,8 @@ import { ReactPost } from './react-post/entities/react-post.entity';
           Channel,
           Comment,
           History,
-
           SavePost,
-
           ReactPost,
-
         ],
         // entities: ['dist/apps/**/*.entity{.ts,.js}'],
         // autoLoadEntities: true,

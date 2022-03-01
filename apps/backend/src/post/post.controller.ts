@@ -86,11 +86,11 @@ export class PostController {
     return this.postService.remove(id);
   }
 
-  @Post(':postId/save')
+  @Post(':id/save')
   @UseGuards(JwtAuthGuard)
   savePost(
     @CurrentUserId() userId: number,
-    @Param('postId', ParseIntPipe) postId: number
+    @Param('id', ParseIntPipe) postId: number
   ) {
     return this.postService.savePost(userId, postId);
   }
@@ -107,5 +107,10 @@ export class PostController {
   @UseGuards(JwtAuthGuard)
   removeSavePost(@Param('id', ParseIntPipe) id: number) {
     return this.postService.removeSavePost(id);
+  }
+
+  @Post(':id/view')
+  increaseView(@Param('id', ParseIntPipe) id: number) {
+    return this.postService.increaseView(id);
   }
 }

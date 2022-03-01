@@ -168,6 +168,16 @@ export class PostService {
     });
     return data[0] ? { isSave: true, idSave: data[0].id } : { isSave: false };
   }
+  increaseView(postId: number) {
+    return this.postRepository
+      .createQueryBuilder('post')
+      .update(Post)
+      .set({
+        viewCount: () => 'viewCount + 1',
+      })
+      .where('id = :id', { id: postId })
+      .execute();
+  }
   removeSavePost(id: number) {
     return this.savePostRepository.softDelete(id);
   }
