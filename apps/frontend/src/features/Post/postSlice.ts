@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { getPostDetail, PostWithDetailResponse } from '@kma-news/api-interface';
+import { getPostDetail, increaseViewPost, PostWithDetailResponse } from '@kma-news/api-interface';
 
 interface ReadingPageState {
   data?: PostWithDetailResponse;
@@ -13,9 +13,10 @@ const initialState: ReadingPageState = {
 };
 export const getPostAction = createAsyncThunk(
   'post/fetchOne',
-  async (id: number, ThunkApi) => {
-    const data = await getPostDetail(id);
-    return data;
+   (id: number) => {
+    //increase view of current post
+    increaseViewPost(id);
+    return getPostDetail(id);
   }
 );
 
