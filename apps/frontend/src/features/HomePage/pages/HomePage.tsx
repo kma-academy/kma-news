@@ -2,11 +2,8 @@
 import React from 'react';
 import { Covid19Feed } from '@/features/covid19/components/Covid19Feed';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { ListNewsRight } from '../components/ListNewsRight';
-import { RiArrowDropDownLine } from 'react-icons/ri';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
-import { fetchNewFeedAction } from '../homeSlice';
+import { fetchNewFeedAction, fetchTopPostAction } from '../homeSlice';
 import { useEffect } from 'react';
 import { selectData } from '@/features/HomePage/homeSlice';
 import {
@@ -18,6 +15,7 @@ import { PublisherList } from '../components/PublisherList';
 import { TopicPost } from '../components/TopicPost';
 import { RecentNews } from '../components/RecentNews';
 import { WeatherFeed } from '@/features/Weather/WeatherFeed';
+import { TopPostFeed } from '../components/TopPostFeed';
 const Home = () => {
   const dispatch = useAppDispatch();
   const data = useAppSelector(selectData);
@@ -25,6 +23,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchNewFeedAction({ limit: 4 }));
     dispatch(getHomeTopicsAction());
+    dispatch(fetchTopPostAction({ limit: 10 }));
   }, [dispatch]);
   return (
     <div className="container">
@@ -51,7 +50,7 @@ const Home = () => {
               </div>
             </div>
             <div className="col-4 content-right">
-              <ListNewsRight data={data} />
+              <TopPostFeed />
               <PublisherList />
               <div className="section">
                 <div className="space"></div>

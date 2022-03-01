@@ -15,6 +15,18 @@ export const getRecentPost = (params: RecentPostParameter) => {
     params,
   }) as Promise<RecentPostResponse>;
 };
+
+export type TopPostParameter = RecentPostParameter;
+
+export type TopPostResponse = Post[];
+
+export const getTopPost = (params: TopPostParameter) => {
+  return client.request({
+    url: '/posts/top',
+    params,
+  }) as Promise<TopPostResponse>;
+};
+
 export type PostWithDetailResponse = PostWithDetail;
 export const getPostDetail = (id: number) => {
   return client.get(`/posts/${id}`) as Promise<PostWithDetail>;
