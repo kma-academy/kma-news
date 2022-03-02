@@ -1,5 +1,6 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { useAppSelector } from '@/app/hooks';
+import { defaultThumbnail } from '@/constants/thumnail';
 import React from 'react';
 import { selectData } from '../../homeSlice';
 import { LastestNew } from './LastestNew';
@@ -19,8 +20,12 @@ export const RecentNews = () => {
         }
         thumbnailURL={lastestPost.thumbnailURL}
         title={lastestPost.title}
-        publisherLogo={lastestPost.publisher.logo}
-        publisherName={lastestPost.publisher.name}
+        publisherLogo={
+          lastestPost.publisher ? lastestPost.publisher.logo : defaultThumbnail
+        }
+        publisherName={
+          lastestPost.publisher ? lastestPost.publisher.name : 'bao-moi'
+        }
         sourceURL={lastestPost.sourceURL}
       />
       <div className="section">
@@ -34,8 +39,10 @@ export const RecentNews = () => {
               }
               thumbnailURL={post.thumbnailURL}
               title={post.title}
-              publisherLogo={post.publisher.logo}
-              publisherName={post.publisher.name}
+              publisherLogo={
+                post.publisher ? post.publisher.logo : defaultThumbnail
+              }
+              publisherName={post.publisher ? post.publisher.name : 'bao-moi'}
             />
           ))}
         </div>

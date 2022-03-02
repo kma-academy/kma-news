@@ -1,6 +1,6 @@
-import React from 'react'
-import { BsSearch } from 'react-icons/bs'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { BsSearch } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 const Footer = () => {
   return (
     <div className="footer">
@@ -19,7 +19,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="footer-body">
+      {/* <div className="footer-body">
         <div className="col-9 footer-body-main">
           <span>
             <Link to="/">Thừa thiên huế</Link>
@@ -142,7 +142,7 @@ const Footer = () => {
             <Link to="/">Thừa thiên huế</Link>
           </span>
         </div>
-      </div>
+      </div> */}
       <div className="footer-footer">
         <div className="col-9 footer-footer-main">
           <div className="footer-main-left">
@@ -167,21 +167,26 @@ const Footer = () => {
           </div>
           <div className="footer-main-right">
             <p>
-              Giấy phép số 1818/GP-TTĐT do Sở Thông tin và Truyền thông Hà Nội cấp ngày 05/05/2017
+              Giấy phép số 1818/GP-TTĐT do Sở Thông tin và Truyền thông Hà Nội
+              cấp ngày 05/05/2017
               <br />
-              Đơn vị chủ quản: Công ty Cổ phần Công nghệ EPI * Chịu trách nhiệm: Võ Quang
+              Đơn vị chủ quản: Công ty Cổ phần Công nghệ EPI * Chịu trách nhiệm:
+              Võ Quang
               <br />
-              Địa chỉ: Tầng 5, Tòa nhà Báo Sinh Viên VN, D29 Phạm Văn Bạch, Yên Hòa, Cầu Giấy, Hà
-              Nội
+              Địa chỉ: Tầng 5, Tòa nhà Báo Sinh Viên VN, D29 Phạm Văn Bạch, Yên
+              Hòa, Cầu Giấy, Hà Nội
               <br />
               Tel: (024) 3-212-3232, số máy lẻ 6666. contact.baomoi@epi.com.vn
             </p>
-            <p>BÁO MỚI tổng hợp và sắp xếp các thông tin tự động bởi chương trình máy tính</p>
+            <p>
+              BÁO MỚI tổng hợp và sắp xếp các thông tin tự động bởi chương trình
+              máy tính
+            </p>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

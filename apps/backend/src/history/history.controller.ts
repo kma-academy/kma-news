@@ -8,11 +8,14 @@ import {
   ParseIntPipe,
   ClassSerializerInterceptor,
   UseInterceptors,
+  Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { HistoryService } from './history.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CurrentUserId } from '../common/decorators/current-user.decorator';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { PaginationDto } from '../common/dto/PaginationDto';
 
 @Controller('views')
 @ApiTags('history')
@@ -32,8 +35,15 @@ export class HistoryController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  findAll(@CurrentUserId() userId: number) {
-    return this.historyService.findAll(userId);
+  findAll(
+    @CurrentUserId() userId: number,
+    @Query(new ValidationPipe({ transform: true })) pagination: PaginationDto
+  ) {
+    return this.historyService.findAll(
+      userId,
+      pagination.page,
+      pagination.limit
+    );
   }
 
   @Delete(':id')

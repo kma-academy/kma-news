@@ -1,6 +1,9 @@
 import client from '../axiosClient';
 import { ReactPost } from './react-inteface';
-
+export interface PagenationParam {
+  page?: number;
+  limit?: number;
+}
 export interface getActiveReact {
   isActive: boolean;
 }
@@ -14,6 +17,8 @@ export const getReactByPost = (postId: number) => {
   return client.get(`/react-post/${postId}`) as Promise<getActiveReact>;
 };
 
-export const getListReact = () => {
-  return client.get('/react-post') as Promise<ReactPost[]>;
+export const getListReact = (param: PagenationParam) => {
+  return client.request({ url: '/react-post', params: param }) as Promise<
+    ReactPost[]
+  >;
 };

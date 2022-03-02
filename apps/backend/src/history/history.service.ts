@@ -45,7 +45,7 @@ export class HistoryService {
     };
   }
 
-  async findAll(userId: number) {
+  async findAll(userId: number, page: number, limit: number) {
     const data = await this.historyRepository.find({
       where: {
         user: {
@@ -56,6 +56,8 @@ export class HistoryService {
         visitDate: 'DESC',
       },
       relations: ['post'],
+      skip: (page - 1) * limit,
+      take: limit,
     });
     return data.map((e) => {
       e.post = new Post(e.post);

@@ -9,7 +9,6 @@ const newPage = () => {
   const data = useAppSelector(selectData);
   const param = useParams();
   const page = param.page || '1';
-  console.log(data);
   useEffect(() => {
     dispatch(fetchNewFeedAction({ limit: 30, page: +page }));
     window.scroll(0, 0);

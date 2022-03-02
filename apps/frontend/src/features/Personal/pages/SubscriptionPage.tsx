@@ -9,8 +9,9 @@ import {
 const SubscriptionPage = () => {
   const dispatch = useAppDispatch();
   const data = useAppSelector(selectListReact);
+  console.log(data);
   useEffect(() => {
-    dispatch(getListReactPostAction());
+    dispatch(getListReactPostAction({ limit: 14, page: 1 }));
   }, [dispatch]);
   return (
     <div>

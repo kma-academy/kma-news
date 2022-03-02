@@ -22,8 +22,9 @@ export const CommentForm = () => {
   };
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
     setText(e.target.value);
+
+    console.log(e.target.value);
     setTimeout(function () {
-      console.log(e.target.value);
       e.target.style.cssText = 'height:auto; padding:0';
       e.target.style.cssText = 'height:' + (e.target.scrollHeight + 20) + 'px;';
     }, 0);
@@ -52,6 +53,7 @@ export const CommentForm = () => {
             <button
               className="comment__textBox__btn"
               disabled={isTextareaDisabled}
+              onClick={() => onChange}
             >
               Gửi
             </button>

@@ -58,6 +58,7 @@ export const WeatherFeed = () => {
                   onClick={(e: React.MouseEvent<HTMLLIElement>) =>
                     hanldePickCountry(e)
                   }
+                  key={i}
                 >
                   {province}
                 </li>
@@ -66,9 +67,9 @@ export const WeatherFeed = () => {
           </div>
           <div className="weather-forecast">
             <div className="list-day">
-              {data.map((e: any) => {
+              {data.map((e, i) => {
                 return (
-                  <div className="item-day">
+                  <div className="item-day" key={i}>
                     <span>17/12</span>
                     <div className="img-weather-day">
                       <img src={e?.icon} alt="" />
