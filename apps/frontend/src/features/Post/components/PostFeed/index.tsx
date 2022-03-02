@@ -10,8 +10,8 @@ const PostFeed: React.FC<PostFeedProps> = (props) => {
   return (
     <div className="content">
       <div className="col-8 content-left">
+        <div className="title-news-navbar">{name}</div>
         <div className="list-news-navbar">
-          <div>{name}</div>
           {contents.map((post, i) => (
             <PostFeedItem post={post} key={`feed-${name}-${i}`} />
           ))}

@@ -36,15 +36,17 @@ export class ReactPostService {
     return this.reactPostService.remove(reactPost);
   }
 
-  async findAll(userId: number) {
+  async findAll(userId: number, page: number, limit: number) {
     const data = await this.reactPostService.find({
       where: {
         user: userId,
       },
       order: {
-        visitDate: 'ASC',
+        visitDate: 'DESC',
       },
       relations: ['post'],
+      skip: (page - 1) * limit,
+      take: limit,
     });
     return data;
   }

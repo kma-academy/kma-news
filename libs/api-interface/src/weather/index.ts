@@ -31,7 +31,6 @@ export const fetchWeatherGeneral = async (location: string) => {
   });
   const forecastday = data?.forecast?.forecastday;
   return forecastday.map((e: any) => {
-    console.log(e);
     const data: ForecastDayData = {
       maxtemp_c: '',
       mintemp_c: '',

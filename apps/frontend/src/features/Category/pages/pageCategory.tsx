@@ -60,9 +60,6 @@ const pageCategory: React.FC = () => {
                     </div>
                   ))}
                 </div>
-                <div className="btn-list-posts">
-                  <a href="/chu-de/1">Xem thêm</a>
-                </div>
               </div>
             )}
           </div>

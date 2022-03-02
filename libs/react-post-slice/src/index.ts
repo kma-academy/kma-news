@@ -2,6 +2,7 @@ import {
   createReactPost,
   getListReact,
   getReactByPost,
+  PagenationParam,
   ReactPostResponse,
 } from '../../api-interface/src/react';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
@@ -20,9 +21,12 @@ export const getReactPostAction = createAsyncThunk(
   }
 );
 
-export const getListReactPostAction = createAsyncThunk('reactPost/get', () => {
-  return getListReact();
-});
+export const getListReactPostAction = createAsyncThunk(
+  'reactPost/get',
+  (param: PagenationParam) => {
+    return getListReact(param);
+  }
+);
 
 export interface ReactPostState {
   loading: LoadingState;

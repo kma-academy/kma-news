@@ -47,8 +47,8 @@ export const CommentBox = () => {
         </div>
       </div>
       <div className="comment__box">
-        {commentData.map((dataComment) => (
-          <CommentItem display={true} data={dataComment} />
+        {commentData.map((dataComment, i) => (
+          <CommentItem display={true} data={dataComment} key={i} />
         ))}
       </div>
     </div>

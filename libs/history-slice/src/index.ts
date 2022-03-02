@@ -3,13 +3,17 @@ import {
   getUserHistory,
   GetUserHistoryResponse,
   LoadingState,
+  PagenationParam,
   updateViewPost,
 } from '@kma-news/api-interface';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-export const getUserHistoryAction = createAsyncThunk('history/fetch', () => {
-  return getUserHistory();
-});
+export const getUserHistoryAction = createAsyncThunk(
+  'history/fetch',
+  (param: PagenationParam) => {
+    return getUserHistory(param);
+  }
+);
 
 export const deleteHistoryAction = createAsyncThunk(
   'history/delete',

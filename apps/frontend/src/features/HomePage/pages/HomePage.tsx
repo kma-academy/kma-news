@@ -40,14 +40,14 @@ const Home = () => {
                   key={`topic-${i}`}
                 />
               ))}
-              <div className="btn-group">
+              {/* <div className="btn-group">
                 <div className="btn-prev">
                   <Link to="">Quay lại</Link>
                 </div>
                 <div className="btn-next">
                   <Link to="">Xem thêm</Link>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="col-4 content-right">
               <TopPostFeed />
@@ -57,12 +57,14 @@ const Home = () => {
               </div>
               <div className="section">
                 <div className="HCM">
-                  <div className="img-news-HCM">
-                    <img
-                      src="https://baomoi-static.zadn.vn/events/banner_hcm_02-min.png"
-                      alt=""
-                    />
-                  </div>
+                  <a href="https://vi.wikipedia.org/wiki/H%E1%BB%93_Ch%C3%AD_Minh">
+                    <div className="img-news-HCM">
+                      <img
+                        src="https://baomoi-static.zadn.vn/events/banner_hcm_02-min.png"
+                        alt=""
+                      />
+                    </div>
+                  </a>
                 </div>
               </div>
               <Covid19Feed />
@@ -213,20 +215,47 @@ const Home = () => {
                   <WeatherFeed />
                   <div className="content-other">
                     <div>
-                      <span>thời tiết</span>
-                      <span>tỷ giá ngoại tệ</span>
-                      <span>kết quả sổ số</span>
-                      <span>lịch truyền hình</span>
-                      <span>cung hoàng đạo</span>
-                      <span>bảng giá xe ô tô</span>
+                      <a
+                        href={'http://baomoi.com/tien-ich/ty-gia-ngoai-te.epi'}
+                      >
+                        tỷ giá ngoại tệ
+                      </a>
+                      <a href={'http://baomoi.com/tien-ich/ket-qua-xo-so.epi'}>
+                        kết quả sổ số
+                      </a>
+                      <a
+                        href={'http://baomoi.com/tien-ich/lich-truyen-hinh.epi'}
+                      >
+                        lịch truyền hình
+                      </a>
+                      <a href={'http://baomoi.com/tien-ich/lich-van-nien.epi'}>
+                        lịch vạn niên
+                      </a>
+                      <a href={'http://baomoi.com/tien-ich/gia-vang.epi'}>
+                        giá vàng
+                      </a>
                     </div>
                     <div>
-                      <span>lịch vạn niên</span>
-                      <span>giá vàng</span>
-                      <span>chứng khoán</span>
-                      <span>lịch chiếu phim</span>
-                      <span>giá xăng, dầu</span>
-                      <span>bảng giá xe máy</span>
+                      <a
+                        href={
+                          'http://baomoi.com/tien-ich/bang-gia-chung-khoan.epi'
+                        }
+                      >
+                        chứng khoán
+                      </a>
+                      <a
+                        href={'http://baomoi.com/tien-ich/lich-chieu-phim.epi'}
+                      >
+                        lịch chiếu phim
+                      </a>
+                      <a href={'http://baomoi.com/tien-ich/gia-xang-dau.epi'}>
+                        giá xăng, dầu
+                      </a>
+                      <a
+                        href={'http://baomoi.com/tien-ich/bang-gia-xe-may.epi'}
+                      >
+                        bảng giá xe máy
+                      </a>
                     </div>
                   </div>
                 </div>

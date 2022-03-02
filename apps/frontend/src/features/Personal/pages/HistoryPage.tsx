@@ -14,7 +14,7 @@ const HistoryPage = () => {
   const histories = useAppSelector(selectHistory);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getUserHistoryAction());
+    dispatch(getUserHistoryAction({ limit: 6, page: 1 }));
   }, [dispatch]);
   return (
     <div>
