@@ -1668,16 +1668,14 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-<<<<<<< HEAD
 }
+
 .btnPage {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .prev {
   margin-right: 30px;
 }
-=======
-}
->>>>>>> 4f47833 (finish)

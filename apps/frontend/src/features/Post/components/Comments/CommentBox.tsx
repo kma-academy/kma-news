@@ -50,10 +50,6 @@ export const CommentBox = () => {
         </div>
       </div>
       <div className="comment__box">
-<<<<<<< HEAD
-        {commentData.map((dataComment, i) => (
-          <CommentItem display={true} data={dataComment} key={i} />
-=======
         {commentData.map((dataComment) => (
           <CommentItem
             display={true}
@@ -61,7 +57,6 @@ export const CommentBox = () => {
             isLoggin={isLoggin}
             user={user}
           />
->>>>>>> 261d4fb (feature del)
         ))}
       </div>
     </div>
