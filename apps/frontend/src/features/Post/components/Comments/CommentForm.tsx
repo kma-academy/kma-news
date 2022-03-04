@@ -1,7 +1,7 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 // import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { selectData } from '../../postSlice';
 import {
   selectLoggedIn,
@@ -15,6 +15,7 @@ export const CommentForm = () => {
   const [text, setText] = useState('');
   const loggedIn = useAppSelector(selectLoggedIn);
   const post = useAppSelector(selectData);
+  const areaTextRef = useRef<HTMLTextAreaElement>(null);
   const onSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (post?.id)
@@ -42,6 +43,7 @@ export const CommentForm = () => {
     <div>
       <form onSubmit={onSubmit}>
         <textarea
+          ref={areaTextRef}
           placeholder="Ý kiến của bạn"
           className={isExtend ? 'comment__textBox--full' : 'comment__textBox'}
           onFocus={checkLogin}
