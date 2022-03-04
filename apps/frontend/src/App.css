@@ -357,11 +357,12 @@
 
 /* container */
 .container {
-  margin-top: 120px;
+  margin-top: 106px;
 }
 
 .content {
   display: flex;
+  padding-top: 15px;
 }
 
 .content-left {
@@ -395,7 +396,7 @@
   color: #212529;
 }
 
-.item-news .description-item-news > a {
+.item-news .description-item-news>a {
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;
@@ -404,9 +405,10 @@
   color: #212529;
 }
 
-.description-item-news > a {
+.description-item-news>a {
   color: #212529;
 }
+
 .description-item-news a:hover {
   color: #2fa1b3;
 }
@@ -420,7 +422,7 @@
   margin-top: 10px;
 }
 
-.news-source > a {
+.news-source>a {
   height: 100%;
 }
 
@@ -487,7 +489,7 @@
   flex-direction: column;
 }
 
-.list-news-navbar > a {
+.list-news-navbar>a {
   color: #2fa1b3;
   text-decoration: none;
   font-size: 18px;
@@ -495,7 +497,7 @@
   justify-content: center;
 }
 
-.list-news-navbar > a:hover {
+.list-news-navbar>a:hover {
   text-decoration: underline;
 }
 
@@ -602,17 +604,20 @@
 .news-horizontal .news-source {
   height: 20px;
 }
+
 .btn-list-posts {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.btn-list-posts > a {
+
+.btn-list-posts>a {
   text-transform: uppercase;
   font-size: 14px;
   color: #2fa1b3;
 }
-.btn-list-posts > a:hover {
+
+.btn-list-posts>a:hover {
   text-decoration: underline;
 }
 
@@ -622,30 +627,38 @@
   justify-content: center;
   margin-top: 20px;
 }
+
 .btn-group div {
   padding: 3px 20px;
   border-radius: 14px;
   border: 1px solid #2fa1b3;
   margin: 5px;
 }
+
 .btn-group .btn-next {
   background-color: #2fa1b3;
 }
+
 .btn-next a {
   color: #fff;
 }
+
 .btn-next:hover {
   opacity: 0.8;
 }
+
 .btn-next a:hover {
   color: #fff;
 }
+
 .btn-prev:hover {
   background-color: #2fa1b3;
 }
+
 .btn-prev:hover.btn-prev a {
   color: #fff;
 }
+
 /* content-right */
 .list-news-right .item-news-navbar:first-child {
   border-top: none;
@@ -675,9 +688,7 @@
   margin: auto;
   position: relative;
   width: 100%;
-  background: #f7f8fa
-    url(https://baomoi-static.zadn.vn/web/styles/img/pls-bg-1.png)
-    calc(50% - 60px) top/600px auto no-repeat;
+  background: #f7f8fa url(https://baomoi-static.zadn.vn/web/styles/img/pls-bg-1.png) calc(50% - 60px) top/600px auto no-repeat;
   border: 1px solid #eee;
   padding: 8px 15px;
 }
@@ -726,9 +737,7 @@
   margin: auto;
   position: relative;
   width: 100%;
-  background: #f7f8fa
-    url(https://baomoi-static.zadn.vn/web/styles/img/pls-bg-1.png)
-    calc(50% - 60px) top/600px auto no-repeat;
+  background: #f7f8fa url(https://baomoi-static.zadn.vn/web/styles/img/pls-bg-1.png) calc(50% - 60px) top/600px auto no-repeat;
   border: 1px solid #eee;
   padding: 8px 15px;
 }
@@ -799,9 +808,7 @@
 }
 
 .news-covid {
-  background: #fff
-    url(https://baomoi-static.zadn.vn/web/styles/img/covid-sidebar-bg-6.png)
-    top/420px 115px no-repeat;
+  background: #fff url(https://baomoi-static.zadn.vn/web/styles/img/covid-sidebar-bg-6.png) top/420px 115px no-repeat;
   padding: 43px 0 0;
   border: 1px solid #e9ecef;
 }
@@ -881,9 +888,7 @@ table {
 }
 
 .location {
-  background: #fef9e6
-    url(https://baomoi-static.zadn.vn/web/styles/img/global-map.png) top/330px
-    164px no-repeat;
+  background: #fef9e6 url(https://baomoi-static.zadn.vn/web/styles/img/global-map.png) top/330px 164px no-repeat;
   padding: 15px;
 }
 
@@ -1221,8 +1226,7 @@ a:hover {
   width: 160px;
   height: 36px;
   display: inline-block;
-  background: url(https://baomoi-static.zadn.vn/web/styles/img/desktop-logo.png)
-    0 0/160px 72px;
+  background: url(https://baomoi-static.zadn.vn/web/styles/img/desktop-logo.png) 0 0/160px 72px;
 }
 
 .footer-body {
@@ -1328,7 +1332,7 @@ a:hover {
   right: 10px;
 }
 
-.topic-main > .list-topic .item-topic .icon-pop-up {
+.topic-main>.list-topic .item-topic .icon-pop-up {
   visibility: hidden;
   opacity: 0;
 }
@@ -1394,7 +1398,7 @@ a:hover {
   box-shadow: 0 0 10px rgb(0 0 0 / 20%);
 }
 
-.topic-main > .list-topic .item-topic:hover .header-item-topic .icon-pop-up {
+.topic-main>.list-topic .item-topic:hover .header-item-topic .icon-pop-up {
   visibility: visible;
   opacity: 1;
 }
@@ -1664,6 +1668,7 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+<<<<<<< HEAD
 }
 .btnPage {
   display: flex;
@@ -1673,3 +1678,6 @@ a:hover {
 .prev {
   margin-right: 30px;
 }
+=======
+}
+>>>>>>> 4f47833 (finish)

@@ -1,4 +1,9 @@
-import { ConflictException, ForbiddenException, HttpException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  ForbiddenException,
+  HttpException,
+  Injectable,
+} from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { User, UserRole } from '../user/entities/user.entity';
 import { TokenService } from '../token/token.service';

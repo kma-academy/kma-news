@@ -100,6 +100,6 @@ export class CommentService {
   }
 
   remove(userId: number, id: number) {
-    return `This action removes a #${id} comment with ${userId}`;
+    return this.commentRepository.softDelete(id);
   }
 }

@@ -5,6 +5,8 @@ import {
   getCommentByPost,
   CreateCommentParameter,
   createComment,
+  deleteComment,
+  DeleteCommentParameter,
 } from '@kma-news/api-interface';
 
 export interface CommentState {
@@ -26,7 +28,12 @@ export const createCommentAction = createAsyncThunk(
     return createComment(data);
   }
 );
-
+export const deleteCommentAction = createAsyncThunk(
+  'comment/delete',
+  (data: DeleteCommentParameter) => {
+    return deleteComment(data);
+  }
+);
 const initialState: CommentState = {
   loading: 'idle',
   comments: [],
@@ -58,6 +65,20 @@ const commentSlice = createSlice({
         state.comments.unshift(action.payload);
       })
       .addCase(createCommentAction.rejected, (state, action) => {
+        state.loading = 'error';
+        state.message = action.error.message;
+      });
+    builder
+      .addCase(deleteCommentAction.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(deleteCommentAction.fulfilled, (state, action) => {
+        state.loading = 'done';
+        state.comments = state.comments.filter(
+          (e) => e.id != action.meta.arg.id
+        );
+      })
+      .addCase(deleteCommentAction.rejected, (state, action) => {
         state.loading = 'error';
         state.message = action.error.message;
       });

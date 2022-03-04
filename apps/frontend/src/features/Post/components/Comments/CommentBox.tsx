@@ -6,14 +6,17 @@ import { CommentForm } from './CommentForm';
 import { getCommentByPostAction, selectComment } from '@kma-news/comment-slice';
 import { selectData } from '../../postSlice';
 import { CommentItem } from './CommentItem';
+import { selectLoggedIn, selectProfile } from '@kma-news/auth-slice';
 export const CommentBox = () => {
   const dispatch = useAppDispatch();
   const [displaySort, setDisplaySort] = useState(true);
   const post = useAppSelector(selectData);
   const commentData = useAppSelector(selectComment);
+  const isLoggin = useAppSelector(selectLoggedIn);
+  const user = useAppSelector(selectProfile);
   useEffect(() => {
     if (post?.id) dispatch(getCommentByPostAction(post.id));
-  }, [post]);
+  }, [post, dispatch]);
   return (
     <div className="frameComment">
       <div className="comment__title">
@@ -47,8 +50,18 @@ export const CommentBox = () => {
         </div>
       </div>
       <div className="comment__box">
+<<<<<<< HEAD
         {commentData.map((dataComment, i) => (
           <CommentItem display={true} data={dataComment} key={i} />
+=======
+        {commentData.map((dataComment) => (
+          <CommentItem
+            display={true}
+            data={dataComment}
+            isLoggin={isLoggin}
+            user={user}
+          />
+>>>>>>> 261d4fb (feature del)
         ))}
       </div>
     </div>

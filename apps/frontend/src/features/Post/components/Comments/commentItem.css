@@ -38,6 +38,15 @@
 
 }
 
+.commentBox__del {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.commentBox__del:hover {
+    color: #0C8AF0;
+}
+
 .commentBox__number {}
 
 .commentBox__reply:hover {
