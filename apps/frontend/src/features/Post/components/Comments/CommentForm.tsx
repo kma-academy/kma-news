@@ -1,7 +1,7 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 // import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { selectData } from '../../postSlice';
 import {
   selectLoggedIn,
@@ -20,6 +20,8 @@ export const CommentForm = () => {
     e.preventDefault();
     if (post?.id)
       dispatch(createCommentAction({ postId: post.id, message: text }));
+
+    if (areaTextRef.current) areaTextRef.current.value = '';
   };
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
     setText(e.target.value);
