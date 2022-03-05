@@ -16,44 +16,40 @@ export class CreateChannelDto {
   @ApiProperty({ default: false, example: true })
   @IsBoolean()
   isPublic: boolean;
-
+  @IsArray()
   @ApiProperty({
     type: String,
     isArray: true,
     example: ['covid19', 'covid-19', 'ncov'],
   })
-  @IsString({ each: true })
   keywords: string[];
 
+  @IsArray()
   @ApiProperty({
-    type: Number,
+    type: String,
     isArray: true,
     example: [],
   })
-  @IsNumber({}, { each: true })
-  categories: number[];
+  categories: string[];
 
   @ApiProperty({
     type: String,
     isArray: true,
     example: [],
   })
-  @IsString({ each: true })
   publishers: string[];
 
   @ApiProperty({ type: String, isArray: true, example: [] })
-  @IsString({ each: true })
+  @IsArray()
   excludedKeywords: string[];
 
   @ApiProperty({
-    type: Number,
+    type: String,
     isArray: true,
     example: [],
   })
   @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => Number)
-  excludedCategories: number[];
+  excludedCategories: string[];
 
   @ApiProperty({
     type: String,

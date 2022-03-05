@@ -26,7 +26,7 @@ export class Channel {
   keywords: string[];
 
   @Column('simple-array')
-  categories: number[];
+  categories: string[];
 
   @Column('simple-array')
   publishers: string[];
@@ -35,7 +35,7 @@ export class Channel {
   excludedKeywords: string[];
 
   @Column('simple-array')
-  excludedCategories: number[];
+  excludedCategories: string[];
 
   @Column('simple-array')
   excludedPublishers: string[];

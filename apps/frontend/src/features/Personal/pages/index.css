@@ -392,6 +392,9 @@
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
   border: 1px solid #ced4da;
 }
+.item-category-drop a {
+  color: #333;
+}
 .item-category-drop::before {
   content: '';
   display: block;

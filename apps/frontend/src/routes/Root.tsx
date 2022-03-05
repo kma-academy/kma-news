@@ -25,6 +25,10 @@ const CategoryPage = React.lazy(
 const CategoryCreatePage = React.lazy(
   () => import('@/features/Personal/pages/CategoryPage/CategoryPageCreate')
 );
+
+const CategoryUpdatePage = React.lazy(
+  () => import('@/features/Personal/pages/CategoryPage/CategoryPageUpdate')
+);
 const SubscriptionPage = React.lazy(
   () => import('@/features/Personal/pages/SubscriptionPage')
 );
@@ -64,6 +68,10 @@ export const RootRouter = () => {
               <Route
                 path="muc-cua-ban/tao-moi"
                 element={<CategoryCreatePage />}
+              />
+              <Route
+                path="muc-cua-ban/sua-doi/:id"
+                element={<CategoryUpdatePage />}
               />
               <Route path="theo-doi" element={<SubscriptionPage />} />
             </Route>

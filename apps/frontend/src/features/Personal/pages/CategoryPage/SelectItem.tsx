@@ -2,12 +2,13 @@
 import { useAppSelector } from '@/app/hooks';
 import { CategoryType } from '@kma-news/api-interface';
 import { selectCategory } from '@kma-news/channel-slice';
+import { Category } from 'libs/api-interface/src/category/category.interface';
 import React from 'react';
 
-export interface ItemData {
+export type ItemData = {
   type: 'keyword' | 'publisher' | 'category';
-  data: string | CategoryType;
-}
+  data: Category | string | any;
+};
 
 export interface SelectItemProps {
   onSelected: (item: ItemData) => void;
