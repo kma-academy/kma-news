@@ -8,8 +8,9 @@ import {
 import React, { useEffect, useState } from 'react';
 import { GiTrashCan } from 'react-icons/gi';
 import { HiOutlineDotsHorizontal, HiOutlinePencilAlt } from 'react-icons/hi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 function CategoryPageMain() {
+  const navigate = useNavigate();
   const channels = useAppSelector(selectChannel);
   const dispatch = useAppDispatch();
   const [dropItem, setDropItem] = useState(-1);
@@ -23,11 +24,12 @@ function CategoryPageMain() {
   };
   const btnDelChannel = (idChannel: number) => {
     dispatch(deletePersonalChannelAction(idChannel));
+    navigate('/ca-nhan/muc-cua-ban/');
   };
   useEffect(() => {
     dispatch(getPersonalChannelAction());
-  }, [dispatch]);
-  if (channels)
+  }, [dispatch, channels]);
+  if (channels && channels.length > 0)
     return (
       <div className="category-page-main">
         <div className="header-category-page-main">

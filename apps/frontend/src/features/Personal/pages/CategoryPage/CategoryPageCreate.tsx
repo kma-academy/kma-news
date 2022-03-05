@@ -36,6 +36,9 @@ const CategoryCreatePage: React.FC = () => {
   if (redirectSuccess) navigate('/ca-nhan/muc-cua-ban/');
 
   const handleSubmit = () => {
+    if (name.length <= 0) {
+      return alert('Tên thư mục không thể bỏ trống');
+    }
     dispatch(
       createPersonalChannelAction({
         name,
