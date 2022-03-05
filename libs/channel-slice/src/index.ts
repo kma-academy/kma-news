@@ -8,8 +8,12 @@ import {
   searchCategory,
   SearchCategoryResponse,
   deletePersonalChannel,
+  updatePersonalChannel,
+  getChannelById,
 } from '@kma-news/api-interface';
 
+import { Channel } from '../../api-interface/src/channel/channel.interface';
+import { channel } from 'diagnostics_channel';
 export const getPersonalChannelAction = createAsyncThunk('channel/get', () => {
   return getPersonalChannel();
 });
@@ -28,6 +32,19 @@ export const createPersonalChannelAction = createAsyncThunk(
   }
 );
 
+export const updatePersonalChannelAction = createAsyncThunk(
+  'channel/update',
+  async ({
+    id,
+    data,
+  }: {
+    id: number;
+    data: CreatePersonalChannelParameter;
+  }) => {
+    return updatePersonalChannel(id, data);
+  }
+);
+
 export const deletePersonalChannelAction = createAsyncThunk(
   'channel/delete',
   (id: number) => {
@@ -35,9 +52,17 @@ export const deletePersonalChannelAction = createAsyncThunk(
   }
 );
 
+export const getChannelByIdAction = createAsyncThunk(
+  'channel/getData',
+  (id: number) => {
+    return getChannelById(id);
+  }
+);
+
 export interface ChannelState {
   channels: PersonalChannelResponse;
   categories: SearchCategoryResponse;
+  channleData: Channel[];
   loading: LoadingState;
   message?: string;
   redirectSuccess: boolean;
@@ -47,6 +72,7 @@ const initialState: ChannelState = {
   loading: 'idle',
   categories: [],
   redirectSuccess: false,
+  channleData: [],
 };
 
 const channelSlice = createSlice({
@@ -82,6 +108,18 @@ const channelSlice = createSlice({
       state.categories = action.payload;
     });
     builder
+      .addCase(updatePersonalChannelAction.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(updatePersonalChannelAction.fulfilled, (state, action) => {
+        state.loading = 'done';
+        state.redirectSuccess = true;
+        state.channels = action.payload.data;
+      })
+      .addCase(updatePersonalChannelAction.rejected, (state) => {
+        state.loading = 'error';
+      });
+    builder
       .addCase(deletePersonalChannelAction.pending, (state) => {
         state.loading = 'pending';
       })
@@ -89,6 +127,17 @@ const channelSlice = createSlice({
         state.loading = 'done';
       })
       .addCase(deletePersonalChannelAction.rejected, (state) => {
+        state.loading = 'error';
+      });
+    builder
+      .addCase(getChannelByIdAction.pending, (state) => {
+        state.loading = 'pending';
+      })
+      .addCase(getChannelByIdAction.fulfilled, (state, action) => {
+        state.loading = 'done';
+        state.channleData[0] = action.payload;
+      })
+      .addCase(getChannelByIdAction.rejected, (state) => {
         state.loading = 'error';
       });
   },
@@ -108,5 +157,8 @@ export const selectCategory = <T extends RootState>(state: T) =>
   state.channel.categories;
 export const selectRedirectSuccess = <T extends RootState>(state: T) =>
   state.channel.redirectSuccess;
+
+export const selectDataChannel = <T extends RootState>(state: T) =>
+  state.channel.channleData;
 
 export default channelSlice.reducer;

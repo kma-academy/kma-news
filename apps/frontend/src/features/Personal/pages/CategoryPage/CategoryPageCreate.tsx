@@ -41,8 +41,8 @@ const CategoryCreatePage: React.FC = () => {
         name,
         keywords,
         excludedKeywords,
-        categories: [],
-        excludedCategories: [],
+        categories,
+        excludedCategories,
         publishers: [],
         excludedPublishers: [],
       })
@@ -50,33 +50,25 @@ const CategoryCreatePage: React.FC = () => {
   };
 
   const handleAddInclude = (item: ItemData) => {
-    console.log(item);
-
     if (item.type === 'keyword') {
       setKeywords((prevState) => [...prevState, item.data as string]);
     }
     if (item.type === 'category') {
-      setCategories((prevState) => [...prevState, item.data as CategoryType]);
+      setCategories((prevState) => [...prevState, item.data.title]);
     }
     toggleIncludeSelect(false);
-    setIncludeText('');
+    // setIncludeText('');
   };
   const handleAddExclude = (item: ItemData) => {
-    console.log(item);
-
     if (item.type === 'keyword') {
       setExcludedKeywords((prevState) => [...prevState, item.data as string]);
     }
     if (item.type === 'category') {
-      setExcludedCategories((prevState) => [
-        ...prevState,
-        item.data as CategoryType,
-      ]);
+      setExcludedCategories((prevState) => [...prevState, item.data.title]);
     }
     toggleExcludeSelect(false);
-    setExcludeText('');
+    // setExcludeText('');
   };
-
   const removeKeyword = (index: number, excluded = false) => {
     if (!excluded)
       setKeywords((prevState) => prevState.filter((e, i) => i !== index));
@@ -150,7 +142,7 @@ const CategoryCreatePage: React.FC = () => {
               ))}
               {categories.map((e, i) => (
                 <div className="select-item" key={i}>
-                  <span>{e.title}</span>
+                  <span>{e}</span>
                   <button
                     className="btn-remove-item-select"
                     onClick={() => removeCategory(i)}
@@ -189,7 +181,7 @@ const CategoryCreatePage: React.FC = () => {
               ))}
               {excludedCategories.map((e, i) => (
                 <div className="select-item" key={i}>
-                  <span>{e.title}</span>
+                  <span>{e}</span>
                   <button
                     className="btn-remove-item-select"
                     onClick={() => removeCategory(i, true)}

@@ -26,8 +26,8 @@ function CategoryPageMain() {
   };
   useEffect(() => {
     dispatch(getPersonalChannelAction());
-  }, [dispatch, btnDropItem]);
-  if (channels.length > 0)
+  }, [dispatch]);
+  if (channels)
     return (
       <div className="category-page-main">
         <div className="header-category-page-main">
@@ -50,10 +50,12 @@ function CategoryPageMain() {
                 <HiOutlineDotsHorizontal />
                 {dropItem === e.id && (
                   <div className="item-category-drop">
-                    <div className="update-category">
-                      <HiOutlinePencilAlt size="20px" />
-                      <span>Sửa</span>
-                    </div>
+                    <Link to={`/ca-nhan/muc-cua-ban/sua-doi/${dropItem}`}>
+                      <div className="update-category">
+                        <HiOutlinePencilAlt size="20px" />
+                        <span>Sửa</span>
+                      </div>
+                    </Link>
                     <div
                       className="remove-category"
                       onClick={() => btnDelChannel(dropItem)}

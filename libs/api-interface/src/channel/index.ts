@@ -1,5 +1,7 @@
+import { CategoryType } from '..';
 import client from '../axiosClient';
 import { Post } from '../post/post.interface';
+import { Channel } from './channel.interface';
 
 export interface PostByChannelParameter {
   topicId: number;
@@ -38,6 +40,17 @@ export const deletePersonalChannel = (id: number) => {
   return client.delete(`/channels/${id}`);
 };
 
+export const updatePersonalChannel = (
+  id: number,
+  data: CreatePersonalChannelParameter
+) => {
+  return client.patch(`/channels/${id}`, data);
+};
+
+export const getChannelById = (id: number) => {
+  return client.get(`/channels/${id}`) as Promise<Channel>;
+};
+
 export type CreatePersonalChannelReponse = Omit<
   PostByChannelResponse,
   'contents'
@@ -46,10 +59,10 @@ export interface CreatePersonalChannelParameter {
   name: string;
   keywords: string[];
   excludedKeywords: string[];
-  categories: number[];
-  excludedCategories: number[];
-  publishers: number[];
-  excludedPublishers: number[];
+  categories: CategoryType[];
+  excludedCategories: CategoryType[];
+  publishers: string[];
+  excludedPublishers: string[];
 }
 
 export const createPersonalChannel = (data: CreatePersonalChannelParameter) => {

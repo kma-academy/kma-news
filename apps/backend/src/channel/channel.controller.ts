@@ -29,14 +29,16 @@ import { UpdateChannelDto } from './dto/update-channel.dto';
 export class ChannelController {
   constructor(private readonly channelService: ChannelService) {}
 
-  @Post()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @hasRoles(UserRole.ADMIN)
-  create(
-    @CurrentUserId() userId: number,
-    @Body() createChannelDto: CreateChannelDto
+  @Post('/mychannel')
+  @UseGuards(JwtAuthGuard)
+  createPersonalChannel(
+    @CurrentUserId() userId,
+    @Body() createPersonalChannelDto: CreatePersonalChannelDto
   ) {
-    return this.channelService.create(userId, createChannelDto);
+    return this.channelService.createPersonalChannel(
+      userId,
+      createPersonalChannelDto
+    );
   }
 
   @Get()
@@ -54,18 +56,6 @@ export class ChannelController {
   @UseGuards(JwtAuthGuard)
   findPersonalChannel(@CurrentUserId() userId) {
     return this.channelService.findPersonalChannel(userId);
-  }
-
-  @Post('/mychannel')
-  @UseGuards(JwtAuthGuard)
-  createPersonalChannel(
-    @CurrentUserId() userId,
-    @Body() createPersonalChannelDto: CreatePersonalChannelDto
-  ) {
-    return this.channelService.createPersonalChannel(
-      userId,
-      createPersonalChannelDto
-    );
   }
 
   @Get(':id')
