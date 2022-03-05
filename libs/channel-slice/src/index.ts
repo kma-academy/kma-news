@@ -113,7 +113,6 @@ const channelSlice = createSlice({
       })
       .addCase(updatePersonalChannelAction.fulfilled, (state, action) => {
         state.loading = 'done';
-        state.redirectSuccess = true;
         state.channels = action.payload.data;
       })
       .addCase(updatePersonalChannelAction.rejected, (state) => {
@@ -124,6 +123,7 @@ const channelSlice = createSlice({
         state.loading = 'pending';
       })
       .addCase(deletePersonalChannelAction.fulfilled, (state, action) => {
+        state.redirectSuccess = true;
         state.loading = 'done';
       })
       .addCase(deletePersonalChannelAction.rejected, (state) => {

@@ -56,6 +56,9 @@ const CategoryUpdatePage: React.FC = () => {
     }
   }, [dataChannel]);
   const handleSubmitUpdate = (id: number) => {
+    if (name.length <= 0) {
+      return alert('Tên thư mục không thể bỏ trống');
+    }
     const data = {
       name,
       keywords,
@@ -66,6 +69,7 @@ const CategoryUpdatePage: React.FC = () => {
       excludedPublishers: [],
     };
     dispatch(updatePersonalChannelAction({ id, data }));
+    navigate('/ca-nhan/muc-cua-ban/');
   };
 
   const handleAddInclude = (item: ItemData) => {
