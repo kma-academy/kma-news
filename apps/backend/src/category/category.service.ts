@@ -5,6 +5,7 @@ import { Like, Repository } from 'typeorm';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Category } from './entities/category.entity';
+const Moment = require('moment');
 
 @Injectable()
 export class CategoryService {
@@ -39,7 +40,11 @@ export class CategoryService {
 
   async findOne(id: number) {
     const categories = await this.categoryRepository.findOne(id);
-    return await categories.posts;
+    return (await categories.posts).sort(
+      (a, b) =>
+        new Moment(b.publishedAt).format('YYYYMMDD') -
+        new Moment(a.publishedAt).format('YYYYMMDD')
+    );
   }
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
