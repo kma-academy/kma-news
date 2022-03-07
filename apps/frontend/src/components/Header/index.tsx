@@ -5,8 +5,10 @@ import { BsPhone, BsSearch } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import Login from '@/features/Auth/components/Login';
 import { AuthDropDown } from '@/features/Auth/components/AuthDropDown/';
+import { toast, ToastContainer } from 'react-toastify';
 import {
   selectLoggedIn,
+  selectMessage,
   selectProfile,
   togglePopup,
 } from '@kma-news/auth-slice';
@@ -27,6 +29,7 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const loggedIn = useAppSelector(selectLoggedIn);
   const profile = useAppSelector(selectProfile);
+  const message = useAppSelector(selectMessage);
   const [refUser, userMenuVisible, toggleUserMenu] =
     useClickOutside<HTMLDivElement>(false);
   const [refDropMenu, activeDropMenu, setActiveDropMenu] =
@@ -46,6 +49,10 @@ const Header = () => {
   // const domNode = useClickOutside(() => {
   //   toggleUserMenu(false)
   // })
+  useEffect(() => {
+    if (message == 'Logout success') toast.success('Đăng xuất thành công');
+    if (message == 'Login success') toast.success('Đăng nhập thành công');
+  }, [message, dispatch]);
   return (
     <div className="header">
       <div className="col-9 header-top">
@@ -134,6 +141,7 @@ const Header = () => {
           </div>
         </div>
       </div>
+      <ToastContainer autoClose={1000} />
     </div>
   );
 };

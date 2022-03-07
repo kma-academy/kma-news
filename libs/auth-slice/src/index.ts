@@ -94,6 +94,7 @@ const authSlice = createSlice({
         .addCase(act.fulfilled, (state, action) => {
           state.loading = 'done';
           state.loggedIn = true;
+          state.message = 'Login success';
           state.showLoginPopup = false;
           const { access_token, expiredAt, user } = action.payload;
           state.profile = user;
@@ -134,6 +135,7 @@ const authSlice = createSlice({
         state.loading = 'error';
         state.loggedIn = false;
         state.profile = undefined;
+        state.message = 'Logout success';
         localStorage.removeItem('access_token');
         localStorage.removeItem('expiredAt');
       });
