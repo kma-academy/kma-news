@@ -1,5 +1,5 @@
-import React from 'react';
-import { useAppDispatch } from '../../../../app/hooks';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { BsSave2 } from 'react-icons/bs';
 import { GiRibbonMedal, GiBackwardTime } from 'react-icons/gi';
 import { IoMdExit } from 'react-icons/io';
@@ -14,6 +14,7 @@ export interface AuthDropDownProps {
 export const AuthDropDown: React.FC<AuthDropDownProps> = (props) => {
   const dispatch = useAppDispatch();
   const { visible } = props;
+
   return (
     <div className={visible ? 'auth-drop' : 'auth-drop--hide'}>
       <ul className="auth-drop__list">

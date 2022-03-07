@@ -1,7 +1,8 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { useState, MouseEvent, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import {
   loginAction,
+  selectMessage,
   selectShowPopup,
   togglePopup,
 } from '@kma-news/auth-slice';
@@ -9,13 +10,14 @@ import './auth.css';
 import createZaloLoginUrl from '../../../services/createZaloLoginUrl';
 import { environment } from '../../../environments/environment';
 import Register from './Register';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 const { zaloCallbackURL, zaloAppId } = environment;
 const Login: React.FC = React.memo((props) => {
   const dispatch = useAppDispatch();
   const isShowing = useAppSelector(selectShowPopup);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const message = useAppSelector(selectMessage);
   const handleSubmit = () => {
     dispatch(loginAction({ email, password }));
   };
@@ -29,7 +31,10 @@ const Login: React.FC = React.memo((props) => {
       'width=600,height=600'
     );
   };
-
+  useEffect(() => {
+    if (message == 'Request failed with status code 401')
+      toast.error('Sai thông tin');
+  }, [dispatch, message]);
   return (
     <div className={isShowing ? 'modal' : 'modal-none'} id="modal">
       <div
@@ -119,7 +124,7 @@ const Login: React.FC = React.memo((props) => {
           <Register close={setIsLogin} />
         )}
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 });
