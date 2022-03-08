@@ -17,6 +17,7 @@
     "react-post-slice": "libs/react-post-slice",
     "save-slice": "libs/save-slice",
     "search-slice": "libs/search-slice",
+    "user-slice": "libs/user-slice",
     "zalo-auth": "libs/zalo-auth"
   }
 }

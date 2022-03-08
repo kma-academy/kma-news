@@ -17,7 +17,7 @@ import saveSlice from '@kma-news/save-slice';
 
 import reactPostSlice from '../../../../libs/react-post-slice/src';
 import weatherSlice from '@/features/Weather/weatherSlice';
-
+import userSlice from '@kma-news/user-slice';
 console.log(process.env['NX_API_URL']);
 
 export const store = configureStore({
@@ -37,6 +37,7 @@ export const store = configureStore({
     save: saveSlice,
     reactPost: reactPostSlice,
     weather: weatherSlice,
+    user: userSlice,
   },
 });
 

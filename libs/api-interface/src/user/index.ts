@@ -10,4 +10,7 @@ export const getAllUsers = () => {
 export const createUser = (user: CreateUser) => {
   return client.post('/user/') as Promise<{ message: string }>;
 };
+export const deleteUser = (id: number) => {
+  return client.delete(`/users/${id}`) as Promise<{ message: string }>;
+};
 export type User = UserWithoutPassword;
