@@ -1,6 +1,36 @@
 version: '3.4'
 
 services:
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
+    container_name: kma-news-elasticsearch
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=es-docker-cluster
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - '9201:9200'
+      - '9301:9300'
+    networks:
+      - es-network
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.12.1
+    container_name: kma-news-kibana
+    ports:
+      - '5601:5601'
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    networks:
+      - es-network
   db:
     image: mysql
     container_name: kma-news-db
@@ -44,9 +74,12 @@ services:
 volumes:
   appdata: null
   appcache: null
+  esdata: null
 
 networks:
   db-network:
     driver: bridge
   redis-network:
+    driver: bridge
+  es-network:
     driver: bridge
