@@ -18,7 +18,7 @@ function CategoryPageMain() {
     if (id === dropItem) {
       setDropItem(-1);
     } else {
-      let selectItem = channels.filter((e) => e.id === id);
+      const selectItem = channels.filter((e) => e.id === id);
       setDropItem(selectItem[0].id);
     }
   };
@@ -41,13 +41,15 @@ function CategoryPageMain() {
         <div className="list-category-page-main col-12">
           {channels.map((e, i) => (
             <div className="item-category-page-main" key={i}>
-              <div className="item-img">
-                <img
-                  src="https://photo-baomoi.zadn.vn/w300_r3x2_sm/2022_02_16_119_41775537/da0037feadbc44e21dad.jpg"
-                  alt=""
-                />
-              </div>
-              <div className="item-name">{e.name}</div>
+              <Link to={e.url || ''}>
+                <div className="item-img">
+                  <img
+                    src="https://photo-baomoi.zadn.vn/w300_r3x2_sm/2022_02_16_119_41775537/da0037feadbc44e21dad.jpg"
+                    alt=""
+                  />
+                </div>
+                <div className="item-name">{e.name}</div>
+              </Link>
               <div className="btn-item" onClick={() => btnDropItem(e.id)}>
                 <HiOutlineDotsHorizontal />
                 {dropItem === e.id && (
