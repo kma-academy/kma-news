@@ -109,20 +109,20 @@ export class PostService {
           bool: {
             should: [
               {
-                match: {
-                  title: query,
+                wildcard: {
+                  title: `*${query}*`,
                 },
               },
               {
-                match: {
-                  description: query,
-                }
+                wildcard: {
+                  description: `*${query}*`,
+                },
               },
               {
-                match: {
-                  keyword: query
-                }
-              }
+                wildcard: {
+                  keyword: `*${query}*`,
+                },
+              },
             ],
           },
         },
@@ -130,7 +130,11 @@ export class PostService {
       size: limit,
       from: (page - 1) * limit,
     });
-    return data.body?.hits.hits || []
+    return (
+      data.body?.hits?.hits?.map((e) => {
+        return e._source;
+      }) || []
+    );
   }
 
   findOne(id: number) {

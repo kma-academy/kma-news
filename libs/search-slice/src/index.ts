@@ -1,6 +1,6 @@
 import {
   LoadingState,
-  searchPost,
+  searchPostV2,
   SearchPostParameter,
   SearchPostResponse,
 } from '@kma-news/api-interface';
@@ -14,7 +14,7 @@ export interface SearchState {
 export const searchPostAction = createAsyncThunk(
   'post/search',
   (data: SearchPostParameter) => {
-    return searchPost(data);
+    return searchPostV2(data);
   }
 );
 
