@@ -13,7 +13,8 @@
     "fe:build": "cross-env NX_API_URL=https://api.kma-news.tech NX_ZALO_CALLBACK_URL=https://blog.kma-news.tech/auth/login/zalo NX_APP_ZALO_APP_ID=513056836020745485 nx build frontend",
     "docker:build": "nx build backend --prod --skip-nx-cache && nx build crawler --prod --skip-nx-cache && npm run fe:build && docker-compose -f docker-compose.build.yml build",
     "docker:push": "docker-compose -f docker-compose.build.yml push",
-    "docker:db": "docker-compose -f docker-compose.prod.yml up -d"
+    "docker:db": "docker-compose -f docker-compose.prod.yml up -d",
+    "docker:db:down": "docker-compose -f docker-compose.prod.yml down"
   },
   "private": true,
   "dependencies": {
