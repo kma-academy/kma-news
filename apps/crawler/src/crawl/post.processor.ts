@@ -61,7 +61,7 @@ export class PostProcessor {
   }
 
   async syncToElasticSearch(post: Post) {
-    const { id, title, description, keywords, categories } = post;
+    const { id, title, description, keywords, categories, url } = post;
     await this.elasticsearchService.create({
       index: 'post',
       id: '' + post.id,
@@ -71,6 +71,7 @@ export class PostProcessor {
         description,
         keywords,
         categories,
+        url,
       },
     });
   }

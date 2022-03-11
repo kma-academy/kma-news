@@ -1,3 +1,4 @@
+import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from '../category/entities/category.entity';
@@ -25,7 +26,8 @@ export class PostService {
     @InjectRepository(SavePost)
     private readonly savePostRepository: Repository<SavePost>,
     private readonly slugHelper: SlugHelper,
-    private readonly paragraphService: ParagraphService
+    private readonly paragraphService: ParagraphService,
+    private readonly elasticsearchService: ElasticsearchService
   ) {}
 
   async create(createPostDto: CreatePostDto) {
@@ -61,16 +63,16 @@ export class PostService {
     });
   }
 
-  findTop(page: number, limit: number){
+  findTop(page: number, limit: number) {
     return this.postRepository.find({
-      relations: ["publisher"],
+      relations: ['publisher'],
       order: {
-        viewCount: "DESC",
-        publishedAt: "DESC"
+        viewCount: 'DESC',
+        publishedAt: 'DESC',
       },
       skip: (page - 1) * limit,
-      take: limit
-    })
+      take: limit,
+    });
   }
 
   search(query: string, page: number, limit: number) {
@@ -98,6 +100,37 @@ export class PostService {
       'post.publisherHostname = publisher.hostname'
     );
     return builder.getMany();
+  }
+
+  async searchV2(query: string, page: number, limit: number) {
+    const data = await this.elasticsearchService.search({
+      body: {
+        query: {
+          bool: {
+            should: [
+              {
+                match: {
+                  title: query,
+                },
+              },
+              {
+                match: {
+                  description: query,
+                }
+              },
+              {
+                match: {
+                  keyword: query
+                }
+              }
+            ],
+          },
+        },
+      },
+      size: limit,
+      from: (page - 1) * limit,
+    });
+    return data.body?.hits.hits || []
   }
 
   findOne(id: number) {

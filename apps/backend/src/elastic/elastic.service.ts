@@ -47,7 +47,7 @@ export class ElasticService {
             id: post.id + '',
           });
         if (postInElasticSearch) continue;
-        const { id, title, description, keywords, categories } = post;
+        const { id, title, description, keywords, categories, url } = post;
         await this.elasticsearchService.create({
           index: 'post',
           id: post.id + '',
@@ -58,6 +58,7 @@ export class ElasticService {
             description,
             keywords,
             categories,
+            url
           },
         });
         this.logger.debug(
