@@ -26,6 +26,7 @@ import { History } from './history/entities/history.entity';
 import { SavePost } from './post/entities/save-post.entity';
 import { ReactPostModule } from './react-post/react-post.module';
 import { ReactPost } from './react-post/entities/react-post.entity';
+import { ElasticModule } from './elastic/elastic.module';
 
 @Module({
   imports: [
@@ -75,6 +76,7 @@ import { ReactPost } from './react-post/entities/react-post.entity';
     CommentModule,
     HistoryModule,
     ReactPostModule,
+    ElasticModule,
   ],
   providers: [],
 })
