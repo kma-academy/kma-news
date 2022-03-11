@@ -15,7 +15,7 @@ type ForecastDayDataReport = ForecastDayData & Record<'name', string>;
 export type WeatherResponse = ForecastDayDataReport[];
 
 export const fetchWeatherGeneral = async (location: string) => {
-  const WEATHER_API = `http://api.weatherapi.com/v1/forecast.json`;
+  const WEATHER_API = `https://api.weatherapi.com/v1/forecast.json`;
   const { data } = await client.request({
     url: WEATHER_API,
     params: {
