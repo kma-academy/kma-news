@@ -42,11 +42,7 @@ const topicSlice = createSlice({
       })
       .addCase(getPostsOnTopicAction.fulfilled, (state, action) => {
         state.loading = 'done';
-        if (!state.topicContents) {
-          state.topicContents = action.payload;
-        } else {
-          state.topicContents.contents = action.payload.contents;
-        }
+        state.topicContents = action.payload;
       })
       .addCase(getPostsOnTopicAction.rejected, (state, action) => {
         state.loading = 'error';
