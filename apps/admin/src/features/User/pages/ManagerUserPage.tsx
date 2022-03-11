@@ -32,15 +32,16 @@ const columns: ProTableColumns<User> = [
 const ManagerUserPage: React.FC = () => {
   console.log('table');
   const dispatch = useAppDispatch();
-  dispatch(getAllUserAction());
+  // dispatch(getAllUserAction());
+  useEffect(() => {
+    dispatch(getAllUserAction());
+  });
   const users = useAppSelector(selectUser);
   const onDelete = (id: number) => {
     dispatch(deleteUserAction(id));
   };
   console.log(users);
-  // useEffect(() => {
-  //   dispatch(getAllUserAction);
-  // }, []);
+
   return (
     <div>
       <ProTable<User>
