@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   backend:
-    image: notekunn/kma-news-backend
+    image: notekunn/kma-news-backend:${VERSION}
     container_name: kma-news-backend
     env_file:
       - .env
@@ -29,7 +29,7 @@ services:
       - app-network
       - es-network
   frontend:
-    image: notekunn/kma-news-frontend:1.0.2
+    image: notekunn/kma-news-frontend:${VERSION}
     container_name: kma-news-frontend
     environment:
       REACT_APP_API_URL: "https://${BACKEND_HOST}"
@@ -44,7 +44,7 @@ services:
       - app-network
     command: [ "nginx", "-g", "daemon off;" ]
   crawler:
-    image: notekunn/kma-news-crawler
+    image: notekunn/kma-news-crawler:${VERSION}
     container_name: kma-news-crawler
     environment:
       DATABASE_HOST: "db"
