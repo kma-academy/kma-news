@@ -23,9 +23,9 @@ services:
       dockerfile: Dockerfile.frontend
       args:
         BUILD_TARGET: frontend
-        API_URL: "http://${BACKEND_HOST}"
+        API_URL: "https://${BACKEND_HOST}"
         ZALO_APP_ID: "${ZALO_APP_ID}"
-        ZALO_CALLBACK_URL: "http://${FRONTEND_HOST}"
+        ZALO_CALLBACK_URL: "https://${FRONTEND_HOST}"
 
   # admin:
   #   image: notekunn/kma-news-admin

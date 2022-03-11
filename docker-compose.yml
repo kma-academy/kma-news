@@ -55,7 +55,6 @@ services:
     networks:
       - db-network
       - redis-network
-    command: [ "node", "./dist/apps/crawler/main.js" ]
   # admin:
   #   image: notekunn/kma-news-admin
   #   container_name: kma-news-admin
