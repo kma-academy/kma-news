@@ -8,6 +8,10 @@ This project was generated using [Nx](https://nx.dev).
 
 🔎 **Smart, Fast and Extensible Build System**
 
+```bash
+NX_API_URL=https://api.kma-news.tech NX_ZALO_CALLBACK_URL=https://blog.kma-news.tech/auth/login/zalo NX_APP_ZALO_APP_ID=513056836020745485 nx build frontend
+```
+
 ## Adding capabilities to your workspace
 
 Nx supports many plugins which add capabilities for developing different types of applications and different tools.

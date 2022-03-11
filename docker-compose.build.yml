@@ -21,6 +21,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.frontend
+      target: product
       args:
         BUILD_TARGET: frontend
         API_URL: "https://${BACKEND_HOST}"
