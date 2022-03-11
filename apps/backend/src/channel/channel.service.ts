@@ -1,3 +1,4 @@
+import { ElasticsearchService } from '@nestjs/elasticsearch';
 import {
   BadRequestException,
   Injectable,
@@ -22,7 +23,8 @@ export class ChannelService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     @InjectRepository(Post)
-    private readonly postRepository: Repository<Post>
+    private readonly postRepository: Repository<Post>,
+    private readonly elasticsearchService: ElasticsearchService
   ) {}
   async create(userId: number, createChannelDto: CreateChannelDto) {
     const user = await this.userRepository.findOne(userId);
@@ -58,7 +60,7 @@ export class ChannelService {
   async findContentByChannel(id: number, page: number, limit: number) {
     const channel = await this.channelRepository.findOne(id);
     if (!channel) throw new NotFoundException('Channel not found');
-    return await this.contentByChannel(channel, page, limit);
+    return await this.contentByChannelV2(channel, page, limit);
   }
   createPersonalChannel(
     userId: number,
@@ -133,6 +135,61 @@ export class ChannelService {
       name: channel.name,
       url: channel.url,
       contents: post,
+    };
+  }
+  async contentByChannelV2(channel: Channel, page: number, limit: number) {
+    const should = [];
+    const mustNot = [];
+    channel.keywords.forEach((e) => {
+      should.push({
+        wildcard: {
+          title: `*${e}*`,
+        },
+      });
+      should.push({
+        wildcard: {
+          description: `*${e}*`,
+        },
+      });
+      should.push({
+        match: {
+          keywords: e,
+        },
+      });
+    });
+
+    if (channel.excludedKeywords.length > 0) {
+      mustNot.push(
+        ...channel.excludedKeywords.map((e) => {
+          return {
+            match: {
+              keywords: e,
+            },
+          };
+        })
+      );
+    }
+    console.log(should, mustNot);
+
+    const { body } = await this.elasticsearchService.search({
+      index: 'post',
+      body: {
+        query: {
+          bool: {
+            should: should,
+            must_not: mustNot,
+          },
+        },
+      },
+      size: limit,
+      from: (page - 1) * limit,
+    });
+    const posts = body?.hits?.hits?.map((e) => e._source) || [];
+    return {
+      id: channel.id,
+      name: channel.name,
+      url: channel.url,
+      contents: posts,
     };
   }
 
