@@ -71,6 +71,18 @@ export class PostController {
     );
   }
 
+  @Get('searchV2')
+  searchV2(
+    @Query(new ValidationPipe({ transform: true }))
+    searchPostDto: SearchPostDto
+  ) {
+    return this.postService.searchV2(
+      searchPostDto.q,
+      searchPostDto.page,
+      searchPostDto.limit
+    );
+  }
+
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.postService.findOne(id);

@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   backend:
-    image: notekunn/kma-news-backend
+    image: notekunn/kma-news-backend:${VERSION}
     container_name: kma-news-backend
     env_file:
       - .env
@@ -18,6 +18,7 @@ services:
     depends_on:
       - db
       - cache
+      - elasticsearch
     expose:
       - 8080
     ports:
@@ -26,8 +27,9 @@ services:
       - db-network
       - redis-network
       - app-network
+      - es-network
   frontend:
-    image: notekunn/kma-news-frontend
+    image: notekunn/kma-news-frontend:${VERSION}
     container_name: kma-news-frontend
     environment:
       REACT_APP_API_URL: "https://${BACKEND_HOST}"
@@ -42,7 +44,7 @@ services:
       - app-network
     command: [ "nginx", "-g", "daemon off;" ]
   crawler:
-    image: notekunn/kma-news-crawler
+    image: notekunn/kma-news-crawler:${VERSION}
     container_name: kma-news-crawler
     environment:
       DATABASE_HOST: "db"
@@ -52,9 +54,15 @@ services:
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       REDIS_HOST: "cache"
       REDIS_PORT: 6379
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    depends_on:
+      - db
+      - cache
+      - elasticsearch
     networks:
       - db-network
       - redis-network
+      - es-network
   # admin:
   #   image: notekunn/kma-news-admin
   #   container_name: kma-news-admin
@@ -130,6 +138,37 @@ services:
     networks:
       - app-network
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
+    container_name: kma-news-elasticsearch
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=es-docker-cluster
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - '9201:9200'
+      - '9301:9300'
+    networks:
+      - es-network
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.12.1
+    container_name: kma-news-kibana
+    ports:
+      - '5601:5601'
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    networks:
+      - es-network
+      - app-network
+
 volumes:
   appdata: null
   appcache: null
@@ -141,6 +180,7 @@ volumes:
   dhparam: null
   certs: null
   acme: null
+  esdata: null
 
 networks:
   db-network:
@@ -149,3 +189,6 @@ networks:
     driver: bridge
   app-network:
     driver: bridge
+  es-network:
+    driver: bridge
+

@@ -1,3 +1,4 @@
+import { ElasticsearchService } from '@nestjs/elasticsearch';
 import {
   InjectQueue,
   OnQueueActive,
@@ -35,7 +36,8 @@ export class PostProcessor {
     private readonly userService: UserService,
     @InjectQueue('add_category_to_post')
     private readonly categoryQueue: Queue,
-    private readonly slugHelper: SlugHelper
+    private readonly slugHelper: SlugHelper,
+    private readonly elasticsearchService: ElasticsearchService
   ) {}
 
   async handlePost(post: PostRaw) {
@@ -51,9 +53,23 @@ export class PostProcessor {
       writter: admin,
       slug: this.slugHelper.slugify(data.title),
     });
+    this.syncToElasticSearch(postData);
     this.categoryQueue.add('add_to_post', {
       postId: postData.id,
       categories,
+    });
+  }
+
+  async syncToElasticSearch(post: Post) {
+    const { paragraphs, viewCount, url, ...dataToImport } = post;
+    await this.elasticsearchService.create({
+      index: 'post',
+      id: post.id + '',
+      refresh: true,
+      body: {
+        ...dataToImport,
+        url,
+      },
     });
   }
 

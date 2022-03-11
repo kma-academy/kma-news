@@ -1,47 +1,50 @@
-FROM node:16-slim as base
-
-ARG BUILD_TARGET=frontend
-
-ENV TZ=Asia/Ho_Chi_Minh
-
-RUN npm i -g cross-env nx
-
-WORKDIR /home/node/app
-
-COPY package*.json .
-
-RUN npm i --quiet
-
-COPY . .
-
-ARG API_URL=http//localhost:8888/
-
-ENV NX_API_URL=${API_URL}
-
-ENV NX_DAEMON=false
-
-ARG ZALO_APP_ID=12346
-
-ARG ZALO_CALLBACK_URL=http://localhost:4200
-
-ENV NODE_ENV production
-
-ENV NX_ZALO_CALLBACK_URL=${ZALO_CALLBACK_URL}/auth/login/zalo
-
-ENV NX_APP_ZALO_APP_ID=${ZALO_APP_ID}
-
-RUN echo "Api url ${API_URL}, Zalo app id ${ZALO_APP_ID}, Zalo callback ${ZALO_CALLBACK_URL}"
-
-
-RUN NX_API_URL=${API_URL} \
-  NX_ZALO_CALLBACK_URL=${ZALO_CALLBACK_URL}/auth/login/zalo \
-  NX_APP_ZALO_APP_ID=${ZALO_APP_ID} \
-  GENERATE_SOURCEMAP=false \
-  nx build ${BUILD_TARGET} --prod --skip-nx-cache
+# FROM node:16-slim as base
 
 FROM nginx:latest as product
 
-COPY --from=base "/home/node/app/dist/apps/frontend/" "/usr/share/nginx/html"
+ARG BUILD_TARGET=frontend
+
+# ENV TZ=Asia/Ho_Chi_Minh
+
+# WORKDIR /home/node/app
+
+# COPY package*.json .
+
+# RUN npm i --quiet
+
+# COPY . .
+
+# ARG API_URL=http//localhost:8888/
+
+# ENV NX_API_URL=${API_URL}
+
+# ENV NX_DAEMON=false
+
+# ARG ZALO_APP_ID=12346
+
+# ARG ZALO_CALLBACK_URL=http://localhost:4200
+
+# ENV NODE_ENV production
+
+# ENV NX_ZALO_CALLBACK_URL=${ZALO_CALLBACK_URL}/auth/login/zalo
+
+# ENV NX_APP_ZALO_APP_ID=${ZALO_APP_ID}
+
+# RUN echo "Api url ${API_URL}, Zalo app id ${ZALO_APP_ID}, Zalo callback ${ZALO_CALLBACK_URL}"
+
+
+# RUN NX_API_URL=${API_URL} \
+#   NX_ZALO_CALLBACK_URL=${ZALO_CALLBACK_URL}/auth/login/zalo \
+#   NX_APP_ZALO_APP_ID=${ZALO_APP_ID} \
+#   # GENERATE_SOURCEMAP=false \
+#   npx nx build ${BUILD_TARGET} --verbose
+COPY  "/dist/apps/${BUILD_TARGET}/" "/usr/share/nginx/html"
+RUN ls -la /usr/share/nginx/html
+
+# FROM nginx:latest as product
+
+# COPY --from=base "/home/node/app/dist/apps/frontend/" "/usr/share/nginx/html"
+# COPY --from= "/dist/apps/${BUILD_TARGET}/" /usr/share/nginx/html"
 
 COPY ./tools/nginx.conf /etc/nginx/conf.d/default.conf
 

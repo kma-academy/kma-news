@@ -50,3 +50,10 @@ export const searchPost = (data: SearchPostParameter) => {
 export const increaseViewPost = (id: number) => {
   return client.post(`/posts/${id}/view`) as Promise<{ message: string }>;
 };
+
+export const searchPostV2 = (data: SearchPostParameter) => {
+  return client.request({
+    url: '/posts/searchV2',
+    params: data,
+  }) as Promise<SearchPostResponse>;
+};

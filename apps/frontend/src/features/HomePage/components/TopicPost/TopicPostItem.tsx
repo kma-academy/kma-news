@@ -13,7 +13,7 @@ export interface TopicPostItemProps {
 }
 export const TopicPostItem: React.FC<TopicPostItemProps> = (props) => {
   const {
-    url,
+    url = '',
     title,
     publishedAt,
     publisherLogo,

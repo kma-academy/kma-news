@@ -2,14 +2,14 @@ version: '3.4'
 
 services:
   backend:
-    image: notekunn/kma-news-backend
+    image: notekunn/kma-news-backend:${VERSION}
     build:
       context: .
       dockerfile: Dockerfile.backend
       args:
         - BUILD_TARGET=backend
   crawler:
-    image: notekunn/kma-news-crawler
+    image: notekunn/kma-news-crawler:${VERSION}
     build:
       context: .
       dockerfile: Dockerfile.backend
@@ -17,10 +17,11 @@ services:
         BUILD_TARGET: crawler
 
   frontend:
-    image: notekunn/kma-news-frontend
+    image: notekunn/kma-news-frontend:${VERSION}
     build:
       context: .
       dockerfile: Dockerfile.frontend
+      target: product
       args:
         BUILD_TARGET: frontend
         API_URL: "https://${BACKEND_HOST}"

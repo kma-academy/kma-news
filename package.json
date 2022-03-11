@@ -2,23 +2,30 @@
   "name": "kma-news",
   "version": "0.0.0",
   "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
     "fe": "cross-env NX_API_URL=http://localhost:8888 nx serve frontend",
-    "docker:build": "nx build backend --prod --skip-nx-cache && nx build crawler --prod --skip-nx-cache && docker-compose -f docker-compose.build.yml build",
+    "fe:build": "cross-env NX_API_URL=https://api.kma-news.tech NX_ZALO_CALLBACK_URL=https://blog.kma-news.tech/auth/login/zalo NX_APP_ZALO_APP_ID=513056836020745485 nx build frontend",
+    "docker:build": "nx build backend --prod --skip-nx-cache && nx build crawler --prod --skip-nx-cache && npm run fe:build && docker-compose -f docker-compose.build.yml build",
     "docker:push": "docker-compose -f docker-compose.build.yml push",
-    "docker:db": "docker-compose -f docker-compose.prod.yml up -d"
+    "docker:db": "docker-compose -f docker-compose.prod.yml up -d",
+    "docker:db:down": "docker-compose -f docker-compose.prod.yml down"
   },
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@elastic/elasticsearch": "^7.17.0",
     "@nestjs/axios": "^0.0.5",
     "@nestjs/bull": "^0.4.2",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^1.1.6",
     "@nestjs/core": "^8.0.0",
+    "@nestjs/elasticsearch": "^8.1.0",
     "@nestjs/jwt": "^8.0.0",
     "@nestjs/passport": "^8.1.0",
     "@nestjs/platform-express": "^8.0.0",
