@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   TableColumnsType,
   Space,
@@ -7,12 +7,14 @@ import {
   Button,
   Table,
   Popconfirm,
+  Modal,
 } from 'antd';
 import {
   ReloadOutlined,
   SettingOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
+import { AddUserModal } from '../AddModal/AddUserModal';
 interface ObjectWithID {
   id: number;
 }
@@ -31,6 +33,7 @@ interface ProTableProps<T extends ObjectWithID> {
 export const ProTable = function <T extends ObjectWithID>(
   props: ProTableProps<T>
 ) {
+  const [visible, setVisible] = useState(false);
   const { tableName, columns, items, toggleAdd, toggleEdit, onDelete } = props;
   const actionColumn: ProTableColumns<T> = useMemo(() => {
     return [
@@ -106,13 +109,15 @@ export const ProTable = function <T extends ObjectWithID>(
         >
           <h3>{tableName}</h3>
           <div>
-            <Button type="primary" onClick={toggleAdd}>
+            <Button type="primary" onClick={() => setVisible(true)}>
               <PlusOutlined />
               Thêm mới
             </Button>
             <Button type="text">
               <ReloadOutlined />
             </Button>
+            <AddUserModal visible={visible} />
+
             <Button type="text">
               <SettingOutlined />
             </Button>

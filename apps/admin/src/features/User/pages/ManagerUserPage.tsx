@@ -1,7 +1,14 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { ProTable, ProTableColumns } from '../../../components/ProTable';
 import { User } from '@kma-news/api-interface';
 import Tag from 'antd/lib/tag';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from 'apps/admin/src/app/hooks';
+import {
+  selectUser,
+  getAllUserAction,
+  deleteUserAction,
+} from '@kma-news/user-slice';
 const columns: ProTableColumns<User> = [
   {
     key: 'name',
@@ -23,12 +30,25 @@ const columns: ProTableColumns<User> = [
   },
 ];
 const ManagerUserPage: React.FC = () => {
+  console.log('table');
+  const dispatch = useAppDispatch();
+  // dispatch(getAllUserAction());
+  useEffect(() => {
+    dispatch(getAllUserAction());
+  });
+  const users = useAppSelector(selectUser);
+  const onDelete = (id: number) => {
+    dispatch(deleteUserAction(id));
+  };
+  console.log(users);
+
   return (
     <div>
       <ProTable<User>
         columns={columns}
-        items={[]}
+        items={users}
         tableName="Quản lý người dùng"
+        onDelete={onDelete}
       ></ProTable>
     </div>
   );

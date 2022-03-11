@@ -4,9 +4,10 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import { LoadingGlobal } from '../components/LoadingGlobal';
 import { BlankLayout } from '../layouts/BlankLayout';
 import { SecurityLayout } from '../layouts/SecurityLayout';
+import ManagerUserPage from '../features/User/pages/ManagerUserPage';
 const LoginPage = React.lazy(() => import('../features/Auth/pages/LoginPage'));
 const UserManager = React.lazy(
-  () => import('../features/User/pages/ManagerUserPage')
+  () => import('../features/User/pages/ManagerUser')
 );
 // const CategoryManager = React.lazy(() => import('@/features/Category/pages/CategoryManager'))
 // const HeaderOptionPage = React.lazy(() => import('@/features/Option/pages/HeaderOptionPage'))

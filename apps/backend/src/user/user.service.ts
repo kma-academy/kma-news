@@ -19,7 +19,7 @@ export class UserService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     @Inject(CACHE_MANAGER)
-    private readonly cacheManager: Cache,
+    private readonly cacheManager: Cache
   ) {}
   async create(createUserDto: CreateUserDto) {
     const existUser = await this.userRepository.findOne({
@@ -27,8 +27,7 @@ export class UserService {
         email: createUserDto.email,
       },
     });
-    if (existUser)
-      throw new ConflictException('Email is used by another one');
+    if (existUser) throw new ConflictException('Email is used by another one');
 
     return await this.userRepository.save({
       ...createUserDto,
