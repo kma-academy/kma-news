@@ -61,16 +61,13 @@ export class PostProcessor {
   }
 
   async syncToElasticSearch(post: Post) {
-    const { id, title, description, keywords, categories, url } = post;
+    const { paragraphs, viewCount, url, ...dataToImport } = post;
     await this.elasticsearchService.create({
       index: 'post',
-      id: '' + post.id,
+      id: post.id + '',
+      refresh: true,
       body: {
-        id,
-        title,
-        description,
-        keywords,
-        categories,
+        ...dataToImport,
         url,
       },
     });

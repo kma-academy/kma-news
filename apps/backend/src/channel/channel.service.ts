@@ -52,7 +52,7 @@ export class ChannelService {
       },
     });
     const channelContent = await Promise.all(
-      channels.map((e) => this.contentByChannel(e, 1, 5))
+      channels.map((e) => this.contentByChannelV2(e, 1, 5))
     );
     return channelContent;
   }
@@ -169,7 +169,6 @@ export class ChannelService {
         })
       );
     }
-    console.log(should, mustNot);
 
     const { body } = await this.elasticsearchService.search({
       index: 'post',

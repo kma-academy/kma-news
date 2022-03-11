@@ -21,8 +21,8 @@ export const TopicPost: React.FC<Omit<PostByChannelResponse, 'id'>> = (
                 content.publishedAt ? new Date(content.publishedAt) : new Date()
               }
               thumbnailURL={content.thumbnailURL}
-              publisherLogo={content.publisher.logo}
-              publisherName={content.publisher.name}
+              publisherLogo={content.publisher?.logo}
+              publisherName={content.publisher?.name}
             />
           ))}
         </div>

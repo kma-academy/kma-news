@@ -47,18 +47,14 @@ export class ElasticService {
             id: post.id + '',
           });
         if (postInElasticSearch) continue;
-        const { id, title, description, keywords, categories, url } = post;
+        const { paragraphs, viewCount, url, ...dataToImport } = post;
         await this.elasticsearchService.create({
           index: 'post',
           id: post.id + '',
           refresh: true,
           body: {
-            id,
-            title,
-            description,
-            keywords,
-            categories,
-            url
+            ...dataToImport,
+            url,
           },
         });
         this.logger.debug(
